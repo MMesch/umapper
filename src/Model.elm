@@ -1,10 +1,10 @@
-module Model exposing (..)
+port module Model exposing (..)
 
 import Array
 import Csv exposing (Csv, parse)
 import File exposing (File)
 import File.Select as Select
-import Maybe exposing (withDefault)
+import Maybe exposing (Maybe(..), withDefault)
 import Result exposing (toMaybe)
 import Table
 import Task
@@ -16,12 +16,18 @@ type Msg
     | CsvLoaded String
     | SetQuery String
     | SetTableState Table.State
+    | UpdateWeight Int String
+    | SayHello
+
+
+port umap : Array.Array (Array.Array Float) -> Cmd msg
 
 
 type alias Model =
     { csv : Maybe String
     , query : String
     , headers : Maybe (Array.Array String)
+    , weights : Maybe (Array.Array Float)
     , records : Maybe (Array.Array (Array.Array String))
     , tableState : Table.State
     }
@@ -32,6 +38,7 @@ init _ =
     ( { csv = Nothing
       , headers = Nothing
       , records = Nothing
+      , weights = Nothing
       , query = ""
       , tableState = Table.initialSort "name"
       }
@@ -49,33 +56,56 @@ update msg model =
             ( model, fileLoad file )
 
         CsvLoaded content ->
-            let
-                parsed =
-                    toMaybe (parse content)
-            in
-            ( { model
-                | csv = Just content
-                , headers = Maybe.map (.headers >> Array.fromList) parsed
-                , records =
-                    Maybe.map
-                        (.records
-                            >> List.map Array.fromList
-                            >> Array.fromList
-                        )
-                        parsed
-              }
-            , Cmd.none
-            )
+            ( updateCsvModel content model, Cmd.none )
 
         SetQuery newQuery ->
             ( { model | query = newQuery }
             , Cmd.none
             )
 
+        SayHello ->
+            ( model, sendMessage () )
+
+        UpdateWeight index value ->
+            let
+                updater =
+                    Array.set index (withDefault 0 (String.toFloat value))
+            in
+            ( { model | weights = Maybe.map updater model.weights }, Cmd.none )
+
         SetTableState newState ->
             ( { model | tableState = newState }
             , Cmd.none
             )
+
+
+updateCsvModel : String -> Model -> Model
+updateCsvModel content model =
+    let
+        parsed =
+            toMaybe (parse content)
+
+        headers =
+            Maybe.map (.headers >> Array.fromList) parsed
+    in
+    { model
+        | csv = Just content
+        , headers = headers
+        , records =
+            Maybe.map
+                (.records
+                    >> List.map Array.fromList
+                    >> Array.fromList
+                )
+                parsed
+        , weights =
+            case headers of
+                Nothing ->
+                    Nothing
+
+                Just headers_ ->
+                    Just (Array.repeat (Array.length headers_) 0)
+    }
 
 
 fileSelection : Cmd Msg

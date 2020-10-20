@@ -10,7 +10,7 @@ mkShell {
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-test
+    elmPackages.elm-live
     elmPackages.elm-language-server
-    nodePackages.elm-oracle
   ];
 }
