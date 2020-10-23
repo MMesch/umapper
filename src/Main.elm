@@ -1,9 +1,9 @@
 module Main exposing (main)
 
 import Browser
-import Model exposing (Model, Msg, init, update)
+import Model.Model exposing (Model, Msg, init, subscriptions, update)
 import Task
-import View exposing (view)
+import View.View exposing (view)
 
 
 main : Program () Model Msg
@@ -14,8 +14,3 @@ main =
         , view = view
         , subscriptions = subscriptions
         }
-
-
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none

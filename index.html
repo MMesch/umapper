@@ -4,25 +4,34 @@
   <meta charset="UTF-8">
   <title>Main</title>
   <style>body { padding: 0; margin: 0; }</style>
-  <script src="./node_modules/umap-js/lib/umap-js.min.js"></script>
+  <script src="lib/umap-js.min.js"></script>
 </head>
 
 <body>
 
 <div id="elm"></div>
 
-<script src="./elm.js"></script>
+<script src="elm.js"></script>
 <script>
   var app = Elm.Main.init({
     node: document.getElementById("elm")
   });
 
-  var umap = new UMAP();
-app.ports.umap.subscribe(function(data) {
-    console.log("mapping...");
-    console.log(data);
-    await umap.fitAsync(data, epochNumber => {console.log(epochNumber)});
-);
+
+  app.ports.umap.subscribe(function([data, params]) {
+      console.log("mapping...");
+      console.log(params);
+      var umap = new UMAP(params);
+      var result = umap.fit(data);
+      app.ports.receiver.send(result);}
+
+  );
+
+  app.ports.getSvg.subscribe(function(id){
+     console.log('downloading', id);
+     var node = document.getElementById(id);
+     app.ports.gotSvg.send(node.innerHTML);
+  });
 </script>
 </body>
 </html>
