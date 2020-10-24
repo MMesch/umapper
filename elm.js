@@ -11065,11 +11065,17 @@ var $author$project$Matrix$getColumnId = F2(
 			$elm$core$Maybe$Nothing,
 			$elm$core$Array$toIndexedList(arr));
 	});
+var $elm_community$array_extra$Array$Extra$map3 = F3(
+	function (f, ws, xs) {
+		return $elm_community$array_extra$Array$Extra$apply(
+			A3($elm_community$array_extra$Array$Extra$map2, f, ws, xs));
+	});
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
 var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
 var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
 var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
 var $elm$svg$Svg$Attributes$fontSize = _VirtualDom_attribute('font-size');
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
 var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
@@ -11077,8 +11083,8 @@ var $elm$svg$Svg$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$svg$Svg$text_ = $elm$svg$Svg$trustedNode('text');
 var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
 var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
-var $author$project$View$DataViz$nodeGroup = F3(
-	function (px, py, label) {
+var $author$project$View$DataViz$nodeGroup = F4(
+	function (px, py, label, color) {
 		return A2(
 			$elm$svg$Svg$g,
 			_List_Nil,
@@ -11090,7 +11096,8 @@ var $author$project$View$DataViz$nodeGroup = F3(
 						[
 							$elm$svg$Svg$Attributes$cx(px),
 							$elm$svg$Svg$Attributes$cy(py),
-							$elm$svg$Svg$Attributes$r('0.5')
+							$elm$svg$Svg$Attributes$r('0.5'),
+							$elm$svg$Svg$Attributes$fill(color)
 						]),
 					_List_Nil),
 					A2(
@@ -11099,7 +11106,8 @@ var $author$project$View$DataViz$nodeGroup = F3(
 						[
 							$elm$svg$Svg$Attributes$x(px),
 							$elm$svg$Svg$Attributes$y(py),
-							$elm$svg$Svg$Attributes$fontSize('1')
+							$elm$svg$Svg$Attributes$fontSize('1'),
+							$elm$svg$Svg$Attributes$fill(color)
 						]),
 					_List_fromArray(
 						[
@@ -11119,15 +11127,15 @@ var $author$project$View$DataViz$safeRetrieve = function (idx) {
 			$elm$core$Maybe$withDefault(0)),
 		$elm$core$Array$get(idx));
 };
-var $author$project$View$DataViz$toNode = F2(
-	function (position, label) {
+var $author$project$View$DataViz$toNode = F3(
+	function (position, label, color) {
 		var py = A2($author$project$View$DataViz$safeRetrieve, 1, position);
 		var px = A2($author$project$View$DataViz$safeRetrieve, 0, position);
-		return A3($author$project$View$DataViz$nodeGroup, px, py, label);
+		return A4($author$project$View$DataViz$nodeGroup, px, py, label, color);
 	});
 var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
-var $author$project$View$DataViz$graph = F2(
-	function (positions, labels) {
+var $author$project$View$DataViz$graph = F3(
+	function (positions, labels, colors) {
 		return A2(
 			$elm$svg$Svg$svg,
 			_List_fromArray(
@@ -11135,11 +11143,12 @@ var $author$project$View$DataViz$graph = F2(
 					$elm$svg$Svg$Attributes$viewBox('-1 -1 101 101')
 				]),
 			$elm$core$Array$toList(
-				A3(
-					$elm_community$array_extra$Array$Extra$map2,
+				A4(
+					$elm_community$array_extra$Array$Extra$map3,
 					$author$project$View$DataViz$toNode,
 					$author$project$Util$normalize(positions),
-					labels)));
+					labels,
+					colors)));
 	});
 var $rtfeldman$elm_css$Css$height = $rtfeldman$elm_css$Css$prop1('height');
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -11190,8 +11199,8 @@ var $author$project$Util$testData = _List_fromArray(
 		[4.1, 2, 3])
 	]);
 var $author$project$Util$testMatrix = $author$project$Matrix$asArrayMatrix($author$project$Util$testData);
-var $author$project$View$DataView$graphMap = F2(
-	function (positions, labels) {
+var $author$project$View$DataView$graphMap = F3(
+	function (positions, labels, colors) {
 		var data = A2($elm$core$Maybe$withDefault, $author$project$Util$testMatrix, positions);
 		var labels_ = A2(
 			$elm$core$Maybe$withDefault,
@@ -11200,6 +11209,13 @@ var $author$project$View$DataView$graphMap = F2(
 				$elm$core$Array$length(data),
 				'NA'),
 			labels);
+		var colors_ = A2(
+			$elm$core$Maybe$withDefault,
+			A2(
+				$elm$core$Array$repeat,
+				$elm$core$Array$length(data),
+				'#000000'),
+			colors);
 		return A2(
 			$rtfeldman$elm_css$Html$Styled$div,
 			_List_fromArray(
@@ -11229,21 +11245,10 @@ var $author$project$View$DataView$graphMap = F2(
 							]),
 						_List_fromArray(
 							[
-								A2($author$project$View$DataViz$graph, data, labels_)
+								A3($author$project$View$DataViz$graph, data, labels_, colors_)
 							])))
 				]));
 	});
-var $rtfeldman$elm_css$VirtualDom$Styled$lazyHelp2 = F3(
-	function (fn, arg1, arg2) {
-		return $rtfeldman$elm_css$VirtualDom$Styled$toUnstyled(
-			A2(fn, arg1, arg2));
-	});
-var $rtfeldman$elm_css$VirtualDom$Styled$lazy2 = F3(
-	function (fn, arg1, arg2) {
-		return $rtfeldman$elm_css$VirtualDom$Styled$Unstyled(
-			A4($elm$virtual_dom$VirtualDom$lazy3, $rtfeldman$elm_css$VirtualDom$Styled$lazyHelp2, fn, arg1, arg2));
-	});
-var $rtfeldman$elm_css$Html$Styled$Lazy$lazy2 = $rtfeldman$elm_css$VirtualDom$Styled$lazy2;
 var $rtfeldman$elm_css$Css$UnitlessFloat = 0;
 var $rtfeldman$elm_css$Css$num = function (val) {
 	return {
@@ -11347,12 +11352,55 @@ var $author$project$View$DataView$sliders = function (model) {
 			$elm$core$Array$toIndexedList(model.aG),
 			$elm$core$Array$toList(model.aw)));
 };
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $author$project$View$Cmap$qualitative = _List_fromArray(
+	['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a', '#ffff99', '#b15928']);
+var $author$project$View$DataView$translate = function (values) {
+	var unique = A2(
+		$elm$core$Basics$composeR,
+		$elm$core$Array$toList,
+		A2($elm$core$Basics$composeR, $elm$core$Set$fromList, $elm$core$Set$toList))(values);
+	var mapping = $elm$core$Dict$fromList(
+		A3(
+			$elm$core$List$map2,
+			F2(
+				function (x, y) {
+					return _Utils_Tuple2(x, y);
+				}),
+			unique,
+			$author$project$View$Cmap$qualitative));
+	return A2(
+		$elm$core$Array$map,
+		function (a) {
+			return A2(
+				$elm$core$Maybe$withDefault,
+				'#000000',
+				A2($elm$core$Dict$get, a, mapping));
+		},
+		values);
+};
 var $author$project$View$DataView$viewPanel = function (model) {
-	var colidx = A2(
+	var labelsidx = A2(
 		$elm$core$Maybe$withDefault,
 		0,
 		A2($author$project$Matrix$getColumnId, 'name', model.aG));
-	var col = A3($author$project$Matrix$getColumn, colidx, '', model.an);
+	var labels = A3($author$project$Matrix$getColumn, labelsidx, '', model.an);
+	var colorsidx = A2(
+		$elm$core$Maybe$withDefault,
+		0,
+		A2($author$project$Matrix$getColumnId, 'ctype', model.aG));
+	var colorColumn = A3($author$project$Matrix$getColumn, colorsidx, '', model.an);
 	return A2(
 		$author$project$View$Components$panel,
 		_List_fromArray(
@@ -11380,7 +11428,12 @@ var $author$project$View$DataView$viewPanel = function (model) {
 				_List_fromArray(
 					[
 						$author$project$View$DataView$sliders(model),
-						A3($rtfeldman$elm_css$Html$Styled$Lazy$lazy2, $author$project$View$DataView$graphMap, model.bg, col)
+						A4(
+						$rtfeldman$elm_css$Html$Styled$Lazy$lazy3,
+						$author$project$View$DataView$graphMap,
+						model.bg,
+						labels,
+						A2($elm$core$Maybe$map, $author$project$View$DataView$translate, colorColumn))
 					]))
 			]));
 };

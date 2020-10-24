@@ -3,15 +3,19 @@ module View.DataView exposing (..)
 import Array as A exposing (Array)
 import Array.Extra as A
 import Css
+import Dict
 import Html.Attributes
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
-import Html.Styled.Lazy exposing (lazy2)
+import Html.Styled.Lazy exposing (lazy2, lazy3)
+import List as L
 import Matrix
 import Maybe exposing (withDefault)
 import Model.Model exposing (Model, Msg(..))
+import Set
 import Svg
 import Util
+import View.Cmap
 import View.Components exposing (Component, onChange, panel)
 import View.DataViz
 
@@ -19,11 +23,17 @@ import View.DataViz
 viewPanel : Model -> Component
 viewPanel model =
     let
-        colidx =
+        labelsidx =
             withDefault 0 (Matrix.getColumnId "name" model.headers)
 
-        col =
-            Matrix.getColumn colidx "" model.records
+        labels =
+            Matrix.getColumn labelsidx "" model.records
+
+        colorsidx =
+            withDefault 0 (Matrix.getColumnId "ctype" model.headers)
+
+        colorColumn =
+            Matrix.getColumn colorsidx "" model.records
     in
     panel [ css [ Css.flexGrow (Css.num 1) ] ]
         [ div
@@ -31,8 +41,22 @@ viewPanel model =
                 [ Css.height (Css.vh 90)
                 ]
             ]
-            [ sliders model, lazy2 graphMap model.positions col ]
+            [ sliders model
+            , lazy3 graphMap model.positions labels (Maybe.map translate colorColumn)
+            ]
         ]
+
+
+translate : Array String -> Array String
+translate values =
+    let
+        unique =
+            (A.toList >> Set.fromList >> Set.toList) values
+
+        mapping =
+            Dict.fromList <| L.map2 (\x y -> ( x, y )) unique View.Cmap.qualitative
+    in
+    A.map (\a -> withDefault "#000000" <| Dict.get a mapping) values
 
 
 sliders : Model -> Component
@@ -58,14 +82,17 @@ indexSlider ( index, label_ ) value =
         ]
 
 
-graphMap : Maybe Matrix.Matrix -> Maybe (Array String) -> Component
-graphMap positions labels =
+graphMap : Maybe Matrix.Matrix -> Maybe (Array String) -> Maybe (Array String) -> Component
+graphMap positions labels colors =
     let
         data =
             withDefault Util.testMatrix positions
 
         labels_ =
             withDefault (A.repeat (A.length data) "NA") labels
+
+        colors_ =
+            withDefault (A.repeat (A.length data) "#000000") colors
     in
     div
         [ css
@@ -82,5 +109,5 @@ graphMap positions labels =
                 , Html.Attributes.style "height" "95%"
                 , Html.Attributes.id "graph"
                 ]
-                [ View.DataViz.graph data labels_ ]
+                [ View.DataViz.graph data labels_ colors_ ]
         ]
