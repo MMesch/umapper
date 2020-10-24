@@ -1,10 +1,25 @@
 module View.Components exposing (..)
 
 import Css
+import Css.Media
 import Html.Styled exposing (..)
 import Html.Styled.Events exposing (on)
 import Json.Decode as D
 import Model.Model exposing (Msg)
+
+
+forSmallWidth =
+    Css.Media.withMedia
+        [ Css.Media.only Css.Media.screen
+            [ Css.Media.maxWidth (Css.px 1000) ]
+        ]
+
+
+forLargeWidth =
+    Css.Media.withMedia
+        [ Css.Media.only Css.Media.screen
+            [ Css.Media.minWidth (Css.px 1000) ]
+        ]
 
 
 type alias Component =

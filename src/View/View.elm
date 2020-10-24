@@ -1,12 +1,13 @@
 module View.View exposing (..)
 
 import Css
+import Css.Media
 import Html
 import Html.Styled exposing (div, toUnstyled)
 import Html.Styled.Attributes exposing (css)
 import Html.Styled.Lazy exposing (lazy)
 import Model.Model exposing (Model, Msg(..))
-import View.Components exposing (Component, theme)
+import View.Components exposing (Component, forSmallWidth, theme)
 import View.DataView exposing (viewPanel)
 import View.SideBar exposing (dataPanel)
 
@@ -26,14 +27,17 @@ mainWindow components =
         [ css
             [ Css.backgroundColor theme.lightblue
             , Css.minHeight (Css.vh 100)
-            , Css.minWidth (Css.vw 100)
+            , Css.width (Css.vw 100)
             ]
         ]
         [ div
             [ css
-                [ Css.padding (Css.px 20)
-                , Css.displayFlex
+                [ Css.displayFlex
                 , Css.flexDirection Css.row
+                , forSmallWidth
+                    [ Css.flexDirection Css.column
+                    , Css.padding (Css.px 3)
+                    ]
                 ]
             ]
             components

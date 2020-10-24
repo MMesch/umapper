@@ -9,28 +9,42 @@ import Html.Styled.Lazy exposing (lazy3)
 import Maybe exposing (withDefault)
 import Model.Model exposing (Model, Msg(..))
 import Table
-import View.Components exposing (Builder, Component, onChange, panel, theme)
+import View.Components
+    exposing
+        ( Builder
+        , Component
+        , forLargeWidth
+        , forSmallWidth
+        , onChange
+        , panel
+        , theme
+        )
 
 
 dataPanel : Model -> Component
 dataPanel model =
     panel
         [ css
-            [ Css.width (Css.pct 20)
-            , Css.minWidth (Css.px 400)
-            , Css.maxWidth (Css.px 600)
-            , Css.height (Css.vh 90)
-            , Css.displayFlex
-            , Css.flexDirection Css.column
-            , Css.justifyContent Css.center
-            , Css.alignItems Css.center
+            [ forLargeWidth
+                [ Css.width (Css.pct 30)
+                , Css.maxWidth (Css.px 500)
+                ]
             ]
         ]
-        [ heyButton model
-        , loadButton
-        , downloadSvgButton
-        , paramInput model
-        , dataTable model
+        [ div
+            [ css
+                [ Css.displayFlex
+                , Css.flexDirection Css.column
+                , Css.justifyContent Css.center
+                , Css.alignItems Css.center
+                ]
+            ]
+            [ heyButton model
+            , loadButton
+            , downloadSvgButton
+            , paramInput model
+            , dataTable model
+            ]
         ]
 
 

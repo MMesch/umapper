@@ -42,7 +42,7 @@ normalizedCompareWithWeight w col =
         nelements =
             A.length col
     in
-    if Debug.log "weight: " (w < 0.01) then
+    if w < 0.01 then
         Nothing
 
     else

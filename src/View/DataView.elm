@@ -25,13 +25,14 @@ viewPanel model =
         col =
             Matrix.getColumn colidx "" model.records
     in
-    panel
-        [ css
-            [ Css.width (Css.vw 100)
-            , Css.height (Css.vh 90)
+    panel [ css [ Css.flexGrow (Css.num 1) ] ]
+        [ div
+            [ css
+                [ Css.height (Css.vh 90)
+                ]
             ]
+            [ sliders model, lazy2 graphMap model.positions col ]
         ]
-        [ sliders model, lazy2 graphMap model.positions col ]
 
 
 sliders : Model -> Component

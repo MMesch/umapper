@@ -128,8 +128,8 @@ update msg model =
         UpdateWeight index value ->
             let
                 updater =
-                    Debug.log ("setting weight " ++ Debug.toString index ++ " to " ++ Debug.toString value) <|
-                        A.set index (withDefault 0 (String.toFloat value))
+                    --Debug.log ("setting weight " ++ Debug.toString index ++ " to " ++ Debug.toString value) <|
+                    A.set index (withDefault 0 (String.toFloat value))
             in
             ( { model | weights = updater model.weights }
             , Cmd.none
