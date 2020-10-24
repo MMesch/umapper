@@ -43,7 +43,8 @@ sliders model =
 indexSlider : ( Int, String ) -> Float -> Component
 indexSlider ( index, label_ ) value =
     div [ css [ Css.displayFlex, Css.flexDirection Css.column ] ]
-        [ label [] [ text label_ ]
+        [ input [ Att.type_ "checkbox" ] []
+        , label [] [ text label_ ]
         , input
             [ Att.type_ "range"
             , Att.min "0.0"

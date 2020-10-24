@@ -36,20 +36,47 @@ compareColumn col =
     A.map (\el -> A.map (compareMultiples ";" el) col) col
 
 
-compareColumns : Array Float -> Array (Array String) -> Matrix
-compareColumns weights columns =
+normalizedCompareWithWeight : Float -> Array String -> Maybe Matrix
+normalizedCompareWithWeight w col =
     let
-        ( l1, l2 ) =
-            Matrix.shape columns
-
-        similarities : Array Matrix
-        similarities =
-            A.map (compareColumn >> normalize) (Matrix.transposeWithDef "NA" columns)
-
-        weightedSimilarities =
-            A.map2 (\w ss -> Matrix.multScalar w ss) weights similarities
+        nelements =
+            A.length col
     in
-    A.foldl (\a b -> Matrix.add a b) (Matrix.repeat 0 ( l1, l1 )) weightedSimilarities
+    if Debug.log "weight: " (w < 0.01) then
+        Nothing
+
+    else
+        Just <| (compareColumn >> normalize >> Matrix.multScalar w) col
+
+
+sumSquareMatrices : Matrix -> Array (Maybe Matrix) -> Matrix
+sumSquareMatrices init matrices =
+    A.foldl
+        (\a b ->
+            case a of
+                Nothing ->
+                    b
+
+                Just a_ ->
+                    Matrix.add a_ b
+        )
+        init
+        matrices
+
+
+compareColumns : Array Float -> Array (Array String) -> Matrix
+compareColumns weights rows =
+    let
+        ( n1, n2 ) =
+            Matrix.shape rows
+
+        zeros =
+            Matrix.repeat 0 ( n1, n1 )
+
+        columns =
+            Matrix.transposeWithDef "NA" rows
+    in
+    sumSquareMatrices zeros <| A.map2 normalizedCompareWithWeight weights columns
 
 
 testData =
