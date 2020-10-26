@@ -7,33 +7,47 @@ import Dict
 import Html.Attributes
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
-import Html.Styled.Lazy exposing (lazy2, lazy3)
+import Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
 import List as L
 import Matrix
 import Maybe exposing (withDefault)
-import Model.Model exposing (Model, Msg(..))
+import Maybe.Extra
+import Model.Model exposing (ColumnParams, Model, Msg(..))
 import Set
 import Svg
 import Util
 import View.Cmap
 import View.Components exposing (Component, onChange, panel)
 import View.DataViz
+import View.SimilarityControl
 
 
 viewPanel : Model -> Component
 viewPanel model =
     let
-        labelsidx =
-            withDefault 0 (Matrix.getColumnId "name" model.headers)
+        headers =
+            A.map .name model.columnParams
 
         labels =
-            Matrix.getColumn labelsidx "" model.records
+            A.map
+                (A.zip headers
+                    >> A.foldl
+                        (\( header, el2 ) a ->
+                            if List.any ((==) header) model.plotParams.labelColumns then
+                                a ++ " | " ++ el2
+
+                            else
+                                a
+                        )
+                        ""
+                )
+                model.records
 
         colorsidx =
-            withDefault 0 (Matrix.getColumnId "ctype" model.headers)
+            Maybe.andThen (\channel -> Matrix.getColumnId channel headers) model.plotParams.colorChannel
 
         colorColumn =
-            Matrix.getColumn colorsidx "" model.records
+            Maybe.andThen (\idx -> Matrix.getColumn idx "" model.records) colorsidx
     in
     panel [ css [ Css.flexGrow (Css.num 1) ] ]
         [ div
@@ -41,7 +55,7 @@ viewPanel model =
                 [ Css.height (Css.vh 90)
                 ]
             ]
-            [ sliders model
+            [ lazy View.SimilarityControl.similarityControl model.columnParams
             , lazy3 graphMap model.positions labels (Maybe.map translate colorColumn)
             ]
         ]
@@ -59,37 +73,14 @@ translate values =
     A.map (\a -> withDefault "#000000" <| Dict.get a mapping) values
 
 
-sliders : Model -> Component
-sliders model =
-    div [ css [ Css.position Css.fixed ] ]
-        (List.map2 indexSlider (A.toIndexedList model.headers) (A.toList model.weights))
-
-
-indexSlider : ( Int, String ) -> Float -> Component
-indexSlider ( index, label_ ) value =
-    div [ css [ Css.displayFlex, Css.flexDirection Css.column ] ]
-        [ input [ Att.type_ "checkbox" ] []
-        , label [] [ text label_ ]
-        , input
-            [ Att.type_ "range"
-            , Att.min "0.0"
-            , Att.max "1.0"
-            , Att.step "0.1"
-            , Att.value <| String.fromFloat value
-            , onChange (UpdateWeight index)
-            ]
-            [ text <| String.fromFloat value ]
-        ]
-
-
-graphMap : Maybe Matrix.Matrix -> Maybe (Array String) -> Maybe (Array String) -> Component
+graphMap : Maybe Matrix.Matrix -> Array String -> Maybe (Array String) -> Component
 graphMap positions labels colors =
     let
         data =
             withDefault Util.testMatrix positions
 
         labels_ =
-            withDefault (A.repeat (A.length data) "NA") labels
+            labels
 
         colors_ =
             withDefault (A.repeat (A.length data) "#000000") colors

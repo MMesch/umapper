@@ -51,11 +51,64 @@ port getSvg : String -> Cmd msg
 port gotSvg : (String -> msg) -> Sub msg
 
 
+type DistanceFunction
+    = MultiString
+
+
+type Colormap
+    = Qualitative
+    | Quantitative
+    | Diverging
+
+
+type Channel
+    = ColorChannel Colormap
+    | SizeChannel
+    | NoChannel
+
+
+type alias ColumnParams =
+    { weight : Float
+    , name : String
+    , distance : DistanceFunction
+    }
+
+
+defaultColumnParams : ColumnParams
+defaultColumnParams =
+    { name = "no name"
+    , weight = 0
+    , distance = MultiString
+    }
+
+
+type alias PlotParams =
+    { labelColumns : List String
+    , colorChannel : Maybe String
+    , sizeChannel : Maybe String
+    , fillChannel : Maybe String
+    , strokeChannel : Maybe String
+    , nodeSize : Float
+    , colorMap : Colormap
+    }
+
+
+defaultPlotParams : PlotParams
+defaultPlotParams =
+    { labelColumns = []
+    , colorChannel = Nothing
+    , sizeChannel = Nothing
+    , fillChannel = Nothing
+    , strokeChannel = Nothing
+    , nodeSize = 1
+    , colorMap = Quantitative
+    }
+
+
 type alias Model =
-    { csv : Maybe String
-    , query : String
-    , headers : Array String
-    , weights : Array Float
+    { query : String
+    , columnParams : Array ColumnParams
+    , plotParams : PlotParams
     , records : Array (Array String)
     , positions : Maybe Matrix
     , tableState : Table.State
@@ -65,9 +118,7 @@ type alias Model =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { csv = Nothing
-      , headers = A.fromList [ "name", "participants" ]
-      , records =
+    ( { records =
             A.fromList
                 [ A.fromList [ "1/12/2020", "Joe;Mat;Hugo" ]
                 , A.fromList [ "2/12/2020", "Joe;Mat" ]
@@ -85,11 +136,16 @@ init _ =
                 , A.fromList [ "14/12/2020", "John;Joe" ]
                 , A.fromList [ "15/12/2020", "Mat;Hugo" ]
                 ]
-      , weights = A.fromList [ 0.0, 1.0 ]
+      , columnParams =
+            A.fromList
+                [ { name = "date", weight = 0.0, distance = MultiString }
+                , { name = "participants", weight = 1.0, distance = MultiString }
+                ]
       , positions = Nothing
       , query = ""
       , tableState = Table.initialSort "name"
       , umapParams = { minDist = 0.1, spread = 1.0, nNeighbors = 3 }
+      , plotParams = { defaultPlotParams | labelColumns = [ "date", "participants" ] }
       }
     , Cmd.none
     )
@@ -117,8 +173,11 @@ update msg model =
 
         UmapSender params ->
             let
+                weights =
+                    A.map .weight model.columnParams
+
                 data =
-                    Util.compareColumns model.weights model.records
+                    Util.compareColumns weights model.records
             in
             ( model, umap ( data, params ) )
 
@@ -127,11 +186,15 @@ update msg model =
 
         UpdateWeight index value ->
             let
-                updater =
+                oldColumnParams =
+                    withDefault defaultColumnParams
+                        (A.get index model.columnParams)
+
+                newColumnParams =
                     --Debug.log ("setting weight " ++ Debug.toString index ++ " to " ++ Debug.toString value) <|
-                    A.set index (withDefault 0 (String.toFloat value))
+                    { oldColumnParams | weight = withDefault 0 (String.toFloat value) }
             in
-            ( { model | weights = updater model.weights }
+            ( { model | columnParams = A.set index newColumnParams model.columnParams }
             , Cmd.none
             )
 
@@ -154,22 +217,22 @@ downloadSvg svgContent =
 
 updateCsvModel : String -> Model -> Model
 updateCsvModel content model =
-    let
-        parsed =
-            toMaybe (parse content)
+    case toMaybe (parse content) of
+        Just parsed ->
+            let
+                columnParams =
+                    A.fromList <| List.map (\x -> { defaultColumnParams | name = x }) parsed.headers
 
-        headers =
-            withDefault model.headers <| Maybe.map (.headers >> A.fromList) parsed
+                records =
+                    (.records >> List.map A.fromList >> A.fromList) parsed
+            in
+            { model
+                | columnParams = columnParams
+                , records = records
+            }
 
-        records =
-            withDefault model.records <| Maybe.map (.records >> List.map A.fromList >> A.fromList) parsed
-    in
-    { model
-        | csv = Just content
-        , headers = headers
-        , records = records
-        , weights = A.repeat (A.length headers) 0
-    }
+        Nothing ->
+            model
 
 
 fileSelection : Cmd Msg

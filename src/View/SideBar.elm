@@ -62,7 +62,7 @@ dataTable model =
             , Css.borderRadius (Css.px 3)
             ]
         ]
-        [ lazy3 table model.headers model.tableState model.records ]
+        [ lazy3 table (A.map .name model.columnParams) model.tableState model.records ]
 
 
 navStyle =

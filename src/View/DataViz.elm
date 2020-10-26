@@ -2,7 +2,7 @@ module View.DataViz exposing (..)
 
 import Array as A
 import Array.Extra as A
-import Css exposing (matrix)
+import Css exposing (matrix, translateY)
 import Matrix exposing (Matrix)
 import Maybe exposing (withDefault)
 import Maybe.Extra
@@ -41,5 +41,5 @@ nodeGroup : String -> String -> String -> String -> Svg msg
 nodeGroup px py label color =
     g []
         [ circle [ cx px, cy py, r "0.5", fill color ] []
-        , text_ [ x px, y py, fontSize "1", fill color ] [ text label ]
+        , text_ [ x px, y py, transform "translate(0 -1)", fontSize "1", fill color ] [ text label ]
         ]
