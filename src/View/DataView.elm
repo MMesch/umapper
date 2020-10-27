@@ -9,14 +9,15 @@ import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
 import Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
 import List as L
-import Matrix
 import Maybe exposing (withDefault)
 import Maybe.Extra
 import Model.Model exposing (ColumnParams, Model, Msg(..))
 import Set
 import Svg
-import Util
-import View.Cmap
+import Util.Array
+import Util.Cmap
+import Util.Matrix exposing (Matrix)
+import Util.Util
 import View.Components exposing (Component, onChange, panel)
 import View.DataViz
 import View.SimilarityControl
@@ -44,10 +45,10 @@ viewPanel model =
                 model.records
 
         colorsidx =
-            Maybe.andThen (\channel -> Matrix.getColumnId channel headers) model.plotParams.colorChannel
+            Maybe.andThen (\channel -> Util.Array.getIdx channel headers) model.plotParams.colorChannel
 
         colorColumn =
-            Maybe.andThen (\idx -> Matrix.getColumn idx "" model.records) colorsidx
+            Maybe.andThen (\idx -> Util.Matrix.getColumn idx "" model.records) colorsidx
     in
     panel [ css [ Css.flexGrow (Css.num 1) ] ]
         [ div
@@ -61,23 +62,11 @@ viewPanel model =
         ]
 
 
-translate : Array String -> Array String
-translate values =
-    let
-        unique =
-            (A.toList >> Set.fromList >> Set.toList) values
-
-        mapping =
-            Dict.fromList <| L.map2 (\x y -> ( x, y )) unique View.Cmap.qualitative
-    in
-    A.map (\a -> withDefault "#000000" <| Dict.get a mapping) values
-
-
-graphMap : Maybe Matrix.Matrix -> Array String -> Maybe (Array String) -> Component
+graphMap : Maybe Matrix -> Array String -> Maybe (Array String) -> Component
 graphMap positions labels colors =
     let
         data =
-            withDefault Util.testMatrix positions
+            withDefault Util.Util.testMatrix positions
 
         labels_ =
             labels

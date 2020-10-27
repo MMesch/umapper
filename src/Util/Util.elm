@@ -1,13 +1,28 @@
-module Util exposing (..)
+module Util.Util exposing (..)
 
 import Array as A exposing (Array)
 import Array.Extra as A
 import List as L
-import Matrix exposing (Matrix)
 import Maybe exposing (withDefault)
 import Maybe.Extra
 import Set
 import String
+import Util.Matrix exposing (Matrix)
+
+
+typeMapToString : List ( String, a ) -> a -> String
+typeMapToString allPairs key =
+    List.filterMap
+        (\( k, v ) ->
+            if v == key then
+                Just k
+
+            else
+                Nothing
+        )
+        allPairs
+        |> List.head
+        |> Maybe.withDefault "Serialization Failed"
 
 
 simpleCompare : String -> String -> Int
@@ -46,7 +61,7 @@ normalizedCompareWithWeight w col =
         Nothing
 
     else
-        Just <| (compareColumn >> normalize >> Matrix.multScalar w) col
+        Just <| (compareColumn >> normalize >> Util.Matrix.multScalar w) col
 
 
 sumSquareMatrices : Matrix -> Array (Maybe Matrix) -> Matrix
@@ -58,7 +73,7 @@ sumSquareMatrices init matrices =
                     b
 
                 Just a_ ->
-                    Matrix.add a_ b
+                    Util.Matrix.add a_ b
         )
         init
         matrices
@@ -68,13 +83,13 @@ compareColumns : Array Float -> Array (Array String) -> Matrix
 compareColumns weights rows =
     let
         ( n1, n2 ) =
-            Matrix.shape rows
+            Util.Matrix.shape rows
 
         zeros =
-            Matrix.repeat 0 ( n1, n1 )
+            Util.Matrix.repeat 0 ( n1, n1 )
 
         columns =
-            Matrix.transposeWithDef "NA" rows
+            Util.Matrix.transposeWithDef "NA" rows
     in
     sumSquareMatrices zeros <| A.map2 normalizedCompareWithWeight weights columns
 
@@ -100,17 +115,17 @@ testData =
 
 
 testMatrix =
-    Matrix.asArrayMatrix testData
+    Util.Matrix.asArrayMatrix testData
 
 
 normalize : Matrix -> Matrix
 normalize matrix =
     let
         max =
-            withDefault 0.000001 <| Matrix.maximum matrix
+            withDefault 0.000001 <| Util.Matrix.maximum matrix
 
         min =
-            withDefault 0.000001 <| Matrix.minimum matrix
+            withDefault 0.000001 <| Util.Matrix.minimum matrix
 
         range =
             max - min
@@ -118,4 +133,4 @@ normalize matrix =
         normalizeValue value =
             (value - min) / range
     in
-    Matrix.map normalizeValue matrix
+    Util.Matrix.map normalizeValue matrix

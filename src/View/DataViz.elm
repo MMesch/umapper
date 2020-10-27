@@ -3,12 +3,12 @@ module View.DataViz exposing (..)
 import Array as A
 import Array.Extra as A
 import Css exposing (matrix, translateY)
-import Matrix exposing (Matrix)
 import Maybe exposing (withDefault)
 import Maybe.Extra
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
-import Util exposing (normalize)
+import Util.Matrix exposing (Matrix)
+import Util.Util exposing (normalize)
 
 
 graph : Matrix -> A.Array String -> A.Array String -> Svg msg

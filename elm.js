@@ -5484,7 +5484,7 @@ var $elm$core$Task$perform = F2(
 	});
 var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Model$Model$MultiString = 0;
-var $author$project$Model$Model$Quantitative = 1;
+var $author$project$Util$Cmap$Quantitative = 1;
 var $author$project$Model$Model$defaultPlotParams = {bK: $elm$core$Maybe$Nothing, bL: 1, bS: $elm$core$Maybe$Nothing, ba: _List_Nil, b7: 1, co: $elm$core$Maybe$Nothing, cr: $elm$core$Maybe$Nothing};
 var $elm$core$Array$fromListHelp = F3(
 	function (list, nodeList, nodeListSize) {
@@ -6216,7 +6216,7 @@ var $elm$core$Set$size = function (_v0) {
 	var dict = _v0;
 	return $elm$core$Dict$size(dict);
 };
-var $author$project$Util$compareMultiples = F3(
+var $author$project$Util$Util$compareMultiples = F3(
 	function (separator, s1, s2) {
 		var set2 = $elm$core$Set$fromList(
 			A2($elm$core$String$split, separator, s2));
@@ -6225,13 +6225,13 @@ var $author$project$Util$compareMultiples = F3(
 		return $elm$core$Set$size(
 			A2($elm$core$Set$intersect, set1, set2));
 	});
-var $author$project$Util$compareColumn = function (col) {
+var $author$project$Util$Util$compareColumn = function (col) {
 	return A2(
 		$elm$core$Array$map,
 		function (el) {
 			return A2(
 				$elm$core$Array$map,
-				A2($author$project$Util$compareMultiples, ';', el),
+				A2($author$project$Util$Util$compareMultiples, ';', el),
 				col);
 		},
 		col);
@@ -6241,12 +6241,12 @@ var $elm$core$Basics$composeR = F3(
 		return g(
 			f(x));
 	});
-var $author$project$Matrix$map = function (func) {
+var $author$project$Util$Matrix$map = function (func) {
 	return $elm$core$Array$map(
 		$elm$core$Array$map(func));
 };
-var $author$project$Matrix$multScalar = function (c) {
-	return $author$project$Matrix$map(
+var $author$project$Util$Matrix$multScalar = function (c) {
+	return $author$project$Util$Matrix$map(
 		$elm$core$Basics$mul(c));
 };
 var $elm$core$Maybe$andThen = F2(
@@ -6273,7 +6273,7 @@ var $elm$core$List$maximum = function (list) {
 		return $elm$core$Maybe$Nothing;
 	}
 };
-var $author$project$Matrix$arrmax = A2($elm$core$Basics$composeL, $elm$core$List$maximum, $elm$core$Array$toList);
+var $author$project$Util$Array$maximum = A2($elm$core$Basics$composeL, $elm$core$List$maximum, $elm$core$Array$toList);
 var $elm$core$Maybe$map2 = F3(
 	function (func, ma, mb) {
 		if (ma.$ === 1) {
@@ -6289,7 +6289,7 @@ var $elm$core$Maybe$map2 = F3(
 			}
 		}
 	});
-var $author$project$Matrix$arrtraverse = function (f) {
+var $author$project$Util$Array$traverse = function (f) {
 	return A2(
 		$elm$core$Basics$composeR,
 		A2(
@@ -6303,11 +6303,11 @@ var $author$project$Matrix$arrtraverse = function (f) {
 			$elm$core$Maybe$Just(_List_Nil)),
 		$elm$core$Maybe$map($elm$core$Array$fromList));
 };
-var $author$project$Matrix$maximum = function (arrs) {
+var $author$project$Util$Matrix$maximum = function (arrs) {
 	return A2(
 		$elm$core$Maybe$andThen,
-		$author$project$Matrix$arrmax,
-		A2($author$project$Matrix$arrtraverse, $author$project$Matrix$arrmax, arrs));
+		$author$project$Util$Array$maximum,
+		A2($author$project$Util$Array$traverse, $author$project$Util$Array$maximum, arrs));
 };
 var $elm$core$List$minimum = function (list) {
 	if (list.b) {
@@ -6319,12 +6319,12 @@ var $elm$core$List$minimum = function (list) {
 		return $elm$core$Maybe$Nothing;
 	}
 };
-var $author$project$Matrix$arrmin = A2($elm$core$Basics$composeL, $elm$core$List$minimum, $elm$core$Array$toList);
-var $author$project$Matrix$minimum = function (arrs) {
+var $author$project$Util$Array$minimum = A2($elm$core$Basics$composeL, $elm$core$List$minimum, $elm$core$Array$toList);
+var $author$project$Util$Matrix$minimum = function (arrs) {
 	return A2(
 		$elm$core$Maybe$andThen,
-		$author$project$Matrix$arrmin,
-		A2($author$project$Matrix$arrtraverse, $author$project$Matrix$arrmin, arrs));
+		$author$project$Util$Array$minimum,
+		A2($author$project$Util$Array$traverse, $author$project$Util$Array$minimum, arrs));
 };
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
@@ -6335,32 +6335,32 @@ var $elm$core$Maybe$withDefault = F2(
 			return _default;
 		}
 	});
-var $author$project$Util$normalize = function (matrix) {
+var $author$project$Util$Util$normalize = function (matrix) {
 	var min = A2(
 		$elm$core$Maybe$withDefault,
 		0.000001,
-		$author$project$Matrix$minimum(matrix));
+		$author$project$Util$Matrix$minimum(matrix));
 	var max = A2(
 		$elm$core$Maybe$withDefault,
 		0.000001,
-		$author$project$Matrix$maximum(matrix));
+		$author$project$Util$Matrix$maximum(matrix));
 	var range = max - min;
 	var normalizeValue = function (value) {
 		return (value - min) / range;
 	};
-	return A2($author$project$Matrix$map, normalizeValue, matrix);
+	return A2($author$project$Util$Matrix$map, normalizeValue, matrix);
 };
-var $author$project$Util$normalizedCompareWithWeight = F2(
+var $author$project$Util$Util$normalizedCompareWithWeight = F2(
 	function (w, col) {
 		var nelements = $elm$core$Array$length(col);
 		return (w < 0.01) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 			A2(
 				$elm$core$Basics$composeR,
-				$author$project$Util$compareColumn,
+				$author$project$Util$Util$compareColumn,
 				A2(
 					$elm$core$Basics$composeR,
-					$author$project$Util$normalize,
-					$author$project$Matrix$multScalar(w)))(col));
+					$author$project$Util$Util$normalize,
+					$author$project$Util$Matrix$multScalar(w)))(col));
 	});
 var $elm$core$Array$repeat = F2(
 	function (n, e) {
@@ -6371,7 +6371,7 @@ var $elm$core$Array$repeat = F2(
 				return e;
 			});
 	});
-var $author$project$Matrix$repeat = F2(
+var $author$project$Util$Matrix$repeat = F2(
 	function (value, _v0) {
 		var l1 = _v0.a;
 		var l2 = _v0.b;
@@ -6380,7 +6380,7 @@ var $author$project$Matrix$repeat = F2(
 			l1,
 			A2($elm$core$Array$repeat, l2, value));
 	});
-var $author$project$Matrix$shape = function (m) {
+var $author$project$Util$Matrix$shape = function (m) {
 	var l2 = $elm$core$Array$length(
 		A2(
 			$elm$core$Maybe$withDefault,
@@ -6389,11 +6389,11 @@ var $author$project$Matrix$shape = function (m) {
 	var l1 = $elm$core$Array$length(m);
 	return _Utils_Tuple2(l1, l2);
 };
-var $author$project$Matrix$map2 = function (func) {
+var $author$project$Util$Matrix$map2 = function (func) {
 	return $elm_community$array_extra$Array$Extra$map2(
 		$elm_community$array_extra$Array$Extra$map2(func));
 };
-var $author$project$Matrix$add = $author$project$Matrix$map2($elm$core$Basics$add);
+var $author$project$Util$Matrix$add = $author$project$Util$Matrix$map2($elm$core$Basics$add);
 var $elm$core$Elm$JsArray$foldl = _JsArray_foldl;
 var $elm$core$Array$foldl = F3(
 	function (func, baseCase, _v0) {
@@ -6415,7 +6415,7 @@ var $elm$core$Array$foldl = F3(
 			A3($elm$core$Elm$JsArray$foldl, helper, baseCase, tree),
 			tail);
 	});
-var $author$project$Util$sumSquareMatrices = F2(
+var $author$project$Util$Util$sumSquareMatrices = F2(
 	function (init, matrices) {
 		return A3(
 			$elm$core$Array$foldl,
@@ -6425,13 +6425,13 @@ var $author$project$Util$sumSquareMatrices = F2(
 						return b;
 					} else {
 						var a_ = a.a;
-						return A2($author$project$Matrix$add, a_, b);
+						return A2($author$project$Util$Matrix$add, a_, b);
 					}
 				}),
 			init,
 			matrices);
 	});
-var $author$project$Matrix$get = function (_v0) {
+var $author$project$Util$Matrix$get = function (_v0) {
 	var i1 = _v0.a;
 	var i2 = _v0.b;
 	return A2(
@@ -6458,7 +6458,7 @@ var $elm$core$List$concatMap = F2(
 		return $elm$core$List$concat(
 			A2($elm$core$List$map, f, list));
 	});
-var $author$project$Matrix$permutations = function (_v0) {
+var $author$project$Util$Matrix$permutations = function (_v0) {
 	var l1 = _v0.a;
 	var l2 = _v0.b;
 	return A2(
@@ -6515,7 +6515,7 @@ var $elm$core$Array$set = F3(
 			A4($elm$core$Array$setHelp, startShift, index, value, tree),
 			tail));
 	});
-var $author$project$Matrix$set = F3(
+var $author$project$Util$Matrix$set = F3(
 	function (_v0, value, m) {
 		var i1 = _v0.a;
 		var i2 = _v0.b;
@@ -6532,51 +6532,51 @@ var $author$project$Matrix$set = F3(
 					A2($elm$core$Array$get, i1, m))),
 			m);
 	});
-var $author$project$Matrix$transposeWithDef = F2(
+var $author$project$Util$Matrix$transposeWithDef = F2(
 	function (def, m) {
 		var setFromTp = F2(
 			function (matrix, _v1) {
 				var i1 = _v1.a;
 				var i2 = _v1.b;
 				return A2(
-					$author$project$Matrix$set,
+					$author$project$Util$Matrix$set,
 					_Utils_Tuple2(i1, i2),
 					A2(
 						$elm$core$Maybe$withDefault,
 						def,
 						A2(
-							$author$project$Matrix$get,
+							$author$project$Util$Matrix$get,
 							_Utils_Tuple2(i2, i1),
 							matrix)));
 			});
-		var _v0 = $author$project$Matrix$shape(m);
+		var _v0 = $author$project$Util$Matrix$shape(m);
 		var l1 = _v0.a;
 		var l2 = _v0.b;
 		var empty = A2(
-			$author$project$Matrix$repeat,
+			$author$project$Util$Matrix$repeat,
 			def,
 			_Utils_Tuple2(l2, l1));
 		return A3(
 			$elm$core$List$foldl,
 			setFromTp(m),
 			empty,
-			$author$project$Matrix$permutations(
+			$author$project$Util$Matrix$permutations(
 				_Utils_Tuple2(l1, l2)));
 	});
-var $author$project$Util$compareColumns = F2(
+var $author$project$Util$Util$compareColumns = F2(
 	function (weights, rows) {
-		var columns = A2($author$project$Matrix$transposeWithDef, 'NA', rows);
-		var _v0 = $author$project$Matrix$shape(rows);
+		var columns = A2($author$project$Util$Matrix$transposeWithDef, 'NA', rows);
+		var _v0 = $author$project$Util$Matrix$shape(rows);
 		var n1 = _v0.a;
 		var n2 = _v0.b;
 		var zeros = A2(
-			$author$project$Matrix$repeat,
+			$author$project$Util$Matrix$repeat,
 			0,
 			_Utils_Tuple2(n1, n1));
 		return A2(
-			$author$project$Util$sumSquareMatrices,
+			$author$project$Util$Util$sumSquareMatrices,
 			zeros,
-			A3($elm_community$array_extra$Array$Extra$map2, $author$project$Util$normalizedCompareWithWeight, weights, columns));
+			A3($elm_community$array_extra$Array$Extra$map2, $author$project$Util$Util$normalizedCompareWithWeight, weights, columns));
 	});
 var $author$project$Model$Model$defaultColumnParams = {aV: 0, aH: 'no name', av: 0};
 var $elm$time$Time$Posix = $elm$core$Basics$identity;
@@ -7408,7 +7408,7 @@ var $author$project$Model$Model$update = F2(
 						return $.av;
 					},
 					model.P);
-				var data = A2($author$project$Util$compareColumns, weights, model.aK);
+				var data = A2($author$project$Util$Util$compareColumns, weights, model.aK);
 				return _Utils_Tuple2(
 					model,
 					$author$project$Model$Model$umap(
@@ -11035,12 +11035,12 @@ var $author$project$View$View$mainWindow = function (components) {
 };
 var $rtfeldman$elm_css$Html$Styled$toUnstyled = $rtfeldman$elm_css$VirtualDom$Styled$toUnstyled;
 var $rtfeldman$elm_css$Css$flexGrow = $rtfeldman$elm_css$Css$prop1('flex-grow');
-var $author$project$Matrix$getColumn = F3(
+var $author$project$Util$Matrix$getColumn = F3(
 	function (idx, def, matrix) {
 		return A2(
 			$elm$core$Array$get,
 			idx,
-			A2($author$project$Matrix$transposeWithDef, def, matrix));
+			A2($author$project$Util$Matrix$transposeWithDef, def, matrix));
 	});
 var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
@@ -11065,7 +11065,7 @@ var $elm$core$Array$toIndexedList = function (array) {
 		_Utils_Tuple2(len - 1, _List_Nil),
 		array).b;
 };
-var $author$project$Matrix$getColumnId = F2(
+var $author$project$Util$Array$getIdx = F2(
 	function (value, arr) {
 		return A3(
 			$elm$core$List$foldr,
@@ -11166,7 +11166,7 @@ var $author$project$View$DataViz$graph = F3(
 				A4(
 					$elm_community$array_extra$Array$Extra$map3,
 					$author$project$View$DataViz$toNode,
-					$author$project$Util$normalize(positions),
+					$author$project$Util$Util$normalize(positions),
 					labels,
 					colors)));
 	});
@@ -11179,11 +11179,11 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $author$project$Matrix$asArrayMatrix = function (ll) {
+var $author$project$Util$Matrix$asArrayMatrix = function (ll) {
 	return $elm$core$Array$fromList(
 		A2($elm$core$List$map, $elm$core$Array$fromList, ll));
 };
-var $author$project$Util$testData = _List_fromArray(
+var $author$project$Util$Util$testData = _List_fromArray(
 	[
 		_List_fromArray(
 		[1, 2, 3]),
@@ -11218,11 +11218,11 @@ var $author$project$Util$testData = _List_fromArray(
 		_List_fromArray(
 		[4.1, 2, 3])
 	]);
-var $author$project$Util$testMatrix = $author$project$Matrix$asArrayMatrix($author$project$Util$testData);
+var $author$project$Util$Util$testMatrix = $author$project$Util$Matrix$asArrayMatrix($author$project$Util$Util$testData);
 var $author$project$View$DataView$graphMap = F3(
 	function (positions, labels, colors) {
 		var labels_ = labels;
-		var data = A2($elm$core$Maybe$withDefault, $author$project$Util$testMatrix, positions);
+		var data = A2($elm$core$Maybe$withDefault, $author$project$Util$Util$testMatrix, positions);
 		var colors_ = A2(
 			$elm$core$Maybe$withDefault,
 			A2(
@@ -11294,6 +11294,14 @@ var $author$project$Model$Model$UpdateWeight = F2(
 	function (a, b) {
 		return {$: 5, a: a, b: b};
 	});
+var $author$project$Util$Cmap$Diverging = 2;
+var $author$project$Util$Cmap$Qualitative = 0;
+var $author$project$Util$Cmap$colormapMap = _List_fromArray(
+	[
+		_Utils_Tuple2('Qualitative', 0),
+		_Utils_Tuple2('Quantitative', 1),
+		_Utils_Tuple2('Diverging', 2)
+	]);
 var $rtfeldman$elm_css$Html$Styled$label = $rtfeldman$elm_css$Html$Styled$node('label');
 var $rtfeldman$elm_css$Html$Styled$Attributes$max = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('max');
 var $rtfeldman$elm_css$Html$Styled$Attributes$min = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('min');
@@ -11344,19 +11352,23 @@ var $author$project$View$SimilarityControl$indexSlider = function (_v0) {
 					[
 						$rtfeldman$elm_css$Html$Styled$Attributes$name('distance function')
 					]),
-				_List_fromArray(
-					[
-						A2(
-						$rtfeldman$elm_css$Html$Styled$option,
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$value('MultiString')
-							]),
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$text('MultiString')
-							]))
-					])),
+				A2(
+					$elm$core$List$map,
+					function (_v1) {
+						var n = _v1.a;
+						var v = _v1.b;
+						return A2(
+							$rtfeldman$elm_css$Html$Styled$option,
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Html$Styled$Attributes$value(n)
+								]),
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Html$Styled$text(n)
+								]));
+					},
+					$author$project$Util$Cmap$colormapMap)),
 				A2(
 				$rtfeldman$elm_css$Html$Styled$input,
 				_List_fromArray(
@@ -11415,7 +11427,7 @@ var $elm$core$Dict$fromList = function (assocs) {
 		$elm$core$Dict$empty,
 		assocs);
 };
-var $author$project$View$Cmap$qualitative = _List_fromArray(
+var $author$project$Util$Cmap$qualitative = _List_fromArray(
 	['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a', '#ffff99', '#b15928']);
 var $author$project$View$DataView$translate = function (values) {
 	var unique = A2(
@@ -11430,7 +11442,7 @@ var $author$project$View$DataView$translate = function (values) {
 					return _Utils_Tuple2(x, y);
 				}),
 			unique,
-			$author$project$View$Cmap$qualitative));
+			$author$project$Util$Cmap$qualitative));
 	return A2(
 		$elm$core$Array$map,
 		function (a) {
@@ -11474,13 +11486,13 @@ var $author$project$View$DataView$viewPanel = function (model) {
 	var colorsidx = A2(
 		$elm$core$Maybe$andThen,
 		function (channel) {
-			return A2($author$project$Matrix$getColumnId, channel, headers);
+			return A2($author$project$Util$Array$getIdx, channel, headers);
 		},
 		model.cb.bK);
 	var colorColumn = A2(
 		$elm$core$Maybe$andThen,
 		function (idx) {
-			return A3($author$project$Matrix$getColumn, idx, '', model.aK);
+			return A3($author$project$Util$Matrix$getColumn, idx, '', model.aK);
 		},
 		colorsidx);
 	return A2(

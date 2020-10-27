@@ -1,4 +1,4 @@
-module Matrix exposing (..)
+module Util.Matrix exposing (..)
 
 import Array as A exposing (Array)
 import Array.Extra as A
@@ -6,10 +6,7 @@ import Html exposing (a)
 import List
 import Maybe exposing (withDefault)
 import Maybe.Extra
-
-
-
--- Matrix functions
+import Util.Array as A
 
 
 type alias Matrix =
@@ -18,12 +15,12 @@ type alias Matrix =
 
 minimum : Matrix -> Maybe Float
 minimum arrs =
-    Maybe.andThen arrmin (arrtraverse arrmin arrs)
+    Maybe.andThen A.minimum (A.traverse A.minimum arrs)
 
 
 maximum : Matrix -> Maybe Float
 maximum arrs =
-    Maybe.andThen arrmax (arrtraverse arrmax arrs)
+    Maybe.andThen A.maximum (A.traverse A.maximum arrs)
 
 
 map : (Float -> Float) -> Matrix -> Matrix
@@ -111,56 +108,3 @@ permutations ( l1, l2 ) =
 getColumn : Int -> a -> Array (Array a) -> Maybe (Array a)
 getColumn idx def matrix =
     A.get idx (transposeWithDef def matrix)
-
-
-
--- Array helpers
-
-
-getColumnId : a -> Array a -> Maybe Int
-getColumnId value arr =
-    List.foldr
-        (\( inew, v ) iold ->
-            case iold of
-                Just ix ->
-                    Just ix
-
-                Nothing ->
-                    if value == v then
-                        Just inew
-
-                    else
-                        Nothing
-        )
-        Nothing
-        (A.toIndexedList arr)
-
-
-arrtraverse : (a -> Maybe b) -> Array a -> Maybe (Array b)
-arrtraverse f =
-    A.foldr (\x -> Maybe.map2 (::) (f x)) (Just []) >> Maybe.map A.fromList
-
-
-arrmax : Array comparable -> Maybe comparable
-arrmax =
-    List.maximum << A.toList
-
-
-arrmin : Array comparable -> Maybe comparable
-arrmin =
-    List.minimum << A.toList
-
-
-arradd : Array number -> Array number -> Array number
-arradd =
-    A.map2 (+)
-
-
-arrmult : Array number -> Array number -> Array number
-arrmult =
-    A.map2 (*)
-
-
-arrsetAll : number -> Array number -> Array number
-arrsetAll num =
-    A.map (\_ -> num)

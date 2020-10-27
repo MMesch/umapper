@@ -5,12 +5,13 @@ import Csv exposing (Csv, parse)
 import File exposing (File)
 import File.Download
 import File.Select as Select
-import Matrix exposing (Matrix)
 import Maybe exposing (Maybe(..), withDefault)
 import Result exposing (toMaybe)
 import Table
 import Task
-import Util
+import Util.Cmap as Cmap exposing (Colormap)
+import Util.Matrix exposing (Matrix)
+import Util.Util
 
 
 type Msg
@@ -55,10 +56,9 @@ type DistanceFunction
     = MultiString
 
 
-type Colormap
-    = Qualitative
-    | Quantitative
-    | Diverging
+distanceMap : List ( String, DistanceFunction )
+distanceMap =
+    [ ( "MultiString", MultiString ) ]
 
 
 type Channel
@@ -101,7 +101,7 @@ defaultPlotParams =
     , fillChannel = Nothing
     , strokeChannel = Nothing
     , nodeSize = 1
-    , colorMap = Quantitative
+    , colorMap = Cmap.Quantitative
     }
 
 
@@ -177,7 +177,7 @@ update msg model =
                     A.map .weight model.columnParams
 
                 data =
-                    Util.compareColumns weights model.records
+                    Util.Util.compareColumns weights model.records
             in
             ( model, umap ( data, params ) )
 
