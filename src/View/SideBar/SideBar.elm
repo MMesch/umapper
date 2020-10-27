@@ -19,6 +19,7 @@ import View.Components
         , theme
         )
 import View.SideBar.ControlTab exposing (controlTab)
+import View.SideBar.PlotTab exposing (plotTab)
 import View.SideBar.SimilarityTab exposing (similarityTab)
 import View.SideBar.TableTab exposing (tableTab)
 import View.SideBar.UmapTab exposing (umapTab)
@@ -26,9 +27,12 @@ import View.SideBar.UmapTab exposing (umapTab)
 
 sidebar : Model -> Component
 sidebar model =
-    panel
+    div
         [ css
-            [ forLargeWidth
+            [ Css.margin (Css.px 5)
+            , Css.height (Css.pct 100)
+            , Css.display Css.block
+            , forLargeWidth
                 [ Css.width (Css.pct 30)
                 , Css.maxWidth (Css.px 500)
                 ]
@@ -46,5 +50,6 @@ sidebar model =
             , lazy3 tableTab model.tableState (A.map .name model.columnParams) model.records
             , lazy umapTab model.umapParams
             , lazy similarityTab model.columnParams
+            , lazy plotTab model.plotParams
             ]
         ]

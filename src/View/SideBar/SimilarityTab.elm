@@ -6,20 +6,17 @@ import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
 import Model.Model exposing (ColumnParams, Msg(..))
 import Util.Cmap
-import View.Components exposing (Component, onChange)
-import View.SideBar.Style exposing (reusableTab)
+import View.Components exposing (Component, onChange, theme)
+import View.SideBar.Style exposing (Layout(..), reusableTab)
 
 
 similarityTab : Array ColumnParams -> Component
 similarityTab columnParams =
-    reusableTab { title = "Similarity" }
-        [ div
-            [ css [ Css.flexDirection Css.column ] ]
-            (List.map
-                indexSlider
-                (A.toIndexedList columnParams)
-            )
-        ]
+    reusableTab { title = "Similarity", layout = RowLayout }
+        (List.map
+            indexSlider
+            (A.toIndexedList columnParams)
+        )
 
 
 indexSlider : ( Int, ColumnParams ) -> Component
@@ -32,7 +29,7 @@ indexSlider ( index, params ) =
                 , Css.flexDirection Css.column
                 ]
             ]
-            [ label [] [ text params.name ]
+            [ label [ css [ Css.color theme.white ] ] [ text params.name ]
             , select [ Att.name "distance function" ] <|
                 List.map
                     (\( n, v ) -> option [ Att.value n ] [ text n ])

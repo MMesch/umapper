@@ -40,6 +40,7 @@ theme =
     , darkblue = Css.hex "2b456e"
     , mediumblue = Css.hex "5284d2"
     , white = Css.hex "ffffff"
+    , black = Css.hex "000000"
     }
 
 

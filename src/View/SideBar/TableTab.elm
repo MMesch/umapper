@@ -7,21 +7,20 @@ import Html.Styled.Attributes as Att exposing (css)
 import Model.Model exposing (Model, Msg)
 import Table
 import View.Components exposing (Component, theme)
-import View.SideBar.Style exposing (reusableTab)
+import View.SideBar.Style exposing (Layout(..), reusableTab)
 
 
 tableTab : Table.State -> Array String -> Array (Array String) -> Component
 tableTab tableState headers records =
-    reusableTab { title = "Data Table" }
+    reusableTab { title = "Data Table", layout = ColumnLayout }
         [ div
             [ css
                 [ Css.width (Css.pct 100)
-                , Css.maxHeight (Css.px 500)
+                , Css.maxHeight (Css.px 300)
                 , Css.display Css.block
                 , Css.overflow Css.auto
                 , Css.margin (Css.px 2)
                 , Css.backgroundColor theme.lightblue
-                , Css.marginTop (Css.px 20)
                 , Css.borderRadius (Css.px 3)
                 ]
             ]

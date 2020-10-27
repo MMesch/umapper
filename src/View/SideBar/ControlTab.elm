@@ -8,12 +8,12 @@ import Html.Styled.Events exposing (onClick, onInput)
 import Html.Styled.Lazy exposing (lazy3)
 import Model.Model exposing (Model, Msg(..))
 import View.Components exposing (Builder, Component, theme)
-import View.SideBar.Style exposing (reusableButton, reusableTab)
+import View.SideBar.Style exposing (Layout(..), reusableButton, reusableTab)
 
 
 controlTab : Component
 controlTab =
-    reusableTab { title = "Control" }
+    reusableTab { title = "Control", layout = ColumnLayout }
         [ heyButton
         , loadButton
         , downloadSvgButton

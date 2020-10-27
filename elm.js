@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.bo.aG === region.bO.aG)
+	if (region.bn.aF === region.bN.aF)
 	{
-		return 'on line ' + region.bo.aG;
+		return 'on line ' + region.bn.aF;
 	}
-	return 'on lines ' + region.bo.aG + ' through ' + region.bO.aG;
+	return 'on lines ' + region.bn.aF + ' through ' + region.bN.aF;
 }
 
 
@@ -1858,8 +1858,8 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 		flagDecoder,
 		args,
 		impl.cU,
-		impl.c8,
-		impl.c4,
+		impl.c9,
+		impl.c5,
 		function() { return function() {} }
 	);
 });
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		K: func(record.K),
-		bp: record.bp,
-		bj: record.bj
+		J: func(record.J),
+		bo: record.bo,
+		bi: record.bi
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.K;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bp;
+		var message = !tag ? value : tag < 3 ? value.a : value.J;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bo;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.bj) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.bi) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3929,10 +3929,10 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 		flagDecoder,
 		args,
 		impl.cU,
-		impl.c8,
-		impl.c4,
+		impl.c9,
+		impl.c5,
 		function(sendToApp, initialModel) {
-			var view = impl.da;
+			var view = impl.db;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3965,11 +3965,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		flagDecoder,
 		args,
 		impl.cU,
-		impl.c8,
-		impl.c4,
+		impl.c9,
+		impl.c5,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.bm && impl.bm(sendToApp)
-			var view = impl.da;
+			var divertHrefToApp = impl.bl && impl.bl(sendToApp)
+			var view = impl.db;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3982,7 +3982,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.c5) && (_VirtualDom_doc.title = title = doc.c5);
+				(title !== doc.c6) && (_VirtualDom_doc.title = title = doc.c6);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.cZ;
-	var onUrlRequest = impl.c_;
+	var onUrlChange = impl.c_;
+	var onUrlRequest = impl.c$;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		bm: function(sendToApp)
+		bl: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.cg === next.cg
-							&& curr.bX === next.bX
-							&& curr.cc.a === next.cc.a
+							&& curr.cf === next.cf
+							&& curr.bW === next.bW
+							&& curr.cb.a === next.cb.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4073,9 +4073,9 @@ function _Browser_application(impl)
 		{
 			return A3(impl.cU, flags, _Browser_getUrl(), key);
 		},
-		da: impl.da,
-		c8: impl.c8,
-		c4: impl.c4
+		db: impl.db,
+		c9: impl.c9,
+		c5: impl.c5
 	});
 }
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		cm: _Browser_getScene(),
-		cy: {
-			cA: _Browser_window.pageXOffset,
-			cB: _Browser_window.pageYOffset,
-			cz: _Browser_doc.documentElement.clientWidth,
-			bV: _Browser_doc.documentElement.clientHeight
+		cl: _Browser_getScene(),
+		cx: {
+			cz: _Browser_window.pageXOffset,
+			cA: _Browser_window.pageYOffset,
+			cy: _Browser_doc.documentElement.clientWidth,
+			bU: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		cz: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		bV: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		cy: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		bU: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			cm: {
-				cz: node.scrollWidth,
-				bV: node.scrollHeight
+			cl: {
+				cy: node.scrollWidth,
+				bU: node.scrollHeight
 			},
-			cy: {
-				cA: node.scrollLeft,
-				cB: node.scrollTop,
-				cz: node.clientWidth,
-				bV: node.clientHeight
+			cx: {
+				cz: node.scrollLeft,
+				cA: node.scrollTop,
+				cy: node.clientWidth,
+				bU: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			cm: _Browser_getScene(),
-			cy: {
-				cA: x,
-				cB: y,
-				cz: _Browser_doc.documentElement.clientWidth,
-				bV: _Browser_doc.documentElement.clientHeight
+			cl: _Browser_getScene(),
+			cx: {
+				cz: x,
+				cA: y,
+				cy: _Browser_doc.documentElement.clientWidth,
+				bU: _Browser_doc.documentElement.clientHeight
 			},
 			cO: {
-				cA: x + rect.left,
-				cB: y + rect.top,
-				cz: rect.width,
-				bV: rect.height
+				cz: x + rect.left,
+				cA: y + rect.top,
+				cy: rect.width,
+				bU: rect.height
 			}
 		};
 	});
@@ -5204,7 +5204,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {bU: fragment, bX: host, b9: path, cc: port_, cg: protocol, bk: query};
+		return {bT: fragment, bW: host, b8: path, cb: port_, cf: protocol, bj: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5485,7 +5485,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Model$Model$MultiString = 0;
 var $author$project$Util$Cmap$Quantitative = 1;
-var $author$project$Model$Model$defaultPlotParams = {bK: $elm$core$Maybe$Nothing, bL: 1, bS: $elm$core$Maybe$Nothing, bb: _List_Nil, b7: 1, co: $elm$core$Maybe$Nothing, cr: $elm$core$Maybe$Nothing};
+var $author$project$Model$Model$defaultPlotParams = {bJ: $elm$core$Maybe$Nothing, bK: 1, bR: $elm$core$Maybe$Nothing, ba: _List_Nil, b6: 1, cn: $elm$core$Maybe$Nothing, cq: $elm$core$Maybe$Nothing};
 var $elm$core$Array$fromListHelp = F3(
 	function (list, nodeList, nodeListSize) {
 		fromListHelp:
@@ -5533,21 +5533,21 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Model$Model$init = function (_v0) {
 	return _Utils_Tuple2(
 		{
-			P: $elm$core$Array$fromList(
+			O: $elm$core$Array$fromList(
 				_List_fromArray(
 					[
-						{aV: 0, aH: 'date', av: 0.0},
-						{aV: 0, aH: 'participants', av: 1.0}
+						{aU: 0, aG: 'date', au: 0.0},
+						{aU: 0, aG: 'participants', au: 1.0}
 					])),
-			cb: _Utils_update(
+			ca: _Utils_update(
 				$author$project$Model$Model$defaultPlotParams,
 				{
-					bb: _List_fromArray(
+					ba: _List_fromArray(
 						['date', 'participants'])
 				}),
-			bi: $elm$core$Maybe$Nothing,
-			bk: '',
-			aK: $elm$core$Array$fromList(
+			bh: $elm$core$Maybe$Nothing,
+			bj: '',
+			aJ: $elm$core$Array$fromList(
 				_List_fromArray(
 					[
 						$elm$core$Array$fromList(
@@ -5596,8 +5596,8 @@ var $author$project$Model$Model$init = function (_v0) {
 						_List_fromArray(
 							['15/12/2020', 'Mat;Hugo']))
 					])),
-			br: $billstclair$elm_sortable_table$Table$initialSort('name'),
-			a5: {bd: 0.1, be: 3, bn: 1.0}
+			bq: $billstclair$elm_sortable_table$Table$initialSort('name'),
+			a4: {bc: 0.1, bd: 3, bm: 1.0}
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -6578,7 +6578,7 @@ var $author$project$Util$Util$compareColumns = F2(
 			zeros,
 			A3($elm_community$array_extra$Array$Extra$map2, $author$project$Util$Util$normalizedCompareWithWeight, weights, columns));
 	});
-var $author$project$Model$Model$defaultColumnParams = {aV: 0, aH: 'no name', av: 0};
+var $author$project$Model$Model$defaultColumnParams = {aU: 0, aG: 'no name', au: 0};
 var $elm$time$Time$Posix = $elm$core$Basics$identity;
 var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
 var $elm$file$File$Download$string = F3(
@@ -6670,13 +6670,13 @@ var $author$project$Model$Model$umap = _Platform_outgoingPort(
 							[
 								_Utils_Tuple2(
 								'minDist',
-								$elm$json$Json$Encode$float($.bd)),
+								$elm$json$Json$Encode$float($.bc)),
 								_Utils_Tuple2(
 								'nNeighbors',
-								$elm$json$Json$Encode$int($.be)),
+								$elm$json$Json$Encode$int($.bd)),
 								_Utils_Tuple2(
 								'spread',
-								$elm$json$Json$Encode$float($.bn))
+								$elm$json$Json$Encode$float($.bm))
 							]));
 				}(b)
 				]));
@@ -6689,7 +6689,7 @@ var $periodic$elm_csv$Csv$addTrailingLineSep = function (str) {
 };
 var $periodic$elm_csv$Csv$Csv = F2(
 	function (headers, records) {
-		return {cQ: headers, aK: records};
+		return {cQ: headers, aJ: records};
 	});
 var $elm$parser$Parser$Advanced$Bad = F2(
 	function (a, b) {
@@ -6859,7 +6859,7 @@ var $elm$parser$Parser$Advanced$AddRight = F2(
 	});
 var $elm$parser$Parser$Advanced$DeadEnd = F4(
 	function (row, col, problem, contextStack) {
-		return {bJ: col, cJ: contextStack, cd: problem, cl: row};
+		return {bI: col, cJ: contextStack, cc: problem, ck: row};
 	});
 var $elm$parser$Parser$Advanced$Empty = {$: 0};
 var $elm$parser$Parser$Advanced$fromState = F2(
@@ -6867,7 +6867,7 @@ var $elm$parser$Parser$Advanced$fromState = F2(
 		return A2(
 			$elm$parser$Parser$Advanced$AddRight,
 			$elm$parser$Parser$Advanced$Empty,
-			A4($elm$parser$Parser$Advanced$DeadEnd, s.cl, s.bJ, x, s.f));
+			A4($elm$parser$Parser$Advanced$DeadEnd, s.ck, s.bI, x, s.f));
 	});
 var $elm$parser$Parser$Advanced$isSubString = _Parser_isSubString;
 var $elm$core$Basics$negate = function (n) {
@@ -6878,7 +6878,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 	var expecting = _v0.b;
 	var progress = !$elm$core$String$isEmpty(str);
 	return function (s) {
-		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.cl, s.bJ, s.a);
+		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.ck, s.bI, s.a);
 		var newOffset = _v1.a;
 		var newRow = _v1.b;
 		var newCol = _v1.c;
@@ -6889,7 +6889,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 			$elm$parser$Parser$Advanced$Good,
 			progress,
 			0,
-			{bJ: newCol, f: s.f, g: s.g, b: newOffset, cl: newRow, a: s.a});
+			{bI: newCol, f: s.f, g: s.g, b: newOffset, ck: newRow, a: s.a});
 	};
 };
 var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
@@ -7007,11 +7007,11 @@ var $elm$parser$Parser$Advanced$chompIf = F2(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{bJ: 1, f: s.f, g: s.g, b: s.b + 1, cl: s.cl + 1, a: s.a}) : A3(
+				{bI: 1, f: s.f, g: s.g, b: s.b + 1, ck: s.ck + 1, a: s.a}) : A3(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{bJ: s.bJ + 1, f: s.f, g: s.g, b: newOffset, cl: s.cl, a: s.a}));
+				{bI: s.bI + 1, f: s.f, g: s.g, b: newOffset, ck: s.ck, a: s.a}));
 		};
 	});
 var $elm$parser$Parser$chompIf = function (isGood) {
@@ -7130,7 +7130,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 					$elm$parser$Parser$Advanced$Good,
 					_Utils_cmp(s0.b, offset) < 0,
 					0,
-					{bJ: col, f: s0.f, g: s0.g, b: offset, cl: row, a: s0.a});
+					{bI: col, f: s0.f, g: s0.g, b: offset, ck: row, a: s0.a});
 			} else {
 				if (_Utils_eq(newOffset, -2)) {
 					var $temp$isGood = isGood,
@@ -7162,7 +7162,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	});
 var $elm$parser$Parser$Advanced$chompWhile = function (isGood) {
 	return function (s) {
-		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.b, s.cl, s.bJ, s);
+		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.b, s.ck, s.bI, s);
 	};
 };
 var $elm$parser$Parser$chompWhile = $elm$parser$Parser$Advanced$chompWhile;
@@ -7265,10 +7265,10 @@ var $periodic$elm_csv$Csv$file = function (sepChar) {
 };
 var $elm$parser$Parser$DeadEnd = F3(
 	function (row, col, problem) {
-		return {bJ: col, cd: problem, cl: row};
+		return {bI: col, cc: problem, ck: row};
 	});
 var $elm$parser$Parser$problemToDeadEnd = function (p) {
-	return A3($elm$parser$Parser$DeadEnd, p.cl, p.bJ, p.cd);
+	return A3($elm$parser$Parser$DeadEnd, p.ck, p.bI, p.cc);
 };
 var $elm$parser$Parser$Advanced$bagToList = F2(
 	function (bag, list) {
@@ -7300,7 +7300,7 @@ var $elm$parser$Parser$Advanced$run = F2(
 	function (_v0, src) {
 		var parse = _v0;
 		var _v1 = parse(
-			{bJ: 1, f: _List_Nil, g: 1, b: 0, cl: 1, a: src});
+			{bI: 1, f: _List_Nil, g: 1, b: 0, ck: 1, a: src});
 		if (!_v1.$) {
 			var value = _v1.b;
 			return $elm$core$Result$Ok(value);
@@ -7349,7 +7349,7 @@ var $author$project$Model$Model$updateCsvModel = F2(
 			var records = A2(
 				$elm$core$Basics$composeR,
 				function ($) {
-					return $.aK;
+					return $.aJ;
 				},
 				A2(
 					$elm$core$Basics$composeR,
@@ -7361,12 +7361,12 @@ var $author$project$Model$Model$updateCsvModel = F2(
 					function (x) {
 						return _Utils_update(
 							$author$project$Model$Model$defaultColumnParams,
-							{aH: x});
+							{aG: x});
 					},
 					parsed.cQ));
 			return _Utils_update(
 				model,
-				{P: columnParams, aK: records});
+				{O: columnParams, aJ: records});
 		} else {
 			return model;
 		}
@@ -7391,34 +7391,34 @@ var $author$project$Model$Model$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{bk: newQuery}),
+						{bj: newQuery}),
 					$elm$core$Platform$Cmd$none);
 			case 6:
 				var params = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{a5: params}),
+						{a4: params}),
 					$elm$core$Platform$Cmd$none);
 			case 7:
 				var weights = A2(
 					$elm$core$Array$map,
 					function ($) {
-						return $.av;
+						return $.au;
 					},
-					model.P);
-				var data = A2($author$project$Util$Util$compareColumns, weights, model.aK);
+					model.O);
+				var data = A2($author$project$Util$Util$compareColumns, weights, model.aJ);
 				return _Utils_Tuple2(
 					model,
 					$author$project$Model$Model$umap(
-						_Utils_Tuple2(data, model.a5)));
+						_Utils_Tuple2(data, model.a4)));
 			case 8:
 				var matrix = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							bi: $elm$core$Maybe$Just(matrix)
+							bh: $elm$core$Maybe$Just(matrix)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 5:
@@ -7427,11 +7427,11 @@ var $author$project$Model$Model$update = F2(
 				var oldColumnParams = A2(
 					$elm$core$Maybe$withDefault,
 					$author$project$Model$Model$defaultColumnParams,
-					A2($elm$core$Array$get, index, model.P));
+					A2($elm$core$Array$get, index, model.O));
 				var newColumnParams = _Utils_update(
 					oldColumnParams,
 					{
-						av: A2(
+						au: A2(
 							$elm$core$Maybe$withDefault,
 							0,
 							$elm$core$String$toFloat(value))
@@ -7440,7 +7440,7 @@ var $author$project$Model$Model$update = F2(
 					_Utils_update(
 						model,
 						{
-							P: A3($elm$core$Array$set, index, newColumnParams, model.P)
+							O: A3($elm$core$Array$set, index, newColumnParams, model.O)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 4:
@@ -7448,7 +7448,7 @@ var $author$project$Model$Model$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{br: newState}),
+						{bq: newState}),
 					$elm$core$Platform$Cmd$none);
 			case 9:
 				return _Utils_Tuple2(
@@ -7469,13 +7469,13 @@ var $rtfeldman$elm_css$Css$property = F2(
 		return $rtfeldman$elm_css$Css$Preprocess$AppendProperty(key + (':' + value));
 	});
 var $rtfeldman$elm_css$Css$backgroundColor = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'background-color', c.D);
+	return A2($rtfeldman$elm_css$Css$property, 'background-color', c.C);
 };
 var $rtfeldman$elm_css$Css$Structure$Compatible = 0;
-var $rtfeldman$elm_css$Css$row = {a9: 0, aD: 0, D: 'row'};
+var $rtfeldman$elm_css$Css$row = {a8: 0, aC: 0, C: 'row'};
 var $rtfeldman$elm_css$Css$column = _Utils_update(
 	$rtfeldman$elm_css$Css$row,
-	{D: 'column'});
+	{C: 'column'});
 var $rtfeldman$elm_css$VirtualDom$Styled$Attribute = F3(
 	function (a, b, c) {
 		return {$: 0, a: a, b: b, c: c};
@@ -7541,7 +7541,7 @@ var $rtfeldman$elm_css$Css$Structure$compactHelp = F2(
 			case 6:
 				var record = declaration.a;
 				return $elm$core$String$isEmpty(record.cL) ? _Utils_Tuple2(keyframesByName, declarations) : _Utils_Tuple2(
-					A3($elm$core$Dict$insert, record.aH, record.cL, keyframesByName),
+					A3($elm$core$Dict$insert, record.aG, record.cL, keyframesByName),
 					declarations);
 			case 7:
 				var properties = declaration.a;
@@ -7579,15 +7579,15 @@ var $rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations = F2(
 					var name = _v0.a;
 					var decl = _v0.b;
 					return $rtfeldman$elm_css$Css$Structure$Keyframes(
-						{cL: decl, aH: name});
+						{cL: decl, aG: name});
 				},
 				$elm$core$Dict$toList(keyframesByName)),
 			compactedDeclarations);
 	});
 var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
-	var charset = _v0.bI;
-	var imports = _v0.bY;
-	var namespaces = _v0.b6;
+	var charset = _v0.bH;
+	var imports = _v0.bX;
+	var namespaces = _v0.b5;
 	var declarations = _v0.cM;
 	var _v1 = A3(
 		$elm$core$List$foldr,
@@ -7597,7 +7597,7 @@ var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
 	var keyframesByName = _v1.a;
 	var compactedDeclarations = _v1.b;
 	var finalDeclarations = A2($rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations, keyframesByName, compactedDeclarations);
-	return {bI: charset, cM: finalDeclarations, bY: imports, b6: namespaces};
+	return {bH: charset, cM: finalDeclarations, bX: imports, b5: namespaces};
 };
 var $rtfeldman$elm_css$Css$Structure$Output$charsetToString = function (charset) {
 	return A2(
@@ -7622,13 +7622,13 @@ var $elm$core$List$filter = F2(
 			list);
 	});
 var $rtfeldman$elm_css$Css$Structure$Output$mediaExpressionToString = function (expression) {
-	return '(' + (expression.bR + (A2(
+	return '(' + (expression.bQ + (A2(
 		$elm$core$Maybe$withDefault,
 		'',
 		A2(
 			$elm$core$Maybe$map,
 			$elm$core$Basics$append(': '),
-			expression.D)) + ')'));
+			expression.C)) + ')'));
 };
 var $rtfeldman$elm_css$Css$Structure$Output$mediaTypeToString = function (mediaType) {
 	switch (mediaType) {
@@ -7870,7 +7870,7 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 		case 5:
 			return 'TODO';
 		case 6:
-			var name = decl.a.aH;
+			var name = decl.a.aG;
 			var declaration = decl.a.cL;
 			return '@keyframes ' + (name + (' {\n' + (declaration + '\n}')));
 		case 7:
@@ -7882,9 +7882,9 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 	}
 };
 var $rtfeldman$elm_css$Css$Structure$Output$prettyPrint = function (_v0) {
-	var charset = _v0.bI;
-	var imports = _v0.bY;
-	var namespaces = _v0.b6;
+	var charset = _v0.bH;
+	var imports = _v0.bX;
+	var namespaces = _v0.b5;
 	var declarations = _v0.cM;
 	return A2(
 		$elm$core$String$join,
@@ -8292,7 +8292,7 @@ var $rtfeldman$elm_css$Css$Structure$concatMapLastStyleBlock = F2(
 	});
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$HashData = F4(
 	function (shift, seed, hash, charsProcessed) {
-		return {ac: charsProcessed, ai: hash, W: seed, an: shift};
+		return {ab: charsProcessed, ah: hash, V: seed, am: shift};
 	});
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$c1 = 3432918353;
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$c2 = 461845907;
@@ -8308,14 +8308,14 @@ var $rtfeldman$elm_css$ElmCssVendor$Murmur3$rotlBy = F2(
 	});
 var $elm$core$Bitwise$xor = _Bitwise_xor;
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$finalize = function (data) {
-	var acc = (!(!data.ai)) ? (data.W ^ A2(
+	var acc = (!(!data.ah)) ? (data.V ^ A2(
 		$rtfeldman$elm_css$ElmCssVendor$Murmur3$multiplyBy,
 		$rtfeldman$elm_css$ElmCssVendor$Murmur3$c2,
 		A2(
 			$rtfeldman$elm_css$ElmCssVendor$Murmur3$rotlBy,
 			15,
-			A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$multiplyBy, $rtfeldman$elm_css$ElmCssVendor$Murmur3$c1, data.ai)))) : data.W;
-	var h0 = acc ^ data.ac;
+			A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$multiplyBy, $rtfeldman$elm_css$ElmCssVendor$Murmur3$c1, data.ah)))) : data.V;
+	var h0 = acc ^ data.ab;
 	var h1 = A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$multiplyBy, 2246822507, h0 ^ (h0 >>> 16));
 	var h2 = A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$multiplyBy, 3266489909, h1 ^ (h1 >>> 13));
 	return (h2 ^ (h2 >>> 16)) >>> 0;
@@ -8339,17 +8339,17 @@ var $rtfeldman$elm_css$ElmCssVendor$Murmur3$mix = F2(
 	});
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$hashFold = F2(
 	function (c, data) {
-		var res = data.ai | ((255 & $elm$core$Char$toCode(c)) << data.an);
-		var _v0 = data.an;
+		var res = data.ah | ((255 & $elm$core$Char$toCode(c)) << data.am);
+		var _v0 = data.am;
 		if (_v0 === 24) {
 			return {
-				ac: data.ac + 1,
-				ai: 0,
-				W: A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$mix, data.W, res),
-				an: 0
+				ab: data.ab + 1,
+				ah: 0,
+				V: A2($rtfeldman$elm_css$ElmCssVendor$Murmur3$mix, data.V, res),
+				am: 0
 			};
 		} else {
-			return {ac: data.ac + 1, ai: res, W: data.W, an: data.an + 8};
+			return {ab: data.ab + 1, ah: res, V: data.V, am: data.am + 8};
 		}
 	});
 var $rtfeldman$elm_css$ElmCssVendor$Murmur3$hashString = F2(
@@ -8965,7 +8965,7 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$applyStyles = F2(
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Css$Structure$Keyframes(
-								{cL: str, aH: name})
+								{cL: str, aG: name})
 							]));
 				case 4:
 					var _v12 = styles.a;
@@ -9100,13 +9100,13 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$toDeclarations = function (snippet
 	}
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$toStructure = function (_v0) {
-	var charset = _v0.bI;
-	var imports = _v0.bY;
-	var namespaces = _v0.b6;
-	var snippets = _v0.cp;
+	var charset = _v0.bH;
+	var imports = _v0.bX;
+	var namespaces = _v0.b5;
+	var snippets = _v0.co;
 	var declarations = $rtfeldman$elm_css$Css$Preprocess$Resolve$extract(
 		A2($elm$core$List$concatMap, $rtfeldman$elm_css$Css$Preprocess$unwrapSnippet, snippets));
-	return {bI: charset, cM: declarations, bY: imports, b6: namespaces};
+	return {bH: charset, cM: declarations, bX: imports, b5: namespaces};
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$compileHelp = function (sheet) {
 	return $rtfeldman$elm_css$Css$Structure$Output$prettyPrint(
@@ -9138,7 +9138,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$makeSnippet = F2(
 	});
 var $rtfeldman$elm_css$VirtualDom$Styled$murmurSeed = 15739;
 var $rtfeldman$elm_css$Css$Preprocess$stylesheet = function (snippets) {
-	return {bI: $elm$core$Maybe$Nothing, bY: _List_Nil, b6: _List_Nil, cp: snippets};
+	return {bH: $elm$core$Maybe$Nothing, bX: _List_Nil, b5: _List_Nil, co: snippets};
 };
 var $rtfeldman$elm_css$VirtualDom$Styled$getClassname = function (styles) {
 	return $elm$core$List$isEmpty(styles) ? 'unstyled' : A2(
@@ -9183,15 +9183,15 @@ var $rtfeldman$elm_css$Html$Styled$node = $rtfeldman$elm_css$VirtualDom$Styled$n
 var $rtfeldman$elm_css$Html$Styled$div = $rtfeldman$elm_css$Html$Styled$node('div');
 var $rtfeldman$elm_css$Css$prop1 = F2(
 	function (key, arg) {
-		return A2($rtfeldman$elm_css$Css$property, key, arg.D);
+		return A2($rtfeldman$elm_css$Css$property, key, arg.C);
 	});
 var $rtfeldman$elm_css$Css$flexDirection = $rtfeldman$elm_css$Css$prop1('flex-direction');
 var $rtfeldman$elm_css$Css$Media$feature = F2(
 	function (key, _v0) {
-		var value = _v0.D;
+		var value = _v0.C;
 		return {
-			bR: key,
-			D: $elm$core$Maybe$Just(value)
+			bQ: key,
+			C: $elm$core$Maybe$Just(value)
 		};
 	});
 var $rtfeldman$elm_css$Css$Media$maxWidth = function (value) {
@@ -9207,23 +9207,23 @@ var $elm$core$String$fromFloat = _String_fromNumber;
 var $rtfeldman$elm_css$Css$Internal$lengthConverter = F3(
 	function (units, unitLabel, numericValue) {
 		return {
-			bw: 0,
-			bG: 0,
-			af: 0,
-			p: 0,
-			aF: 0,
+			bv: 0,
+			bF: 0,
+			ae: 0,
+			o: 0,
+			aE: 0,
+			ai: 0,
+			I: 0,
 			aj: 0,
-			J: 0,
 			ak: 0,
-			al: 0,
+			R: 0,
 			S: 0,
-			T: 0,
-			B: 0,
-			L: numericValue,
-			aq: 0,
-			as: unitLabel,
-			aQ: units,
-			D: _Utils_ap(
+			A: 0,
+			K: numericValue,
+			ap: 0,
+			ar: unitLabel,
+			aP: units,
+			C: _Utils_ap(
 				$elm$core$String$fromFloat(numericValue),
 				unitLabel)
 		};
@@ -9255,12 +9255,12 @@ var $rtfeldman$elm_css$Css$withPrecedingHash = function (str) {
 };
 var $rtfeldman$elm_css$Css$erroneousHex = function (str) {
 	return {
-		ax: 1,
-		aA: 0,
-		A: 0,
-		aE: 0,
-		aL: 0,
-		D: $rtfeldman$elm_css$Css$withPrecedingHash(str)
+		aw: 1,
+		az: 0,
+		z: 0,
+		aD: 0,
+		aK: 0,
+		C: $rtfeldman$elm_css$Css$withPrecedingHash(str)
 	};
 };
 var $elm$core$String$foldr = _String_foldr;
@@ -9511,12 +9511,12 @@ var $rtfeldman$elm_css$Css$validHex = F5(
 			var blue = _v6.a.a;
 			var alpha = _v6.b.a;
 			return {
-				ax: alpha / 255,
-				aA: blue,
-				A: 0,
-				aE: green,
-				aL: red,
-				D: $rtfeldman$elm_css$Css$withPrecedingHash(str)
+				aw: alpha / 255,
+				az: blue,
+				z: 0,
+				aD: green,
+				aK: red,
+				C: $rtfeldman$elm_css$Css$withPrecedingHash(str)
 			};
 		} else {
 			return $rtfeldman$elm_css$Css$erroneousHex(str);
@@ -9618,10 +9618,11 @@ var $rtfeldman$elm_css$Css$hex = function (str) {
 	return $rtfeldman$elm_css$Css$erroneousHex(str);
 };
 var $author$project$View$Components$theme = {
+	cF: $rtfeldman$elm_css$Css$hex('000000'),
 	cK: $rtfeldman$elm_css$Css$hex('2b456e'),
-	cX: $rtfeldman$elm_css$Css$hex('5c94eb'),
-	b4: $rtfeldman$elm_css$Css$hex('5284d2'),
-	db: $rtfeldman$elm_css$Css$hex('ffffff')
+	cY: $rtfeldman$elm_css$Css$hex('5c94eb'),
+	b3: $rtfeldman$elm_css$Css$hex('5284d2'),
+	dc: $rtfeldman$elm_css$Css$hex('ffffff')
 };
 var $rtfeldman$elm_css$Css$VhUnits = 0;
 var $rtfeldman$elm_css$Css$vh = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'vh');
@@ -9636,7 +9637,7 @@ var $author$project$View$View$mainWindow = function (components) {
 				$rtfeldman$elm_css$Html$Styled$Attributes$css(
 				_List_fromArray(
 					[
-						$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cX),
+						$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cY),
 						$rtfeldman$elm_css$Css$minHeight(
 						$rtfeldman$elm_css$Css$vh(100)),
 						$rtfeldman$elm_css$Css$width(
@@ -9738,7 +9739,9 @@ var $rtfeldman$elm_css$Css$alignItems = function (fn) {
 		'align-items',
 		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
 };
+var $rtfeldman$elm_css$Css$block = {j: 0, C: 'block'};
 var $rtfeldman$elm_css$Css$center = $rtfeldman$elm_css$Css$prop1('center');
+var $author$project$View$SideBar$Style$ColumnLayout = 1;
 var $author$project$Model$Model$GetSvg = {$: 9};
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
@@ -9766,28 +9769,35 @@ var $rtfeldman$elm_css$Html$Styled$Events$onClick = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $rtfeldman$elm_css$Html$Styled$button = $rtfeldman$elm_css$Html$Styled$node('button');
-var $rtfeldman$elm_css$Css$block = {j: 0, D: 'block'};
 var $rtfeldman$elm_css$Css$border = $rtfeldman$elm_css$Css$prop1('border');
 var $rtfeldman$elm_css$Css$borderRadius = $rtfeldman$elm_css$Css$prop1('border-radius');
 var $rtfeldman$elm_css$Css$color = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'color', c.D);
+	return A2($rtfeldman$elm_css$Css$property, 'color', c.C);
 };
 var $rtfeldman$elm_css$Css$display = $rtfeldman$elm_css$Css$prop1('display');
-var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
+var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
+var $rtfeldman$elm_css$Css$marginBottom = $rtfeldman$elm_css$Css$prop1('margin-bottom');
+var $rtfeldman$elm_css$Css$marginTop = $rtfeldman$elm_css$Css$prop1('margin-top');
 var $rtfeldman$elm_css$Css$PercentageUnits = 0;
 var $rtfeldman$elm_css$Css$pct = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, '%');
+var $rtfeldman$elm_css$Css$RemUnits = 0;
+var $rtfeldman$elm_css$Css$rem = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'rem');
 var $author$project$View$SideBar$Style$buttonStyle = _List_fromArray(
 	[
 		$rtfeldman$elm_css$Css$borderRadius(
 		$rtfeldman$elm_css$Css$px(2)),
-		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cK),
-		$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.db),
+		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cY),
+		$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.cF),
 		$rtfeldman$elm_css$Css$border(
 		$rtfeldman$elm_css$Css$px(0)),
+		$rtfeldman$elm_css$Css$fontSize(
+		$rtfeldman$elm_css$Css$rem(1.5)),
 		$rtfeldman$elm_css$Css$width(
-		$rtfeldman$elm_css$Css$pct(100)),
+		$rtfeldman$elm_css$Css$pct(95)),
 		$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
-		$rtfeldman$elm_css$Css$margin(
+		$rtfeldman$elm_css$Css$marginTop(
+		$rtfeldman$elm_css$Css$px(2)),
+		$rtfeldman$elm_css$Css$marginBottom(
 		$rtfeldman$elm_css$Css$px(2))
 	]);
 var $rtfeldman$elm_css$Html$Styled$styled = F4(
@@ -9842,15 +9852,48 @@ var $author$project$View$SideBar$ControlTab$loadButton = A2(
 		[
 			$rtfeldman$elm_css$Html$Styled$text('Load CSV')
 		]));
-var $rtfeldman$elm_css$Html$Styled$h3 = $rtfeldman$elm_css$Html$Styled$node('h3');
+var $rtfeldman$elm_css$Css$flexWrap = $rtfeldman$elm_css$Css$prop1('flex-wrap');
+var $rtfeldman$elm_css$Css$justifyContent = function (fn) {
+	return A3(
+		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
+		'justifyContent',
+		'justify-content',
+		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
+};
+var $rtfeldman$elm_css$Css$wrap = {aC: 0, aV: 0, C: 'wrap'};
+var $author$project$View$SideBar$Style$layout = function (x) {
+	if (!x) {
+		return _List_fromArray(
+			[
+				$rtfeldman$elm_css$Css$displayFlex,
+				$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$row),
+				$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$center),
+				$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center),
+				$rtfeldman$elm_css$Css$flexWrap($rtfeldman$elm_css$Css$wrap)
+			]);
+	} else {
+		return _List_fromArray(
+			[
+				$rtfeldman$elm_css$Css$displayFlex,
+				$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$column),
+				$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$center),
+				$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center)
+			]);
+	}
+};
+var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
 var $author$project$View$SideBar$Style$tabStyle = _List_fromArray(
 	[
 		$rtfeldman$elm_css$Css$borderRadius(
-		$rtfeldman$elm_css$Css$px(2)),
+		$rtfeldman$elm_css$Css$px(5)),
 		$rtfeldman$elm_css$Css$width(
 		$rtfeldman$elm_css$Css$pct(100)),
 		$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
-		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.b4)
+		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cK),
+		$rtfeldman$elm_css$Css$marginTop(
+		$rtfeldman$elm_css$Css$px(2)),
+		$rtfeldman$elm_css$Css$padding(
+		$rtfeldman$elm_css$Css$px(10))
 	]);
 var $author$project$View$SideBar$Style$reusableTab = F2(
 	function (params, components) {
@@ -9860,22 +9903,37 @@ var $author$project$View$SideBar$Style$reusableTab = F2(
 				[
 					$rtfeldman$elm_css$Html$Styled$Attributes$css($author$project$View$SideBar$Style$tabStyle)
 				]),
-			_Utils_ap(
-				_List_fromArray(
-					[
-						A2(
-						$rtfeldman$elm_css$Html$Styled$h3,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$text(params.c5)
-							]))
-					]),
-				components));
+			_List_fromArray(
+				[
+					A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$css(
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.dc),
+									$rtfeldman$elm_css$Css$margin(
+									$rtfeldman$elm_css$Css$px(5))
+								]))
+						]),
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$text(params.c6)
+						])),
+					A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$css(
+							$author$project$View$SideBar$Style$layout(params.cX))
+						]),
+					components)
+				]));
 	});
 var $author$project$View$SideBar$ControlTab$controlTab = A2(
 	$author$project$View$SideBar$Style$reusableTab,
-	{c5: 'Control'},
+	{cX: 1, c6: 'Control'},
 	_List_fromArray(
 		[$author$project$View$SideBar$ControlTab$heyButton, $author$project$View$SideBar$ControlTab$loadButton, $author$project$View$SideBar$ControlTab$downloadSvgButton]));
 var $rtfeldman$elm_css$Css$Media$minWidth = function (value) {
@@ -9893,13 +9951,7 @@ var $author$project$View$Components$forLargeWidth = $rtfeldman$elm_css$Css$Media
 					$rtfeldman$elm_css$Css$px(1000))
 				]))
 		]));
-var $rtfeldman$elm_css$Css$justifyContent = function (fn) {
-	return A3(
-		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
-		'justifyContent',
-		'justify-content',
-		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
-};
+var $rtfeldman$elm_css$Css$height = $rtfeldman$elm_css$Css$prop1('height');
 var $elm$virtual_dom$VirtualDom$lazy2 = _VirtualDom_lazy2;
 var $rtfeldman$elm_css$VirtualDom$Styled$accumulateStyles = F2(
 	function (_v0, styles) {
@@ -10405,23 +10457,16 @@ var $rtfeldman$elm_css$VirtualDom$Styled$lazy3 = F4(
 	});
 var $rtfeldman$elm_css$Html$Styled$Lazy$lazy3 = $rtfeldman$elm_css$VirtualDom$Styled$lazy3;
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
-var $rtfeldman$elm_css$Css$pre = {D: 'pre', O: 0};
-var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
-var $author$project$View$Components$panel = A2(
-	$rtfeldman$elm_css$Html$Styled$styled,
-	$rtfeldman$elm_css$Html$Styled$div,
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.b4),
-			$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre),
-			$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
-			$rtfeldman$elm_css$Css$margin(
-			$rtfeldman$elm_css$Css$px(10)),
-			$rtfeldman$elm_css$Css$padding(
-			$rtfeldman$elm_css$Css$px(10)),
-			$rtfeldman$elm_css$Css$borderRadius(
-			$rtfeldman$elm_css$Css$px(10))
-		]));
+var $author$project$View$SideBar$Style$RowLayout = 0;
+var $author$project$View$SideBar$PlotTab$plotTab = function (plotParams) {
+	return A2(
+		$author$project$View$SideBar$Style$reusableTab,
+		{cX: 0, c6: 'Plot Control'},
+		_List_fromArray(
+			[
+				A2($rtfeldman$elm_css$Html$Styled$div, _List_Nil, _List_Nil)
+			]));
+};
 var $author$project$Model$Model$UpdateWeight = F2(
 	function (a, b) {
 		return {$: 5, a: a, b: b};
@@ -10511,10 +10556,17 @@ var $author$project$View$SideBar$SimilarityTab$indexSlider = function (_v0) {
 					[
 						A2(
 						$rtfeldman$elm_css$Html$Styled$label,
-						_List_Nil,
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Html$Styled$text(params.aH)
+								$rtfeldman$elm_css$Html$Styled$Attributes$css(
+								_List_fromArray(
+									[
+										$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.dc)
+									]))
+							]),
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Html$Styled$text(params.aG)
 							])),
 						A2(
 						$rtfeldman$elm_css$Html$Styled$select,
@@ -10548,14 +10600,14 @@ var $author$project$View$SideBar$SimilarityTab$indexSlider = function (_v0) {
 								$rtfeldman$elm_css$Html$Styled$Attributes$max('1.0'),
 								$rtfeldman$elm_css$Html$Styled$Attributes$step('0.1'),
 								$rtfeldman$elm_css$Html$Styled$Attributes$value(
-								$elm$core$String$fromFloat(params.av)),
+								$elm$core$String$fromFloat(params.au)),
 								$author$project$View$Components$onChange(
 								$author$project$Model$Model$UpdateWeight(index))
 							]),
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Html$Styled$text(
-								$elm$core$String$fromFloat(params.av))
+								$elm$core$String$fromFloat(params.au))
 							]))
 					]))
 			]));
@@ -10586,27 +10638,13 @@ var $elm$core$Array$toIndexedList = function (array) {
 var $author$project$View$SideBar$SimilarityTab$similarityTab = function (columnParams) {
 	return A2(
 		$author$project$View$SideBar$Style$reusableTab,
-		{c5: 'Similarity'},
-		_List_fromArray(
-			[
-				A2(
-				$rtfeldman$elm_css$Html$Styled$div,
-				_List_fromArray(
-					[
-						$rtfeldman$elm_css$Html$Styled$Attributes$css(
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$column)
-							]))
-					]),
-				A2(
-					$elm$core$List$map,
-					$author$project$View$SideBar$SimilarityTab$indexSlider,
-					$elm$core$Array$toIndexedList(columnParams)))
-			]));
+		{cX: 0, c6: 'Similarity'},
+		A2(
+			$elm$core$List$map,
+			$author$project$View$SideBar$SimilarityTab$indexSlider,
+			$elm$core$Array$toIndexedList(columnParams)));
 };
-var $rtfeldman$elm_css$Css$auto = {cD: 0, c: 0, af: 0, aX: 0, cW: 0, aj: 0, J: 0, B: 0, am: 0, y: 0, a3: 0, ar: 0, u: 0, D: 'auto'};
-var $rtfeldman$elm_css$Css$marginTop = $rtfeldman$elm_css$Css$prop1('margin-top');
+var $rtfeldman$elm_css$Css$auto = {cC: 0, c: 0, ae: 0, aW: 0, cW: 0, ai: 0, I: 0, A: 0, al: 0, x: 0, a2: 0, aq: 0, t: 0, C: 'auto'};
 var $rtfeldman$elm_css$Css$maxHeight = $rtfeldman$elm_css$Css$prop1('max-height');
 var $rtfeldman$elm_css$Css$overflow = $rtfeldman$elm_css$Css$prop1('overflow');
 var $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode = $rtfeldman$elm_css$VirtualDom$Styled$Unstyled;
@@ -10620,7 +10658,7 @@ var $billstclair$elm_sortable_table$Table$simpleRowAttrs = function (_v0) {
 };
 var $billstclair$elm_sortable_table$Table$HtmlDetails = F2(
 	function (attributes, children) {
-		return {ay: attributes, aB: children};
+		return {ax: attributes, aA: children};
 	});
 var $elm$core$Char$fromCode = _Char_fromCode;
 var $billstclair$elm_sortable_table$Table$nbsp = $elm$core$String$fromList(
@@ -10708,10 +10746,10 @@ var $billstclair$elm_sortable_table$Table$simpleThead = function (headers) {
 		_List_Nil,
 		A2($elm$core$List$map, $billstclair$elm_sortable_table$Table$simpleTheadHelp, headers));
 };
-var $billstclair$elm_sortable_table$Table$defaultCustomizations = {a7: $elm$core$Maybe$Nothing, bl: $billstclair$elm_sortable_table$Table$simpleRowAttrs, bq: _List_Nil, bs: _List_Nil, bu: $elm$core$Maybe$Nothing, bv: $billstclair$elm_sortable_table$Table$simpleThead};
+var $billstclair$elm_sortable_table$Table$defaultCustomizations = {a6: $elm$core$Maybe$Nothing, bk: $billstclair$elm_sortable_table$Table$simpleRowAttrs, bp: _List_Nil, br: _List_Nil, bt: $elm$core$Maybe$Nothing, bu: $billstclair$elm_sortable_table$Table$simpleThead};
 var $billstclair$elm_sortable_table$Table$config = function (_v0) {
-	var toId = _v0.c6;
-	var toMsg = _v0.c7;
+	var toId = _v0.c7;
+	var toMsg = _v0.c8;
 	var columns = _v0.cI;
 	return {
 		cI: A2(
@@ -10721,9 +10759,9 @@ var $billstclair$elm_sortable_table$Table$config = function (_v0) {
 				return cData;
 			},
 			columns),
-		aC: $billstclair$elm_sortable_table$Table$defaultCustomizations,
-		c6: toId,
-		c7: toMsg
+		aB: $billstclair$elm_sortable_table$Table$defaultCustomizations,
+		c7: toId,
+		c8: toMsg
 	};
 };
 var $billstclair$elm_sortable_table$Table$Column = $elm$core$Basics$identity;
@@ -10747,9 +10785,9 @@ var $billstclair$elm_sortable_table$Table$textDetails = function (str) {
 var $billstclair$elm_sortable_table$Table$stringColumn = F2(
 	function (name, toStr) {
 		return {
-			aH: name,
-			X: $billstclair$elm_sortable_table$Table$increasingOrDecreasingBy(toStr),
-			au: A2($elm$core$Basics$composeL, $billstclair$elm_sortable_table$Table$textDetails, toStr)
+			aG: name,
+			W: $billstclair$elm_sortable_table$Table$increasingOrDecreasingBy(toStr),
+			at: A2($elm$core$Basics$composeL, $billstclair$elm_sortable_table$Table$textDetails, toStr)
 		};
 	});
 var $author$project$Model$Model$tableConfig = function (headers) {
@@ -10772,11 +10810,11 @@ var $author$project$Model$Model$tableConfig = function (headers) {
 					$elm$core$List$range,
 					0,
 					$elm$core$Array$length(headers))),
-			c6: A2(
+			c7: A2(
 				$elm$core$Basics$composeL,
 				$elm$core$Maybe$withDefault(''),
 				$elm$core$Array$get(0)),
-			c7: $author$project$Model$Model$SetTableState
+			c8: $author$project$Model$Model$SetTableState
 		});
 };
 var $elm$html$Html$caption = _VirtualDom_node('caption');
@@ -10809,8 +10847,8 @@ var $billstclair$elm_sortable_table$Table$findSorter = F2(
 			if (!columnData.b) {
 				return $elm$core$Maybe$Nothing;
 			} else {
-				var name = columnData.a.aH;
-				var sorter = columnData.a.X;
+				var name = columnData.a.aG;
+				var sorter = columnData.a.W;
 				var remainingColumnData = columnData.b;
 				if (_Utils_eq(name, selectedColumn)) {
 					return $elm$core$Maybe$Just(sorter);
@@ -10838,10 +10876,10 @@ var $billstclair$elm_sortable_table$Table$sort = F3(
 	});
 var $billstclair$elm_sortable_table$Table$getSortedData = F3(
 	function (_v0, state, data) {
-		var toId = _v0.c6;
-		var toMsg = _v0.c7;
+		var toId = _v0.c7;
+		var toMsg = _v0.c8;
 		var columns = _v0.cI;
-		var customizations = _v0.aC;
+		var customizations = _v0.aB;
 		return A3($billstclair$elm_sortable_table$Table$sort, state, columns, data);
 	});
 var $elm$html$Html$Keyed$node = $elm$virtual_dom$VirtualDom$keyedNode;
@@ -10880,8 +10918,8 @@ var $billstclair$elm_sortable_table$Table$toHeaderInfo = F3(
 	function (_v0, toMsg, _v1) {
 		var sortName = _v0.a;
 		var isReversed = _v0.b;
-		var name = _v1.aH;
-		var sorter = _v1.X;
+		var name = _v1.aG;
+		var sorter = _v1.W;
 		switch (sorter.$) {
 			case 0:
 				return _Utils_Tuple3(
@@ -10926,9 +10964,9 @@ var $elm$html$Html$Lazy$lazy3 = $elm$virtual_dom$VirtualDom$lazy3;
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $billstclair$elm_sortable_table$Table$viewCell = F2(
 	function (data, _v0) {
-		var viewData = _v0.au;
+		var viewData = _v0.at;
 		var details = viewData(data);
-		return A2($elm$html$Html$td, details.ay, details.aB);
+		return A2($elm$html$Html$td, details.ax, details.aA);
 	});
 var $billstclair$elm_sortable_table$Table$viewRowHelp = F3(
 	function (columns, toRowAttrs, data) {
@@ -10948,38 +10986,38 @@ var $billstclair$elm_sortable_table$Table$viewRow = F4(
 	});
 var $billstclair$elm_sortable_table$Table$view = F3(
 	function (conf, state, data) {
-		var toId = conf.c6;
-		var toMsg = conf.c7;
+		var toId = conf.c7;
+		var toMsg = conf.c8;
 		var columns = conf.cI;
-		var customizations = conf.aC;
-		var theadDetails = customizations.bv(
+		var customizations = conf.aB;
+		var theadDetails = customizations.bu(
 			A2(
 				$elm$core$List$map,
 				A2($billstclair$elm_sortable_table$Table$toHeaderInfo, state, toMsg),
 				columns));
 		var thead = A2(
 			$elm$html$Html$thead,
-			theadDetails.ay,
+			theadDetails.ax,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$tr, _List_Nil, theadDetails.aB)
+					A2($elm$html$Html$tr, _List_Nil, theadDetails.aA)
 				]));
 		var sortedData = A3($billstclair$elm_sortable_table$Table$getSortedData, conf, state, data);
 		var tbody = A3(
 			$elm$html$Html$Keyed$node,
 			'tbody',
-			customizations.bs,
+			customizations.br,
 			A2(
 				$elm$core$List$map,
-				A3($billstclair$elm_sortable_table$Table$viewRow, toId, columns, customizations.bl),
+				A3($billstclair$elm_sortable_table$Table$viewRow, toId, columns, customizations.bk),
 				sortedData));
 		var withFoot = function () {
-			var _v1 = customizations.bu;
+			var _v1 = customizations.bt;
 			if (_v1.$ === 1) {
 				return A2($elm$core$List$cons, tbody, _List_Nil);
 			} else {
-				var attributes = _v1.a.ay;
-				var children = _v1.a.aB;
+				var attributes = _v1.a.ax;
+				var children = _v1.a.aA;
 				return A2(
 					$elm$core$List$cons,
 					A2($elm$html$Html$tfoot, attributes, children),
@@ -10988,14 +11026,14 @@ var $billstclair$elm_sortable_table$Table$view = F3(
 		}();
 		return A2(
 			$elm$html$Html$table,
-			customizations.bq,
+			customizations.bp,
 			function () {
-				var _v0 = customizations.a7;
+				var _v0 = customizations.a6;
 				if (_v0.$ === 1) {
 					return A2($elm$core$List$cons, thead, withFoot);
 				} else {
-					var attributes = _v0.a.ay;
-					var children = _v0.a.aB;
+					var attributes = _v0.a.ax;
+					var children = _v0.a.aA;
 					return A2(
 						$elm$core$List$cons,
 						A2($elm$html$Html$caption, attributes, children),
@@ -11016,7 +11054,7 @@ var $author$project$View$SideBar$TableTab$tableTab = F3(
 	function (tableState, headers, records) {
 		return A2(
 			$author$project$View$SideBar$Style$reusableTab,
-			{c5: 'Data Table'},
+			{cX: 1, c6: 'Data Table'},
 			_List_fromArray(
 				[
 					A2(
@@ -11029,14 +11067,12 @@ var $author$project$View$SideBar$TableTab$tableTab = F3(
 									$rtfeldman$elm_css$Css$width(
 									$rtfeldman$elm_css$Css$pct(100)),
 									$rtfeldman$elm_css$Css$maxHeight(
-									$rtfeldman$elm_css$Css$px(500)),
+									$rtfeldman$elm_css$Css$px(300)),
 									$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
 									$rtfeldman$elm_css$Css$overflow($rtfeldman$elm_css$Css$auto),
 									$rtfeldman$elm_css$Css$margin(
 									$rtfeldman$elm_css$Css$px(2)),
-									$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cX),
-									$rtfeldman$elm_css$Css$marginTop(
-									$rtfeldman$elm_css$Css$px(20)),
+									$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cY),
 									$rtfeldman$elm_css$Css$borderRadius(
 									$rtfeldman$elm_css$Css$px(3))
 								]))
@@ -11081,122 +11117,155 @@ var $rtfeldman$elm_css$Html$Styled$Attributes$placeholder = $rtfeldman$elm_css$H
 var $author$project$View$SideBar$Style$inputStyle = _List_fromArray(
 	[
 		$rtfeldman$elm_css$Css$width(
-		$rtfeldman$elm_css$Css$pct(30))
+		$rtfeldman$elm_css$Css$pct(30)),
+		$rtfeldman$elm_css$Css$fontSize(
+		$rtfeldman$elm_css$Css$rem(1.2))
 	]);
 var $author$project$View$SideBar$Style$reusableInput = A2($rtfeldman$elm_css$Html$Styled$styled, $rtfeldman$elm_css$Html$Styled$input, $author$project$View$SideBar$Style$inputStyle);
-var $rtfeldman$elm_css$Css$spaceBetween = $rtfeldman$elm_css$Css$prop1('space-between');
 var $author$project$View$SideBar$UmapTab$umapTab = function (umapParams) {
 	return A2(
 		$author$project$View$SideBar$Style$reusableTab,
-		{c5: 'Umap Control'},
+		{cX: 1, c6: 'Umap'},
 		_List_fromArray(
 			[
 				A2(
-				$rtfeldman$elm_css$Html$Styled$div,
+				$rtfeldman$elm_css$Html$Styled$label,
 				_List_fromArray(
 					[
 						$rtfeldman$elm_css$Html$Styled$Attributes$css(
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Css$displayFlex,
-								$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$row),
-								$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$spaceBetween)
+								$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.dc)
 							]))
 					]),
 				_List_fromArray(
 					[
-						A2(
-						$author$project$View$SideBar$Style$reusableInput,
+						$rtfeldman$elm_css$Html$Styled$text('minimum Distance')
+					])),
+				A2(
+				$author$project$View$SideBar$Style$reusableInput,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('minDist'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$step('0.01'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$value(
+						$elm$core$String$fromFloat(umapParams.bc)),
+						$rtfeldman$elm_css$Html$Styled$Events$onInput(
+						function (x) {
+							return $author$project$Model$Model$SetUmapParams(
+								_Utils_update(
+									umapParams,
+									{
+										bc: A2(
+											$elm$core$Maybe$withDefault,
+											0.1,
+											$elm$core$String$toFloat(x))
+									}));
+						})
+					]),
+				_List_Nil),
+				A2(
+				$rtfeldman$elm_css$Html$Styled$label,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('minDist'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$step('0.01'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$value(
-								$elm$core$String$fromFloat(umapParams.bd)),
-								$rtfeldman$elm_css$Html$Styled$Events$onInput(
-								function (x) {
-									return $author$project$Model$Model$SetUmapParams(
-										_Utils_update(
-											umapParams,
-											{
-												bd: A2(
-													$elm$core$Maybe$withDefault,
-													0.1,
-													$elm$core$String$toFloat(x))
-											}));
-								})
-							]),
-						_List_Nil),
-						A2(
-						$author$project$View$SideBar$Style$reusableInput,
+								$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.dc)
+							]))
+					]),
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$text('spread')
+					])),
+				A2(
+				$author$project$View$SideBar$Style$reusableInput,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('spread'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$step('0.01'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$value(
+						$elm$core$String$fromFloat(umapParams.bm)),
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('spread'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$step('0.01'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$value(
-								$elm$core$String$fromFloat(umapParams.bn)),
-								$rtfeldman$elm_css$Html$Styled$Attributes$css(
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Css$width(
-										$rtfeldman$elm_css$Css$pct(30))
-									])),
-								$rtfeldman$elm_css$Html$Styled$Events$onInput(
-								function (x) {
-									return $author$project$Model$Model$SetUmapParams(
-										_Utils_update(
-											umapParams,
-											{
-												bn: A2(
-													$elm$core$Maybe$withDefault,
-													1.0,
-													$elm$core$String$toFloat(x))
-											}));
-								})
-							]),
-						_List_Nil),
-						A2(
-						$author$project$View$SideBar$Style$reusableInput,
+								$rtfeldman$elm_css$Css$width(
+								$rtfeldman$elm_css$Css$pct(30))
+							])),
+						$rtfeldman$elm_css$Html$Styled$Events$onInput(
+						function (x) {
+							return $author$project$Model$Model$SetUmapParams(
+								_Utils_update(
+									umapParams,
+									{
+										bm: A2(
+											$elm$core$Maybe$withDefault,
+											1.0,
+											$elm$core$String$toFloat(x))
+									}));
+						})
+					]),
+				_List_Nil),
+				A2(
+				$rtfeldman$elm_css$Html$Styled$label,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('nNeighbours'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$step('1'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$value(
-								$elm$core$String$fromInt(umapParams.be)),
-								$rtfeldman$elm_css$Html$Styled$Attributes$css(
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Css$width(
-										$rtfeldman$elm_css$Css$pct(30))
-									])),
-								$rtfeldman$elm_css$Html$Styled$Events$onInput(
-								function (x) {
-									return $author$project$Model$Model$SetUmapParams(
-										_Utils_update(
-											umapParams,
-											{
-												be: A2(
-													$elm$core$Maybe$withDefault,
-													15,
-													$elm$core$String$toInt(x))
-											}));
-								})
-							]),
-						_List_Nil)
-					]))
+								$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.dc)
+							]))
+					]),
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$text('nNeighbors')
+					])),
+				A2(
+				$author$project$View$SideBar$Style$reusableInput,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('nNeighbours'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$step('1'),
+						$rtfeldman$elm_css$Html$Styled$Attributes$value(
+						$elm$core$String$fromInt(umapParams.bd)),
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Css$width(
+								$rtfeldman$elm_css$Css$pct(30))
+							])),
+						$rtfeldman$elm_css$Html$Styled$Events$onInput(
+						function (x) {
+							return $author$project$Model$Model$SetUmapParams(
+								_Utils_update(
+									umapParams,
+									{
+										bd: A2(
+											$elm$core$Maybe$withDefault,
+											15,
+											$elm$core$String$toInt(x))
+									}));
+						})
+					]),
+				_List_Nil)
 			]));
 };
 var $author$project$View$SideBar$SideBar$sidebar = function (model) {
 	return A2(
-		$author$project$View$Components$panel,
+		$rtfeldman$elm_css$Html$Styled$div,
 		_List_fromArray(
 			[
 				$rtfeldman$elm_css$Html$Styled$Attributes$css(
 				_List_fromArray(
 					[
+						$rtfeldman$elm_css$Css$margin(
+						$rtfeldman$elm_css$Css$px(5)),
+						$rtfeldman$elm_css$Css$height(
+						$rtfeldman$elm_css$Css$pct(100)),
+						$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
 						$author$project$View$Components$forLargeWidth(
 						_List_fromArray(
 							[
@@ -11228,16 +11297,17 @@ var $author$project$View$SideBar$SideBar$sidebar = function (model) {
 						A4(
 						$rtfeldman$elm_css$Html$Styled$Lazy$lazy3,
 						$author$project$View$SideBar$TableTab$tableTab,
-						model.br,
+						model.bq,
 						A2(
 							$elm$core$Array$map,
 							function ($) {
-								return $.aH;
+								return $.aG;
 							},
-							model.P),
-						model.aK),
-						A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$UmapTab$umapTab, model.a5),
-						A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$SimilarityTab$similarityTab, model.P)
+							model.O),
+						model.aJ),
+						A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$UmapTab$umapTab, model.a4),
+						A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$SimilarityTab$similarityTab, model.O),
+						A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$PlotTab$plotTab, model.ca)
 					]))
 			]));
 };
@@ -11355,7 +11425,6 @@ var $author$project$View$Graph$graph = F3(
 					labels,
 					colors)));
 	});
-var $rtfeldman$elm_css$Css$height = $rtfeldman$elm_css$Css$prop1('height');
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -11451,16 +11520,33 @@ var $author$project$View$DataWindow$graphMap = F3(
 var $rtfeldman$elm_css$Css$UnitlessFloat = 0;
 var $rtfeldman$elm_css$Css$num = function (val) {
 	return {
-		T: 0,
-		B: 0,
-		aI: 0,
-		aZ: 0,
-		L: val,
-		as: '',
-		aQ: 0,
-		D: $elm$core$String$fromFloat(val)
+		S: 0,
+		A: 0,
+		aH: 0,
+		aY: 0,
+		K: val,
+		ar: '',
+		aP: 0,
+		C: $elm$core$String$fromFloat(val)
 	};
 };
+var $rtfeldman$elm_css$Css$pre = {C: 'pre', N: 0};
+var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
+var $author$project$View$Components$panel = A2(
+	$rtfeldman$elm_css$Html$Styled$styled,
+	$rtfeldman$elm_css$Html$Styled$div,
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.b3),
+			$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre),
+			$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+			$rtfeldman$elm_css$Css$margin(
+			$rtfeldman$elm_css$Css$px(10)),
+			$rtfeldman$elm_css$Css$padding(
+			$rtfeldman$elm_css$Css$px(10)),
+			$rtfeldman$elm_css$Css$borderRadius(
+			$rtfeldman$elm_css$Css$px(10))
+		]));
 var $elm$core$Dict$fromList = function (assocs) {
 	return A3(
 		$elm$core$List$foldl,
@@ -11508,9 +11594,9 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 	var headers = A2(
 		$elm$core$Array$map,
 		function ($) {
-			return $.aH;
+			return $.aG;
 		},
-		model.P);
+		model.O);
 	var labels = A2(
 		$elm$core$Array$map,
 		A2(
@@ -11525,20 +11611,20 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 						return A2(
 							$elm$core$List$any,
 							$elm$core$Basics$eq(header),
-							model.cb.bb) ? (a + (' | ' + el2)) : a;
+							model.ca.ba) ? (a + (' | ' + el2)) : a;
 					}),
 				'')),
-		model.aK);
+		model.aJ);
 	var colorsidx = A2(
 		$elm$core$Maybe$andThen,
 		function (channel) {
 			return A2($author$project$Util$Array$getIdx, channel, headers);
 		},
-		model.cb.bK);
+		model.ca.bJ);
 	var colorColumn = A2(
 		$elm$core$Maybe$andThen,
 		function (idx) {
-			return A3($author$project$Util$Matrix$getColumn, idx, '', model.aK);
+			return A3($author$project$Util$Matrix$getColumn, idx, '', model.aJ);
 		},
 		colorsidx);
 	return A2(
@@ -11570,7 +11656,7 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 						A4(
 						$rtfeldman$elm_css$Html$Styled$Lazy$lazy3,
 						$author$project$View$DataWindow$graphMap,
-						model.bi,
+						model.bh,
 						labels,
 						A2($elm$core$Maybe$map, $author$project$Util$Cmap$translate, colorColumn))
 					]))
@@ -11586,6 +11672,6 @@ var $author$project$View$View$view = function (model) {
 				])));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{cU: $author$project$Model$Model$init, c4: $author$project$Model$Model$subscriptions, c8: $author$project$Model$Model$update, da: $author$project$View$View$view});
+	{cU: $author$project$Model$Model$init, c5: $author$project$Model$Model$subscriptions, c9: $author$project$Model$Model$update, db: $author$project$View$View$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
