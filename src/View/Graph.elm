@@ -1,4 +1,4 @@
-module View.DataViz exposing (..)
+module View.Graph exposing (..)
 
 import Array as A
 import Array.Extra as A

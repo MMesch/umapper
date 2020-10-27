@@ -1,4 +1,4 @@
-module View.DataView exposing (..)
+module View.DataWindow exposing (..)
 
 import Array as A exposing (Array)
 import Array.Extra as A
@@ -19,8 +19,7 @@ import Util.Cmap
 import Util.Matrix exposing (Matrix)
 import Util.Util
 import View.Components exposing (Component, onChange, panel)
-import View.DataViz
-import View.SimilarityControl
+import View.Graph
 
 
 viewPanel : Model -> Component
@@ -52,12 +51,11 @@ viewPanel model =
     in
     panel [ css [ Css.flexGrow (Css.num 1) ] ]
         [ div
-            [ css
-                [ Css.height (Css.vh 90)
-                ]
-            ]
-            [ lazy View.SimilarityControl.similarityControl model.columnParams
-            , lazy3 graphMap model.positions labels (Maybe.map translate colorColumn)
+            [ css [ Css.height (Css.vh 90) ] ]
+            [ lazy3 graphMap
+                model.positions
+                labels
+                (Maybe.map Util.Cmap.translate colorColumn)
             ]
         ]
 
@@ -89,5 +87,5 @@ graphMap positions labels colors =
                 , Html.Attributes.style "height" "95%"
                 , Html.Attributes.id "graph"
                 ]
-                [ View.DataViz.graph data labels_ colors_ ]
+                [ View.Graph.graph data labels_ colors_ ]
         ]

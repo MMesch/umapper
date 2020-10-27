@@ -8,15 +8,15 @@ import Html.Styled.Attributes exposing (css)
 import Html.Styled.Lazy exposing (lazy)
 import Model.Model exposing (Model, Msg(..))
 import View.Components exposing (Component, forSmallWidth, theme)
-import View.DataView exposing (viewPanel)
-import View.SideBar exposing (dataPanel)
+import View.DataWindow exposing (viewPanel)
+import View.SideBar.SideBar exposing (sidebar)
 
 
 view : Model -> Html.Html Msg
 view model =
     toUnstyled <|
         mainWindow <|
-            [ dataPanel model
+            [ sidebar model
             , viewPanel model
             ]
 

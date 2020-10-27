@@ -22,7 +22,7 @@ type Msg
     | SetTableState Table.State
     | UpdateWeight Int String
     | SetUmapParams UmapParams
-    | UmapSender UmapParams
+    | UmapSender
     | UmapReceiver Matrix
     | GetSvg
     | GotSvg String
@@ -171,7 +171,7 @@ update msg model =
         SetUmapParams params ->
             ( { model | umapParams = params }, Cmd.none )
 
-        UmapSender params ->
+        UmapSender ->
             let
                 weights =
                     A.map .weight model.columnParams
@@ -179,7 +179,7 @@ update msg model =
                 data =
                     Util.Util.compareColumns weights model.records
             in
-            ( model, umap ( data, params ) )
+            ( model, umap ( data, model.umapParams ) )
 
         UmapReceiver matrix ->
             ( { model | positions = Just matrix }, Cmd.none )
