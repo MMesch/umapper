@@ -7,15 +7,26 @@ import Html.Styled.Attributes as Att exposing (css)
 import Html.Styled.Events exposing (onClick, onInput)
 import Maybe exposing (withDefault)
 import Model.Model exposing (Model, Msg(..), PlotParams)
+import Util.Cmap
 import View.Components
     exposing
         ( Builder
         , Component
         )
-import View.SideBar.Style exposing (Layout(..), reusableInput, reusableTab)
+import View.SideBar.Style exposing (Layout(..), reusableInput, reusableSelect, reusableTab)
 
 
-plotTab : PlotParams -> Component
-plotTab plotParams =
+plotTab : PlotParams -> Array String -> Component
+plotTab params headers =
     reusableTab { title = "Plot Control", layout = RowLayout }
-        [ div [] [] ]
+        [ reusableSelect SetChannelColor
+            { title = "color channel"
+            , selected = withDefault "nothing" params.colorChannel
+            , values = "nothing" :: A.toList headers
+            }
+        , reusableSelect SetChannelSize
+            { title = "size channel"
+            , selected = withDefault "nothing" params.sizeChannel
+            , values = "nothing" :: A.toList headers
+            }
+        ]

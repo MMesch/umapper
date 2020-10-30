@@ -1,8 +1,11 @@
 module View.SideBar.Style exposing (..)
 
+import Array as A exposing (Array)
 import Css
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
+import Html.Styled.Events exposing (onInput)
+import Model.Model exposing (Msg)
 import View.Components exposing (Builder, Component, theme)
 
 
@@ -37,6 +40,7 @@ tabStyle =
 type Layout
     = RowLayout
     | ColumnLayout
+    | GridLayout Int Int
 
 
 layout : Layout -> List Css.Style
@@ -45,7 +49,7 @@ layout x =
         RowLayout ->
             [ Css.displayFlex
             , Css.flexDirection Css.row
-            , Css.justifyContent Css.center
+            , Css.justifyContent Css.spaceBetween
             , Css.alignItems Css.center
             , Css.flexWrap Css.wrap
             ]
@@ -53,8 +57,12 @@ layout x =
         ColumnLayout ->
             [ Css.displayFlex
             , Css.flexDirection Css.column
-            , Css.justifyContent Css.center
+            , Css.justifyContent Css.spaceBetween
             , Css.alignItems Css.center
+            ]
+
+        GridLayout i1 i2 ->
+            [ Css.property "display" "grid"
             ]
 
 
@@ -80,10 +88,73 @@ reusableTab params components =
         ]
 
 
-inputStyle =
-    [ Css.width (Css.pct 30), Css.fontSize (Css.rem 1.2) ]
+reusableInput : String -> List (Attribute Msg) -> Component
+reusableInput name atts =
+    div
+        [ css
+            [ Css.width (Css.px 200)
+            , Css.margin (Css.px 10)
+            , Css.displayFlex
+            , Css.alignItems Css.center
+            ]
+        ]
+        [ label
+            [ css
+                [ Css.color theme.white
+                , Css.display Css.inlineBlock
+                , Css.width (Css.px 110)
+                , Css.textAlign Css.center
+                ]
+            ]
+            [ text name ]
+        , input
+            ([ css
+                [ Css.width (Css.px 80)
+                , Css.fontSize (Css.rem 1.2)
+                , Css.display Css.inlineBlock
+                ]
+             ]
+                ++ atts
+            )
+            []
+        ]
 
 
-reusableInput : Builder
-reusableInput =
-    styled input inputStyle
+reusableSelect :
+    (String -> Msg)
+    -> { title : String, values : List String, selected : String }
+    -> Component
+reusableSelect msg { title, values, selected } =
+    div [ css [ Css.width (Css.px 200), Css.margin (Css.px 10) ] ]
+        [ label
+            [ css
+                [ Css.color theme.white
+                , Css.width (Css.px 110)
+                , Css.display Css.inlineBlock
+                , Css.textAlign Css.center
+                ]
+            ]
+            [ text title ]
+        , select
+            [ onInput msg
+            , css
+                [ Css.display Css.inlineBlock
+                , Css.width (Css.px 80)
+                ]
+            ]
+          <|
+            List.map
+                (\value ->
+                    option
+                        ([ Att.value value ]
+                            ++ (if value == selected then
+                                    [ Att.selected True ]
+
+                                else
+                                    []
+                               )
+                        )
+                        [ text value ]
+                )
+                values
+        ]

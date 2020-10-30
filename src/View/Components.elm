@@ -52,6 +52,5 @@ panel =
         , Css.whiteSpace Css.pre
         , Css.display Css.block
         , Css.margin (Css.px 10)
-        , Css.padding (Css.px 10)
         , Css.borderRadius (Css.px 10)
         ]

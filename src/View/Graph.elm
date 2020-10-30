@@ -11,8 +11,14 @@ import Util.Matrix exposing (Matrix)
 import Util.Util exposing (normalize)
 
 
-graph : Matrix -> A.Array String -> A.Array String -> Svg msg
-graph positions labels colors =
+graph :
+    { positions : Matrix
+    , labels : A.Array String
+    , colors : A.Array String
+    , sizes : A.Array String
+    }
+    -> Svg msg
+graph { positions, labels, colors, sizes } =
     svg
         [ viewBox "-1 -1 101 101"
         ]

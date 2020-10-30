@@ -15,7 +15,6 @@ import View.Components
         , forLargeWidth
         , forSmallWidth
         , onChange
-        , panel
         , theme
         )
 import View.SideBar.ControlTab exposing (controlTab)
@@ -29,27 +28,38 @@ sidebar : Model -> Component
 sidebar model =
     div
         [ css
-            [ Css.margin (Css.px 5)
-            , Css.height (Css.pct 100)
-            , Css.display Css.block
+            [ Css.display Css.block
             , forLargeWidth
-                [ Css.width (Css.pct 30)
-                , Css.maxWidth (Css.px 500)
+                [ Css.width (Css.pct 40)
+                , Css.maxWidth (Css.px 600)
+                , Css.overflowY Css.auto
+                , Css.maxHeight (Css.vh 90)
+                , Css.margin (Css.px 10)
+                ]
+            , Css.pseudoElement "-webkit-scrollbar"
+                [ Css.width (Css.px 5)
                 ]
             ]
         ]
         [ div
             [ css
-                [ Css.displayFlex
+                [ Css.width (Css.pct 93)
+                , Css.marginLeft (Css.px 20)
+                , Css.displayFlex
                 , Css.flexDirection Css.column
                 , Css.justifyContent Css.center
                 , Css.alignItems Css.center
                 ]
             ]
-            [ controlTab
-            , lazy3 tableTab model.tableState (A.map .name model.columnParams) model.records
-            , lazy umapTab model.umapParams
-            , lazy similarityTab model.columnParams
-            , lazy plotTab model.plotParams
-            ]
+            (let
+                headers =
+                    A.map .name model.columnParams
+             in
+             [ controlTab
+             , lazy3 tableTab model.tableState headers model.records
+             , lazy umapTab model.umapParams
+             , lazy similarityTab model.columnParams
+             , lazy2 plotTab model.plotParams headers
+             ]
+            )
         ]

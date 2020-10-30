@@ -18,34 +18,26 @@ import View.SideBar.Style exposing (Layout(..), reusableInput, reusableTab)
 
 umapTab : UmapParams -> Component
 umapTab umapParams =
-    reusableTab { title = "Umap", layout = ColumnLayout }
-        [ label [ css [ Css.color theme.white ] ] [ text "minimum Distance" ]
-        , reusableInput
+    reusableTab { title = "Umap", layout = RowLayout }
+        [ reusableInput "minimum Distance"
             [ Att.type_ "number"
             , Att.placeholder "minDist"
             , Att.step "0.01"
             , Att.value <| String.fromFloat umapParams.minDist
             , onInput (\x -> SetUmapParams { umapParams | minDist = withDefault 0.1 (String.toFloat x) })
             ]
-            []
-        , label [ css [ Css.color theme.white ] ] [ text "spread" ]
-        , reusableInput
+        , reusableInput "spread"
             [ Att.type_ "number"
             , Att.placeholder "spread"
             , Att.step "0.01"
             , Att.value <| String.fromFloat umapParams.spread
-            , css [ Css.width (Css.pct 30) ]
             , onInput (\x -> SetUmapParams { umapParams | spread = withDefault 1.0 (String.toFloat x) })
             ]
-            []
-        , label [ css [ Css.color theme.white ] ] [ text "nNeighbors" ]
-        , reusableInput
+        , reusableInput "nNeighbors"
             [ Att.type_ "number"
             , Att.placeholder "nNeighbours"
             , Att.step "1"
             , Att.value <| String.fromInt umapParams.nNeighbors
-            , css [ Css.width (Css.pct 30) ]
             , onInput (\x -> SetUmapParams { umapParams | nNeighbors = withDefault 15 (String.toInt x) })
             ]
-            []
         ]

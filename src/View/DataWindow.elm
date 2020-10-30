@@ -49,9 +49,9 @@ viewPanel model =
         colorColumn =
             Maybe.andThen (\idx -> Util.Matrix.getColumn idx "" model.records) colorsidx
     in
-    panel [ css [ Css.flexGrow (Css.num 1) ] ]
+    panel [ css [ Css.width (Css.pct 100) ] ]
         [ div
-            [ css [ Css.height (Css.vh 90) ] ]
+            [ css [ Css.height (Css.pct 90) ] ]
             [ lazy3 graphMap
                 model.positions
                 labels
@@ -71,6 +71,9 @@ graphMap positions labels colors =
 
         colors_ =
             withDefault (A.repeat (A.length data) "#000000") colors
+
+        sizes_ =
+            withDefault (A.repeat (A.length data) "1") colors
     in
     div
         [ css
@@ -87,5 +90,5 @@ graphMap positions labels colors =
                 , Html.Attributes.style "height" "95%"
                 , Html.Attributes.id "graph"
                 ]
-                [ View.Graph.graph data labels_ colors_ ]
+                [ View.Graph.graph { positions = data, labels = labels_, colors = colors_, sizes = sizes_ } ]
         ]

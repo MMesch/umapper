@@ -7,6 +7,7 @@ import File.Download
 import File.Select as Select
 import Maybe exposing (Maybe(..), withDefault)
 import Result exposing (toMaybe)
+import String exposing (String)
 import Table
 import Task
 import Util.Cmap as Cmap exposing (Colormap)
@@ -20,8 +21,11 @@ type Msg
     | CsvLoaded String
     | SetQuery String
     | SetTableState Table.State
-    | UpdateWeight Int String
     | SetUmapParams UmapParams
+    | SetChannelColor String
+    | SetChannelSize String
+    | SetColumnWeight Int String
+    | SetColumnDistance Int String
     | UmapSender
     | UmapReceiver Matrix
     | GetSvg
@@ -61,10 +65,9 @@ distanceMap =
     [ ( "MultiString", MultiString ) ]
 
 
-type Channel
-    = ColorChannel Colormap
-    | SizeChannel
-    | NoChannel
+toString : DistanceFunction -> String
+toString =
+    Util.Util.typeMapToString distanceMap
 
 
 type alias ColumnParams =
@@ -86,9 +89,7 @@ type alias PlotParams =
     { labelColumns : List String
     , colorChannel : Maybe String
     , sizeChannel : Maybe String
-    , fillChannel : Maybe String
-    , strokeChannel : Maybe String
-    , nodeSize : Float
+    , baseSize : Float
     , colorMap : Colormap
     }
 
@@ -98,9 +99,7 @@ defaultPlotParams =
     { labelColumns = []
     , colorChannel = Nothing
     , sizeChannel = Nothing
-    , fillChannel = Nothing
-    , strokeChannel = Nothing
-    , nodeSize = 1
+    , baseSize = 1
     , colorMap = Cmap.Quantitative
     }
 
@@ -184,7 +183,7 @@ update msg model =
         UmapReceiver matrix ->
             ( { model | positions = Just matrix }, Cmd.none )
 
-        UpdateWeight index value ->
+        SetColumnWeight index value ->
             let
                 oldColumnParams =
                     withDefault defaultColumnParams
@@ -198,6 +197,29 @@ update msg model =
             , Cmd.none
             )
 
+        SetColumnDistance index value ->
+            ( model, Cmd.none )
+
+        SetChannelColor value ->
+            let
+                oldParams =
+                    model.plotParams
+
+                newParams =
+                    { oldParams | colorChannel = extractNothing value }
+            in
+            ( { model | plotParams = newParams }, Cmd.none )
+
+        SetChannelSize value ->
+            let
+                oldParams =
+                    model.plotParams
+
+                newParams =
+                    { oldParams | sizeChannel = extractNothing value }
+            in
+            ( { model | plotParams = newParams }, Cmd.none )
+
         SetTableState newState ->
             ( { model | tableState = newState }
             , Cmd.none
@@ -208,6 +230,16 @@ update msg model =
 
         GotSvg output ->
             ( model, downloadSvg output )
+
+
+extractNothing : String -> Maybe String
+extractNothing value =
+    case value of
+        "nothing" ->
+            Nothing
+
+        _ ->
+            Just value
 
 
 downloadSvg : String -> Cmd msg

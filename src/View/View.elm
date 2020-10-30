@@ -28,12 +28,15 @@ mainWindow components =
             [ Css.backgroundColor theme.lightblue
             , Css.minHeight (Css.vh 100)
             , Css.width (Css.vw 100)
+            , Css.displayFlex
+            , Css.alignItems Css.center
             ]
         ]
         [ div
             [ css
                 [ Css.displayFlex
                 , Css.flexDirection Css.row
+                , Css.width (Css.pct 100)
                 , forSmallWidth
                     [ Css.flexDirection Css.column
                     , Css.padding (Css.px 3)

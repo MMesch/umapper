@@ -7,7 +7,7 @@ import Html.Styled.Attributes as Att exposing (css)
 import Model.Model exposing (ColumnParams, Msg(..))
 import Util.Cmap
 import View.Components exposing (Component, onChange, theme)
-import View.SideBar.Style exposing (Layout(..), reusableTab)
+import View.SideBar.Style exposing (Layout(..), reusableInput, reusableSelect, reusableTab)
 
 
 similarityTab : Array ColumnParams -> Component
@@ -21,27 +21,36 @@ similarityTab columnParams =
 
 indexSlider : ( Int, ColumnParams ) -> Component
 indexSlider ( index, params ) =
-    div [ css [ Css.display Css.block ] ]
+    div [ css [ Css.display Css.inlineBlock ] ]
         [ div
             [ css
                 [ Css.margin (Css.px 5)
                 , Css.displayFlex
                 , Css.flexDirection Css.column
+                , Css.border3 (Css.px 1) Css.solid theme.black
                 ]
             ]
-            [ label [ css [ Css.color theme.white ] ] [ text params.name ]
-            , select [ Att.name "distance function" ] <|
-                List.map
-                    (\( n, v ) -> option [ Att.value n ] [ text n ])
-                    Util.Cmap.colormapMap
-            , input
+            [ div
+                [ css
+                    [ Css.textAlign Css.center
+                    , Css.color theme.white
+                    , Css.margin (Css.px 5)
+                    ]
+                ]
+                [ text params.name ]
+            , reusableSelect
+                (SetColumnDistance index)
+                { title = "distance"
+                , selected = Model.Model.toString params.distance
+                , values = List.map Tuple.first Model.Model.distanceMap
+                }
+            , reusableInput "weight"
                 [ Att.type_ "range"
                 , Att.min "0.0"
                 , Att.max "1.0"
                 , Att.step "0.1"
                 , Att.value <| String.fromFloat params.weight
-                , onChange (UpdateWeight index)
+                , onChange (SetColumnWeight index)
                 ]
-                [ text <| String.fromFloat params.weight ]
             ]
         ]
