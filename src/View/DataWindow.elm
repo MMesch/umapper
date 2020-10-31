@@ -4,6 +4,7 @@ import Array as A exposing (Array)
 import Array.Extra as A
 import Css
 import Dict
+import Draggable
 import Html.Attributes
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
@@ -52,16 +53,24 @@ viewPanel model =
     panel [ css [ Css.width (Css.pct 100) ] ]
         [ div
             [ css [ Css.height (Css.pct 90) ] ]
-            [ lazy3 graphMap
-                model.positions
-                labels
-                (Maybe.map Util.Cmap.translate colorColumn)
+            [ lazy graphMap
+                { positions = model.positions
+                , labels = labels
+                , colors = Maybe.map Util.Cmap.translate colorColumn
+                , center = model.position
+                }
             ]
         ]
 
 
-graphMap : Maybe Matrix -> Array String -> Maybe (Array String) -> Component
-graphMap positions labels colors =
+graphMap :
+    { positions : Maybe Matrix
+    , labels : Array String
+    , colors : Maybe (Array String)
+    , center : ( Int, Int )
+    }
+    -> Component
+graphMap { positions, labels, colors, center } =
     let
         data =
             withDefault Util.Util.testMatrix positions
@@ -86,9 +95,19 @@ graphMap positions labels colors =
         ]
         [ fromUnstyled <|
             Svg.svg
-                [ Html.Attributes.style "width" "95%"
-                , Html.Attributes.style "height" "95%"
-                , Html.Attributes.id "graph"
+                ([ Html.Attributes.style "width" "95%"
+                 , Html.Attributes.style "height" "95%"
+                 , Html.Attributes.id "graph"
+                 , Draggable.mouseTrigger "my-element" DragMsg
+                 ]
+                    ++ Draggable.touchTriggers "my-element" DragMsg
+                )
+                [ View.Graph.graph
+                    { center = center
+                    , positions = data
+                    , labels = labels_
+                    , colors = colors_
+                    , sizes = sizes_
+                    }
                 ]
-                [ View.Graph.graph { positions = data, labels = labels_, colors = colors_, sizes = sizes_ } ]
         ]

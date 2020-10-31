@@ -42,8 +42,12 @@ dragConfig =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.batch [ receiver UmapReceiver, gotSvg GotSvg ]
+subscriptions { drag } =
+    Sub.batch
+        [ receiver UmapReceiver
+        , gotSvg GotSvg
+        , Draggable.subscriptions DragMsg drag
+        ]
 
 
 type alias UmapParams =
@@ -254,7 +258,12 @@ update msg model =
                 ( x, y ) =
                     model.position
             in
-            ( { model | position = ( round (toFloat x), round (toFloat y) ) }
+            ( { model
+                | position =
+                    ( round (toFloat x - dx)
+                    , round (toFloat y - dy)
+                    )
+              }
             , Cmd.none
             )
 

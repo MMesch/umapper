@@ -5,6 +5,7 @@ import Array.Extra as A
 import Css exposing (matrix, translateY)
 import Maybe exposing (withDefault)
 import Maybe.Extra
+import String
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 import Util.Matrix exposing (Matrix)
@@ -16,11 +17,19 @@ graph :
     , labels : A.Array String
     , colors : A.Array String
     , sizes : A.Array String
+    , center : ( Int, Int )
     }
     -> Svg msg
-graph { positions, labels, colors, sizes } =
+graph { positions, labels, colors, sizes, center } =
     svg
-        [ viewBox "-1 -1 101 101"
+        [ viewBox <|
+            String.fromInt (-1 + Tuple.first center)
+                ++ " "
+                ++ String.fromInt (-1 + Tuple.second center)
+                ++ " "
+                ++ String.fromInt (101 + Tuple.first center)
+                ++ " "
+                ++ String.fromInt (101 + Tuple.second center)
         ]
         (A.toList <|
             A.map3 toNode (normalize positions) labels colors
