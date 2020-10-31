@@ -26,6 +26,7 @@ type Msg
     | SetUmapParams UmapParams
     | SetChannelColor String
     | SetChannelSize String
+    | SetLabelColumns (List String)
     | SetColumnWeight Int String
     | SetColumnDistance Int String
     | UmapSender
@@ -281,6 +282,16 @@ update msg model =
                         |> clamp 0.5 5
             in
             ( { model | zoom = newZoom }, Cmd.none )
+
+        SetLabelColumns labels ->
+            let
+                oldParams =
+                    model.plotParams
+
+                newParams =
+                    { oldParams | labelColumns = labels }
+            in
+            ( { model | plotParams = newParams }, Cmd.none )
 
 
 extractNothing : String -> Maybe String

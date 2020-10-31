@@ -7,6 +7,7 @@ import Html.Styled.Attributes as Att exposing (css)
 import Html.Styled.Events exposing (onClick, onInput)
 import Maybe exposing (withDefault)
 import Model.Model exposing (Model, Msg(..), PlotParams)
+import MultiSelect
 import Util.Cmap
 import View.Components
     exposing
@@ -29,4 +30,11 @@ plotTab params headers =
             , selected = withDefault "nothing" params.sizeChannel
             , values = "nothing" :: A.toList headers
             }
+        , fromUnstyled <|
+            MultiSelect.multiSelect
+                { items = List.map (\h -> { value = h, text = h, enabled = True }) <| A.toList headers
+                , onChange = SetLabelColumns
+                }
+                []
+                (A.toList headers)
         ]
