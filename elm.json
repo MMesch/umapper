@@ -6,6 +6,7 @@
     "elm-version": "0.19.1",
     "dependencies": {
         "direct": {
+            "abadi199/elm-input-extra": "5.2.4",
             "billstclair/elm-sortable-table": "1.2.0",
             "elm/browser": "1.0.2",
             "elm/core": "1.0.5",
@@ -23,9 +24,11 @@
         "indirect": {
             "elm/bytes": "1.0.8",
             "elm/parser": "1.1.0",
+            "elm/regex": "1.0.0",
             "elm/time": "1.0.0",
             "elm/url": "1.0.0",
             "elm/virtual-dom": "1.0.2",
+            "elm-community/list-extra": "8.2.4",
             "mpizenberg/elm-pointer-events": "4.0.2",
             "rtfeldman/elm-hex": "1.0.0"
         }
