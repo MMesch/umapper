@@ -1,7 +1,9 @@
 port module Model.Model exposing (..)
 
 import Array as A exposing (Array)
+import Css exposing (position)
 import Csv exposing (Csv, parse)
+import Draggable exposing (Msg)
 import File exposing (File)
 import File.Download
 import File.Select as Select
@@ -30,6 +32,13 @@ type Msg
     | UmapReceiver Matrix
     | GetSvg
     | GotSvg String
+    | OnDragBy Draggable.Delta
+    | DragMsg (Draggable.Msg String)
+
+
+dragConfig : Draggable.Config String Msg
+dragConfig =
+    Draggable.basicConfig OnDragBy
 
 
 subscriptions : Model -> Sub Msg
@@ -58,11 +67,16 @@ port gotSvg : (String -> msg) -> Sub msg
 
 type DistanceFunction
     = MultiString
+    | Euclidean
+    | NumberOfEntries
 
 
 distanceMap : List ( String, DistanceFunction )
 distanceMap =
-    [ ( "MultiString", MultiString ) ]
+    [ ( "MultiString", MultiString )
+    , ( "Euclidean", Euclidean )
+    , ( "NumberOfEntries", NumberOfEntries )
+    ]
 
 
 toString : DistanceFunction -> String
@@ -112,6 +126,8 @@ type alias Model =
     , positions : Maybe Matrix
     , tableState : Table.State
     , umapParams : UmapParams
+    , position : ( Int, Int )
+    , drag : Draggable.State String
     }
 
 
@@ -145,6 +161,8 @@ init _ =
       , tableState = Table.initialSort "name"
       , umapParams = { minDist = 0.1, spread = 1.0, nNeighbors = 3 }
       , plotParams = { defaultPlotParams | labelColumns = [ "date", "participants" ] }
+      , position = ( 0, 0 )
+      , drag = Draggable.init
       }
     , Cmd.none
     )
@@ -230,6 +248,18 @@ update msg model =
 
         GotSvg output ->
             ( model, downloadSvg output )
+
+        OnDragBy ( dx, dy ) ->
+            let
+                ( x, y ) =
+                    model.position
+            in
+            ( { model | position = ( round (toFloat x), round (toFloat y) ) }
+            , Cmd.none
+            )
+
+        DragMsg dragMsg ->
+            Draggable.update dragConfig dragMsg model
 
 
 extractNothing : String -> Maybe String
