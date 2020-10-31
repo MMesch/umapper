@@ -6,9 +6,11 @@ import Css
 import Dict
 import Draggable
 import Html.Attributes
+import Html.Events
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
 import Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
+import Json.Decode as Decode exposing (Decoder)
 import List as L
 import Maybe exposing (withDefault)
 import Maybe.Extra
@@ -57,7 +59,8 @@ viewPanel model =
                 { positions = model.positions
                 , labels = labels
                 , colors = Maybe.map Util.Cmap.translate colorColumn
-                , center = model.position
+                , center = model.center
+                , zoom = model.zoom
                 }
             ]
         ]
@@ -67,10 +70,11 @@ graphMap :
     { positions : Maybe Matrix
     , labels : Array String
     , colors : Maybe (Array String)
-    , center : ( Int, Int )
+    , center : ( Float, Float )
+    , zoom : Float
     }
     -> Component
-graphMap { positions, labels, colors, center } =
+graphMap { positions, labels, colors, center, zoom } =
     let
         data =
             withDefault Util.Util.testMatrix positions
@@ -98,6 +102,7 @@ graphMap { positions, labels, colors, center } =
                 ([ Html.Attributes.style "width" "95%"
                  , Html.Attributes.style "height" "95%"
                  , Html.Attributes.id "graph"
+                 , handleZoom Zoom
                  , Draggable.mouseTrigger "my-element" DragMsg
                  ]
                     ++ Draggable.touchTriggers "my-element" DragMsg
@@ -108,6 +113,25 @@ graphMap { positions, labels, colors, center } =
                     , labels = labels_
                     , colors = colors_
                     , sizes = sizes_
+                    , zoom = zoom
                     }
                 ]
         ]
+
+
+handleZoom : (Float -> msg) -> Svg.Attribute msg
+handleZoom onZoom =
+    let
+        alwaysPreventDefaultAndStopPropagation msg =
+            { message = msg, stopPropagation = True, preventDefault = True }
+
+        zoomDecoder : Decoder msg
+        zoomDecoder =
+            Decode.float
+                |> Decode.field "deltaY"
+                |> Decode.map onZoom
+    in
+    Html.Events.custom
+        "wheel"
+    <|
+        Decode.map alwaysPreventDefaultAndStopPropagation zoomDecoder

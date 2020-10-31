@@ -17,23 +17,29 @@ graph :
     , labels : A.Array String
     , colors : A.Array String
     , sizes : A.Array String
-    , center : ( Int, Int )
+    , center : ( Float, Float )
+    , zoom : Float
     }
     -> Svg msg
-graph { positions, labels, colors, sizes, center } =
+graph { positions, labels, colors, sizes, center, zoom } =
+    let
+        panning =
+            "translate("
+                ++ String.fromFloat (-1 * Tuple.first center)
+                ++ ", "
+                ++ String.fromFloat (-1 * Tuple.second center)
+                ++ ")"
+
+        zooming =
+            "scale(" ++ String.fromFloat zoom ++ ")"
+    in
     svg
-        [ viewBox <|
-            String.fromInt (-1 + Tuple.first center)
-                ++ " "
-                ++ String.fromInt (-1 + Tuple.second center)
-                ++ " "
-                ++ String.fromInt (101 + Tuple.first center)
-                ++ " "
-                ++ String.fromInt (101 + Tuple.second center)
+        [ viewBox "-1 -1 101 101" ]
+        [ g [ transform (zooming ++ " " ++ panning) ]
+            (A.toList <|
+                A.map3 toNode (normalize positions) labels colors
+            )
         ]
-        (A.toList <|
-            A.map3 toNode (normalize positions) labels colors
-        )
 
 
 toNode : A.Array Float -> String -> String -> Svg msg

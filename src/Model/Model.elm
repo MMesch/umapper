@@ -34,6 +34,7 @@ type Msg
     | GotSvg String
     | OnDragBy Draggable.Delta
     | DragMsg (Draggable.Msg String)
+    | Zoom Float
 
 
 dragConfig : Draggable.Config String Msg
@@ -130,8 +131,9 @@ type alias Model =
     , positions : Maybe Matrix
     , tableState : Table.State
     , umapParams : UmapParams
-    , position : ( Int, Int )
+    , center : ( Float, Float )
     , drag : Draggable.State String
+    , zoom : Float
     }
 
 
@@ -165,8 +167,9 @@ init _ =
       , tableState = Table.initialSort "name"
       , umapParams = { minDist = 0.1, spread = 1.0, nNeighbors = 3 }
       , plotParams = { defaultPlotParams | labelColumns = [ "date", "participants" ] }
-      , position = ( 0, 0 )
+      , center = ( 0, 0 )
       , drag = Draggable.init
+      , zoom = 1.0
       }
     , Cmd.none
     )
@@ -256,12 +259,12 @@ update msg model =
         OnDragBy ( dx, dy ) ->
             let
                 ( x, y ) =
-                    model.position
+                    model.center
             in
             ( { model
-                | position =
-                    ( round (toFloat x - dx)
-                    , round (toFloat y - dy)
+                | center =
+                    ( x - 0.1 * dx
+                    , y - 0.1 * dy
                     )
               }
             , Cmd.none
@@ -269,6 +272,15 @@ update msg model =
 
         DragMsg dragMsg ->
             Draggable.update dragConfig dragMsg model
+
+        Zoom factor ->
+            let
+                newZoom =
+                    model.zoom
+                        |> (+) (factor * 0.005)
+                        |> clamp 0.5 5
+            in
+            ( { model | zoom = newZoom }, Cmd.none )
 
 
 extractNothing : String -> Maybe String
