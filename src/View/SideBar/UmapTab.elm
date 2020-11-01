@@ -19,21 +19,21 @@ import View.SideBar.Style exposing (Layout(..), reusableInput, reusableTab)
 umapTab : UmapParams -> Component
 umapTab umapParams =
     reusableTab { title = "Umap", layout = RowLayout }
-        [ reusableInput "minimum Distance"
+        [ reusableInput (Just "minimum Distance")
             [ Att.type_ "number"
             , Att.placeholder "minDist"
             , Att.step "0.01"
             , Att.value <| String.fromFloat umapParams.minDist
             , onInput (\x -> SetUmapParams { umapParams | minDist = withDefault 0.1 (String.toFloat x) })
             ]
-        , reusableInput "spread"
+        , reusableInput (Just "spread")
             [ Att.type_ "number"
             , Att.placeholder "spread"
             , Att.step "0.01"
             , Att.value <| String.fromFloat umapParams.spread
             , onInput (\x -> SetUmapParams { umapParams | spread = withDefault 1.0 (String.toFloat x) })
             ]
-        , reusableInput "nNeighbors"
+        , reusableInput (Just "nNeighbors")
             [ Att.type_ "number"
             , Att.placeholder "nNeighbours"
             , Att.step "1"

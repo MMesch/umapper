@@ -29,24 +29,24 @@ plotTab : PlotParams -> Array String -> Component
 plotTab params headers =
     reusableTab { title = "Plot Control", layout = RowLayout }
         [ reusableSelect (\x -> SetPlotParams { params | colorChannel = x })
-            { title = "color channel"
+            { title = Just "color channel"
             , hasEmpty = True
             , selected = params.colorChannel
             , values = A.toList headers
             }
         , reusableSelect (\x -> SetPlotParams { params | sizeChannel = x })
-            { title = "size channel"
+            { title = Just "size channel"
             , hasEmpty = True
             , selected = params.sizeChannel
             , values = A.toList headers
             }
         , reusableMultiSelect (\x -> SetPlotParams { params | labelColumns = x })
-            { title = "label columns"
+            { title = Just "label columns"
             , hasEmpty = False
             , values = A.toList headers
             , selected = params.labelColumns
             }
-        , reusableInput "base size"
+        , reusableInput (Just "base size")
             [ Att.type_ "number"
             , Att.placeholder "spread"
             , Att.step "0.1"

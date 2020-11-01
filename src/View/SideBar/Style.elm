@@ -1,7 +1,7 @@
 module View.SideBar.Style exposing (..)
 
 import Array as A exposing (Array)
-import Css
+import Css exposing (row)
 import Dropdown
 import Html.Attributes as UnstyledAtt
 import Html.Styled exposing (..)
@@ -91,19 +91,27 @@ reusableTab params components =
         ]
 
 
-reusableInput : String -> List (Attribute Msg) -> Component
+reusableInput : Maybe String -> List (Attribute Msg) -> Component
 reusableInput name atts =
-    inputWrapper name <|
-        input
-            ([ css
-                [ Css.width (Css.px 80)
-                , Css.fontSize (Css.rem 1.2)
-                , Css.display Css.inlineBlock
-                ]
-             ]
-                ++ atts
-            )
-            []
+    let
+        inputElem =
+            input
+                ([ css
+                    [ Css.width (Css.px 80)
+                    , Css.fontSize (Css.rem 1.2)
+                    , Css.display Css.inlineBlock
+                    ]
+                 ]
+                    ++ atts
+                )
+                []
+    in
+    case name of
+        Just name_ ->
+            inputWrapper name_ inputElem
+
+        Nothing ->
+            inputElem
 
 
 inputWrapper : String -> Component -> Component
@@ -132,56 +140,72 @@ inputWrapper title c =
 reusableSelect :
     (Maybe String -> Msg)
     ->
-        { title : String
+        { title : Maybe String
         , values : List String
         , hasEmpty : Bool
         , selected : Maybe String
         }
     -> Component
 reusableSelect msg { title, values, hasEmpty, selected } =
-    inputWrapper title <|
-        fromUnstyled <|
-            Dropdown.dropdown
-                { items = List.map (\v -> { value = v, text = v, enabled = True }) values
-                , emptyItem =
-                    if hasEmpty then
-                        Just <| { value = "nothing", text = "nothing", enabled = True }
+    let
+        dropdown =
+            fromUnstyled <|
+                Dropdown.dropdown
+                    { items = List.map (\v -> { value = v, text = v, enabled = True }) values
+                    , emptyItem =
+                        if hasEmpty then
+                            Just <| { value = "nothing", text = "nothing", enabled = True }
 
-                    else
-                        Nothing
-                , onChange = msg
-                }
-                (List.map (\( a, b ) -> UnstyledAtt.style a b)
-                    [ ( "display", "inline-block" )
-                    , ( "width", "80px" )
-                    ]
-                )
-                selected
+                        else
+                            Nothing
+                    , onChange = msg
+                    }
+                    (List.map (\( a, b ) -> UnstyledAtt.style a b)
+                        [ ( "display", "inline-block" )
+                        , ( "width", "80px" )
+                        ]
+                    )
+                    selected
+    in
+    case title of
+        Just title_ ->
+            inputWrapper title_ dropdown
+
+        Nothing ->
+            dropdown
 
 
 reusableMultiSelect :
     (List String -> Msg)
     ->
-        { title : String
+        { title : Maybe String
         , values : List String
         , hasEmpty : Bool
         , selected : List String
         }
     -> Component
 reusableMultiSelect msg { title, values, hasEmpty, selected } =
-    inputWrapper title <|
-        fromUnstyled <|
-            MultiSelect.multiSelect
-                { items =
-                    List.map
-                        (\h ->
-                            { value = h
-                            , text = h
-                            , enabled = True
-                            }
-                        )
-                        values
-                , onChange = msg
-                }
-                []
-                selected
+    let
+        multiselect =
+            fromUnstyled <|
+                MultiSelect.multiSelect
+                    { items =
+                        List.map
+                            (\h ->
+                                { value = h
+                                , text = h
+                                , enabled = True
+                                }
+                            )
+                            values
+                    , onChange = msg
+                    }
+                    []
+                    selected
+    in
+    case title of
+        Just title_ ->
+            inputWrapper title_ multiselect
+
+        Nothing ->
+            multiselect

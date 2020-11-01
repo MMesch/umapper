@@ -11091,26 +11091,29 @@ var $author$project$View$SideBar$Style$inputWrapper = F2(
 	});
 var $author$project$View$SideBar$Style$reusableInput = F2(
 	function (name, atts) {
-		return A2(
-			$author$project$View$SideBar$Style$inputWrapper,
-			name,
-			A2(
-				$rtfeldman$elm_css$Html$Styled$input,
-				_Utils_ap(
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$width(
-									$rtfeldman$elm_css$Css$px(80)),
-									$rtfeldman$elm_css$Css$fontSize(
-									$rtfeldman$elm_css$Css$rem(1.2)),
-									$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock)
-								]))
-						]),
-					atts),
-				_List_Nil));
+		var inputElem = A2(
+			$rtfeldman$elm_css$Html$Styled$input,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Css$width(
+								$rtfeldman$elm_css$Css$px(80)),
+								$rtfeldman$elm_css$Css$fontSize(
+								$rtfeldman$elm_css$Css$rem(1.2)),
+								$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock)
+							]))
+					]),
+				atts),
+			_List_Nil);
+		if (!name.$) {
+			var name_ = name.a;
+			return A2($author$project$View$SideBar$Style$inputWrapper, name_, inputElem);
+		} else {
+			return inputElem;
+		}
 	});
 var $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode = $rtfeldman$elm_css$VirtualDom$Styled$Unstyled;
 var $rtfeldman$elm_css$Html$Styled$fromUnstyled = $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode;
@@ -11258,23 +11261,26 @@ var $author$project$View$SideBar$Style$reusableMultiSelect = F2(
 		var values = _v0.bP;
 		var hasEmpty = _v0.bm;
 		var selected = _v0.bC;
-		return A2(
-			$author$project$View$SideBar$Style$inputWrapper,
-			title,
-			$rtfeldman$elm_css$Html$Styled$fromUnstyled(
-				A3(
-					$abadi199$elm_input_extra$MultiSelect$multiSelect,
-					{
-						cn: A2(
-							$elm$core$List$map,
-							function (h) {
-								return {bj: true, bJ: h, bO: h};
-							},
-							values),
-						cv: msg
-					},
-					_List_Nil,
-					selected)));
+		var multiselect = $rtfeldman$elm_css$Html$Styled$fromUnstyled(
+			A3(
+				$abadi199$elm_input_extra$MultiSelect$multiSelect,
+				{
+					cn: A2(
+						$elm$core$List$map,
+						function (h) {
+							return {bj: true, bJ: h, bO: h};
+						},
+						values),
+					cv: msg
+				},
+				_List_Nil,
+				selected));
+		if (!title.$) {
+			var title_ = title.a;
+			return A2($author$project$View$SideBar$Style$inputWrapper, title_, multiselect);
+		} else {
+			return multiselect;
+		}
 	});
 var $elm$html$Html$Events$targetValue = A2(
 	$elm$json$Json$Decode$at,
@@ -11361,36 +11367,39 @@ var $author$project$View$SideBar$Style$reusableSelect = F2(
 		var values = _v0.bP;
 		var hasEmpty = _v0.bm;
 		var selected = _v0.bC;
-		return A2(
-			$author$project$View$SideBar$Style$inputWrapper,
-			title,
-			$rtfeldman$elm_css$Html$Styled$fromUnstyled(
-				A3(
-					$abadi199$elm_input_extra$Dropdown$dropdown,
-					{
-						$7: hasEmpty ? $elm$core$Maybe$Just(
-							{bj: true, bJ: 'nothing', bO: 'nothing'}) : $elm$core$Maybe$Nothing,
-						cn: A2(
-							$elm$core$List$map,
-							function (v) {
-								return {bj: true, bJ: v, bO: v};
-							},
-							values),
-						cv: msg
-					},
-					A2(
+		var dropdown = $rtfeldman$elm_css$Html$Styled$fromUnstyled(
+			A3(
+				$abadi199$elm_input_extra$Dropdown$dropdown,
+				{
+					$7: hasEmpty ? $elm$core$Maybe$Just(
+						{bj: true, bJ: 'nothing', bO: 'nothing'}) : $elm$core$Maybe$Nothing,
+					cn: A2(
 						$elm$core$List$map,
-						function (_v1) {
-							var a = _v1.a;
-							var b = _v1.b;
-							return A2($elm$html$Html$Attributes$style, a, b);
+						function (v) {
+							return {bj: true, bJ: v, bO: v};
 						},
-						_List_fromArray(
-							[
-								_Utils_Tuple2('display', 'inline-block'),
-								_Utils_Tuple2('width', '80px')
-							])),
-					selected)));
+						values),
+					cv: msg
+				},
+				A2(
+					$elm$core$List$map,
+					function (_v2) {
+						var a = _v2.a;
+						var b = _v2.b;
+						return A2($elm$html$Html$Attributes$style, a, b);
+					},
+					_List_fromArray(
+						[
+							_Utils_Tuple2('display', 'inline-block'),
+							_Utils_Tuple2('width', '80px')
+						])),
+				selected));
+		if (!title.$) {
+			var title_ = title.a;
+			return A2($author$project$View$SideBar$Style$inputWrapper, title_, dropdown);
+		} else {
+			return dropdown;
+		}
 	});
 var $rtfeldman$elm_css$Html$Styled$Attributes$step = function (n) {
 	return A2($rtfeldman$elm_css$Html$Styled$Attributes$stringProperty, 'step', n);
@@ -11415,7 +11424,7 @@ var $author$project$View$SideBar$PlotTab$plotTab = F2(
 					{
 						bm: true,
 						bC: params.b3,
-						ed: 'color channel',
+						ed: $elm$core$Maybe$Just('color channel'),
 						bP: $elm$core$Array$toList(headers)
 					}),
 					A2(
@@ -11429,7 +11438,7 @@ var $author$project$View$SideBar$PlotTab$plotTab = F2(
 					{
 						bm: true,
 						bC: params.cN,
-						ed: 'size channel',
+						ed: $elm$core$Maybe$Just('size channel'),
 						bP: $elm$core$Array$toList(headers)
 					}),
 					A2(
@@ -11443,12 +11452,12 @@ var $author$project$View$SideBar$PlotTab$plotTab = F2(
 					{
 						bm: false,
 						bC: params.bp,
-						ed: 'label columns',
+						ed: $elm$core$Maybe$Just('label columns'),
 						bP: $elm$core$Array$toList(headers)
 					}),
 					A2(
 					$author$project$View$SideBar$Style$reusableInput,
-					'base size',
+					$elm$core$Maybe$Just('base size'),
 					_List_fromArray(
 						[
 							$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
@@ -11487,18 +11496,6 @@ var $author$project$Model$Model$SetColumnWeight = F2(
 	function (a, b) {
 		return {$: 7, a: a, b: b};
 	});
-var $rtfeldman$elm_css$Css$prop3 = F4(
-	function (key, argA, argB, argC) {
-		return A2(
-			$rtfeldman$elm_css$Css$property,
-			key,
-			A2(
-				$elm$core$String$join,
-				' ',
-				_List_fromArray(
-					[argA.bO, argB.bO, argC.bO])));
-	});
-var $rtfeldman$elm_css$Css$border3 = $rtfeldman$elm_css$Css$prop3('border');
 var $author$project$Model$Model$Euclidean = 1;
 var $author$project$Model$Model$NumberOfEntries = 2;
 var $author$project$Model$Model$distanceMap = _List_fromArray(
@@ -11522,7 +11519,6 @@ var $author$project$View$Components$onChange = function (handler) {
 					['target', 'value']),
 				$elm$json$Json$Decode$string)));
 };
-var $rtfeldman$elm_css$Css$solid = {q: 0, Y: 0, bO: 'solid'};
 var $author$project$Util$Util$typeMapToString = F2(
 	function (allPairs, key) {
 		return A2(
@@ -11539,85 +11535,121 @@ var $author$project$Util$Util$typeMapToString = F2(
 					allPairs)));
 	});
 var $author$project$Model$Model$toString = $author$project$Util$Util$typeMapToString($author$project$Model$Model$distanceMap);
-var $author$project$View$SideBar$SimilarityTab$indexSlider = function (_v0) {
+var $author$project$View$SideBar$SimilarityTab$columnBuilder = function (_v0) {
 	var index = _v0.a;
 	var params = _v0.b;
-	return A2(
-		$rtfeldman$elm_css$Html$Styled$div,
-		_List_fromArray(
-			[
-				$rtfeldman$elm_css$Html$Styled$Attributes$css(
-				_List_fromArray(
-					[
-						$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock)
-					]))
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$rtfeldman$elm_css$Html$Styled$div,
-				_List_fromArray(
-					[
-						$rtfeldman$elm_css$Html$Styled$Attributes$css(
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Css$margin(
-								$rtfeldman$elm_css$Css$px(5)),
-								$rtfeldman$elm_css$Css$displayFlex,
-								$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$column),
-								A3(
-								$rtfeldman$elm_css$Css$border3,
-								$rtfeldman$elm_css$Css$px(1),
-								$rtfeldman$elm_css$Css$solid,
-								$author$project$View$Components$theme.c4)
-							]))
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$rtfeldman$elm_css$Html$Styled$div,
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$css(
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Css$textAlign($rtfeldman$elm_css$Css$center),
-										$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.ek),
-										$rtfeldman$elm_css$Css$margin(
-										$rtfeldman$elm_css$Css$px(5))
-									]))
-							]),
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$text(params.aH)
-							])),
-						A2(
-						$author$project$View$SideBar$Style$reusableSelect,
-						$author$project$Model$Model$SetColumnDistance(index),
-						{
-							bm: false,
-							bC: $elm$core$Maybe$Just(
-								$author$project$Model$Model$toString(params.aV)),
-							ed: 'distance',
-							bP: A2($elm$core$List$map, $elm$core$Tuple$first, $author$project$Model$Model$distanceMap)
-						}),
-						A2(
-						$author$project$View$SideBar$Style$reusableInput,
-						'weight',
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$Attributes$type_('range'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$min('0.0'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$max('1.0'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$step('0.1'),
-								$rtfeldman$elm_css$Html$Styled$Attributes$value(
-								$elm$core$String$fromFloat(params.au)),
-								$author$project$View$Components$onChange(
-								$author$project$Model$Model$SetColumnWeight(index))
-							]))
-					]))
-			]));
+	var currentColumn = A2(
+		$rtfeldman$elm_css$Css$property,
+		'grid-column',
+		$elm$core$String$fromInt(index + 2));
+	return _List_fromArray(
+		[
+			A2(
+			$rtfeldman$elm_css$Html$Styled$div,
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$Attributes$css(
+					_List_fromArray(
+						[
+							currentColumn,
+							$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+							A2($rtfeldman$elm_css$Css$property, 'grid-row', '1'),
+							$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.ek),
+							$rtfeldman$elm_css$Css$padding(
+							$rtfeldman$elm_css$Css$px(2))
+						]))
+				]),
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$text(params.aH)
+				])),
+			A2(
+			$rtfeldman$elm_css$Html$Styled$div,
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$Attributes$css(
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+							currentColumn,
+							A2($rtfeldman$elm_css$Css$property, 'grid-row', '2')
+						]))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$author$project$View$SideBar$Style$reusableSelect,
+					$author$project$Model$Model$SetColumnDistance(index),
+					{
+						bm: false,
+						bC: $elm$core$Maybe$Just(
+							$author$project$Model$Model$toString(params.aV)),
+						ed: $elm$core$Maybe$Nothing,
+						bP: A2($elm$core$List$map, $elm$core$Tuple$first, $author$project$Model$Model$distanceMap)
+					})
+				])),
+			A2(
+			$rtfeldman$elm_css$Html$Styled$div,
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$Attributes$css(
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+							A2($rtfeldman$elm_css$Css$property, 'grid-row', '3'),
+							currentColumn
+						]))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$author$project$View$SideBar$Style$reusableInput,
+					$elm$core$Maybe$Nothing,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$type_('range'),
+							$rtfeldman$elm_css$Html$Styled$Attributes$min('0.0'),
+							$rtfeldman$elm_css$Html$Styled$Attributes$max('1.0'),
+							$rtfeldman$elm_css$Html$Styled$Attributes$step('0.1'),
+							$rtfeldman$elm_css$Html$Styled$Attributes$value(
+							$elm$core$String$fromFloat(params.au)),
+							$author$project$View$Components$onChange(
+							$author$project$Model$Model$SetColumnWeight(index))
+						]))
+				]))
+		]);
 };
+var $author$project$View$SideBar$SimilarityTab$firstColumn = function (labels) {
+	return A2(
+		$elm$core$List$indexedMap,
+		F2(
+			function (i, t) {
+				return A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$css(
+							_List_fromArray(
+								[
+									A2($rtfeldman$elm_css$Css$property, 'grid-column', '1'),
+									A2(
+									$rtfeldman$elm_css$Css$property,
+									'grid-row',
+									$elm$core$String$fromInt(i + 1)),
+									$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.ek),
+									$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block)
+								]))
+						]),
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$text(t)
+						]));
+			}),
+		labels);
+};
+var $rtfeldman$elm_css$Css$overflowX = $rtfeldman$elm_css$Css$prop1('overflow-x');
+var $rtfeldman$elm_css$Css$paddingBottom = $rtfeldman$elm_css$Css$prop1('padding-bottom');
+var $rtfeldman$elm_css$Css$paddingTop = $rtfeldman$elm_css$Css$prop1('padding-top');
 var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
 	return y;
@@ -11645,10 +11677,35 @@ var $author$project$View$SideBar$SimilarityTab$similarityTab = function (columnP
 	return A2(
 		$author$project$View$SideBar$Style$reusableTab,
 		{dC: $author$project$View$SideBar$Style$RowLayout, ed: 'Similarity'},
-		A2(
-			$elm$core$List$map,
-			$author$project$View$SideBar$SimilarityTab$indexSlider,
-			$elm$core$Array$toIndexedList(columnParams)));
+		_List_fromArray(
+			[
+				A2(
+				$rtfeldman$elm_css$Html$Styled$div,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_List_fromArray(
+							[
+								A2($rtfeldman$elm_css$Css$property, 'display', 'grid'),
+								$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center),
+								$rtfeldman$elm_css$Css$overflowX($rtfeldman$elm_css$Css$auto),
+								A2($rtfeldman$elm_css$Css$property, 'column-gap', '5px'),
+								A2($rtfeldman$elm_css$Css$property, 'row-gap', '10px'),
+								$rtfeldman$elm_css$Css$paddingBottom(
+								$rtfeldman$elm_css$Css$px(10)),
+								$rtfeldman$elm_css$Css$paddingTop(
+								$rtfeldman$elm_css$Css$px(10))
+							]))
+					]),
+				_Utils_ap(
+					$author$project$View$SideBar$SimilarityTab$firstColumn(
+						_List_fromArray(
+							['', 'distance', 'weight'])),
+					A2(
+						$elm$core$List$concatMap,
+						$author$project$View$SideBar$SimilarityTab$columnBuilder,
+						$elm$core$Array$toIndexedList(columnParams))))
+			]));
 };
 var $author$project$View$SideBar$Style$ColumnLayout = {$: 1};
 var $rtfeldman$elm_css$Css$overflow = $rtfeldman$elm_css$Css$prop1('overflow');
@@ -12086,7 +12143,7 @@ var $author$project$View$SideBar$UmapTab$umapTab = function (umapParams) {
 			[
 				A2(
 				$author$project$View$SideBar$Style$reusableInput,
-				'minimum Distance',
+				$elm$core$Maybe$Just('minimum Distance'),
 				_List_fromArray(
 					[
 						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
@@ -12109,7 +12166,7 @@ var $author$project$View$SideBar$UmapTab$umapTab = function (umapParams) {
 					])),
 				A2(
 				$author$project$View$SideBar$Style$reusableInput,
-				'spread',
+				$elm$core$Maybe$Just('spread'),
 				_List_fromArray(
 					[
 						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
@@ -12132,7 +12189,7 @@ var $author$project$View$SideBar$UmapTab$umapTab = function (umapParams) {
 					])),
 				A2(
 				$author$project$View$SideBar$Style$reusableInput,
-				'nNeighbors',
+				$elm$core$Maybe$Just('nNeighbors'),
 				_List_fromArray(
 					[
 						$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
