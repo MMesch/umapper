@@ -24,9 +24,7 @@ type Msg
     | SetQuery String
     | SetTableState Table.State
     | SetUmapParams UmapParams
-    | SetChannelColor (Maybe String)
-    | SetChannelSize (Maybe String)
-    | SetLabelColumns (List String)
+    | SetPlotParams PlotParams
     | SetColumnWeight Int String
     | SetColumnDistance Int (Maybe String)
     | UmapSender
@@ -226,26 +224,6 @@ update msg model =
         SetColumnDistance index value ->
             ( model, Cmd.none )
 
-        SetChannelColor value ->
-            let
-                oldParams =
-                    model.plotParams
-
-                newParams =
-                    { oldParams | colorChannel = value }
-            in
-            ( { model | plotParams = newParams }, Cmd.none )
-
-        SetChannelSize value ->
-            let
-                oldParams =
-                    model.plotParams
-
-                newParams =
-                    { oldParams | sizeChannel = value }
-            in
-            ( { model | plotParams = newParams }, Cmd.none )
-
         SetTableState newState ->
             ( { model | tableState = newState }
             , Cmd.none
@@ -283,15 +261,8 @@ update msg model =
             in
             ( { model | zoom = newZoom }, Cmd.none )
 
-        SetLabelColumns labels ->
-            let
-                oldParams =
-                    model.plotParams
-
-                newParams =
-                    { oldParams | labelColumns = labels }
-            in
-            ( { model | plotParams = newParams }, Cmd.none )
+        SetPlotParams params ->
+            ( { model | plotParams = params }, Cmd.none )
 
 
 downloadSvg : String -> Cmd msg

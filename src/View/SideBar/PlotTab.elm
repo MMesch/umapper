@@ -28,22 +28,29 @@ import View.SideBar.Style
 plotTab : PlotParams -> Array String -> Component
 plotTab params headers =
     reusableTab { title = "Plot Control", layout = RowLayout }
-        [ reusableSelect SetChannelColor
+        [ reusableSelect (\x -> SetPlotParams { params | colorChannel = x })
             { title = "color channel"
             , hasEmpty = True
             , selected = params.colorChannel
             , values = A.toList headers
             }
-        , reusableSelect SetChannelSize
+        , reusableSelect (\x -> SetPlotParams { params | sizeChannel = x })
             { title = "size channel"
             , hasEmpty = True
             , selected = params.sizeChannel
             , values = A.toList headers
             }
-        , reusableMultiSelect SetLabelColumns
+        , reusableMultiSelect (\x -> SetPlotParams { params | labelColumns = x })
             { title = "label columns"
             , hasEmpty = False
             , values = A.toList headers
             , selected = params.labelColumns
             }
+        , reusableInput "base size"
+            [ Att.type_ "number"
+            , Att.placeholder "spread"
+            , Att.step "0.01"
+            , Att.value <| String.fromFloat params.baseSize
+            , onInput (\x -> SetPlotParams { params | baseSize = withDefault 1.0 (String.toFloat x) })
+            ]
         ]
