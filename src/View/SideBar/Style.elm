@@ -2,10 +2,13 @@ module View.SideBar.Style exposing (..)
 
 import Array as A exposing (Array)
 import Css
+import Dropdown
+import Html.Attributes as UnstyledAtt
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
 import Html.Styled.Events exposing (onInput)
 import Model.Model exposing (Msg)
+import MultiSelect
 import View.Components exposing (Builder, Component, theme)
 
 
@@ -90,6 +93,21 @@ reusableTab params components =
 
 reusableInput : String -> List (Attribute Msg) -> Component
 reusableInput name atts =
+    inputWrapper name <|
+        input
+            ([ css
+                [ Css.width (Css.px 80)
+                , Css.fontSize (Css.rem 1.2)
+                , Css.display Css.inlineBlock
+                ]
+             ]
+                ++ atts
+            )
+            []
+
+
+inputWrapper : String -> Component -> Component
+inputWrapper title c =
     div
         [ css
             [ Css.width (Css.px 200)
@@ -101,60 +119,69 @@ reusableInput name atts =
         [ label
             [ css
                 [ Css.color theme.white
-                , Css.display Css.inlineBlock
-                , Css.width (Css.px 110)
-                , Css.textAlign Css.center
-                ]
-            ]
-            [ text name ]
-        , input
-            ([ css
-                [ Css.width (Css.px 80)
-                , Css.fontSize (Css.rem 1.2)
-                , Css.display Css.inlineBlock
-                ]
-             ]
-                ++ atts
-            )
-            []
-        ]
-
-
-reusableSelect :
-    (String -> Msg)
-    -> { title : String, values : List String, selected : String }
-    -> Component
-reusableSelect msg { title, values, selected } =
-    div [ css [ Css.width (Css.px 200), Css.margin (Css.px 10) ] ]
-        [ label
-            [ css
-                [ Css.color theme.white
                 , Css.width (Css.px 110)
                 , Css.display Css.inlineBlock
                 , Css.textAlign Css.center
                 ]
             ]
             [ text title ]
-        , select
-            [ onInput msg
-            , css
-                [ Css.display Css.inlineBlock
-                , Css.width (Css.px 80)
-                ]
-            ]
-          <|
-            List.map
-                (\value ->
-                    option
-                        ([ Att.value value ]
-                            ++ (if value == selected then
-                                    [ Att.selected True ]
-
-                                else
-                                    []
-                               )
-                        )
-                        [ text value ]
-                )
-                values
+        , c
         ]
+
+
+reusableSelect :
+    (Maybe String -> Msg)
+    ->
+        { title : String
+        , values : List String
+        , hasEmpty : Bool
+        , selected : Maybe String
+        }
+    -> Component
+reusableSelect msg { title, values, hasEmpty, selected } =
+    inputWrapper title <|
+        fromUnstyled <|
+            Dropdown.dropdown
+                { items = List.map (\v -> { value = v, text = v, enabled = True }) values
+                , emptyItem =
+                    if hasEmpty then
+                        Just <| { value = "nothing", text = "nothing", enabled = True }
+
+                    else
+                        Nothing
+                , onChange = msg
+                }
+                (List.map (\( a, b ) -> UnstyledAtt.style a b)
+                    [ ( "display", "inline-block" )
+                    , ( "width", "80px" )
+                    ]
+                )
+                selected
+
+
+reusableMultiSelect :
+    (List String -> Msg)
+    ->
+        { title : String
+        , values : List String
+        , hasEmpty : Bool
+        , selected : List String
+        }
+    -> Component
+reusableMultiSelect msg { title, values, hasEmpty, selected } =
+    inputWrapper title <|
+        fromUnstyled <|
+            MultiSelect.multiSelect
+                { items =
+                    List.map
+                        (\h ->
+                            { value = h
+                            , text = h
+                            , enabled = True
+                            }
+                        )
+                        values
+                , onChange = msg
+                }
+                []
+                selected

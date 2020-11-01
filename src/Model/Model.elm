@@ -24,11 +24,11 @@ type Msg
     | SetQuery String
     | SetTableState Table.State
     | SetUmapParams UmapParams
-    | SetChannelColor String
-    | SetChannelSize String
+    | SetChannelColor (Maybe String)
+    | SetChannelSize (Maybe String)
     | SetLabelColumns (List String)
     | SetColumnWeight Int String
-    | SetColumnDistance Int String
+    | SetColumnDistance Int (Maybe String)
     | UmapSender
     | UmapReceiver Matrix
     | GetSvg
@@ -232,7 +232,7 @@ update msg model =
                     model.plotParams
 
                 newParams =
-                    { oldParams | colorChannel = extractNothing value }
+                    { oldParams | colorChannel = value }
             in
             ( { model | plotParams = newParams }, Cmd.none )
 
@@ -242,7 +242,7 @@ update msg model =
                     model.plotParams
 
                 newParams =
-                    { oldParams | sizeChannel = extractNothing value }
+                    { oldParams | sizeChannel = value }
             in
             ( { model | plotParams = newParams }, Cmd.none )
 
@@ -292,16 +292,6 @@ update msg model =
                     { oldParams | labelColumns = labels }
             in
             ( { model | plotParams = newParams }, Cmd.none )
-
-
-extractNothing : String -> Maybe String
-extractNothing value =
-    case value of
-        "nothing" ->
-            Nothing
-
-        _ ->
-            Just value
 
 
 downloadSvg : String -> Cmd msg

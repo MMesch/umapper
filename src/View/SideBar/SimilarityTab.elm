@@ -41,7 +41,8 @@ indexSlider ( index, params ) =
             , reusableSelect
                 (SetColumnDistance index)
                 { title = "distance"
-                , selected = Model.Model.toString params.distance
+                , hasEmpty = False
+                , selected = Just <| Model.Model.toString params.distance
                 , values = List.map Tuple.first Model.Model.distanceMap
                 }
             , reusableInput "weight"
