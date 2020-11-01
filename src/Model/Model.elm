@@ -284,6 +284,7 @@ updateCsvModel content model =
             { model
                 | columnParams = columnParams
                 , records = records
+                , positions = Nothing
             }
 
         Nothing ->

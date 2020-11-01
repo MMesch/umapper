@@ -42,14 +42,3 @@ theme =
     , white = Css.hex "ffffff"
     , black = Css.hex "000000"
     }
-
-
-panel : Builder
-panel =
-    styled
-        div
-        [ Css.backgroundColor theme.mediumblue
-        , Css.display Css.block
-        , Css.margin (Css.px 10)
-        , Css.borderRadius (Css.px 10)
-        ]

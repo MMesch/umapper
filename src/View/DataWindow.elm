@@ -75,7 +75,7 @@ viewPanel model =
         ]
         [ div
             [ css
-                [ Css.height (Css.pct 90)
+                [ Css.height (Css.pct 100)
                 , Css.display Css.block
                 ]
             ]
@@ -102,8 +102,11 @@ graphMap :
     -> Component
 graphMap { positions, baseSize, labels, colors, center, zoom } =
     let
+        ndata =
+            withDefault 0 (Maybe.map A.length positions)
+
         data =
-            withDefault Util.Util.testMatrix positions
+            withDefault (A.fromList []) positions
 
         labels_ =
             labels
@@ -119,14 +122,13 @@ graphMap { positions, baseSize, labels, colors, center, zoom } =
             [ Css.width (Css.pct 100)
             , Css.height (Css.pct 100)
             , Css.display Css.block
-            , Css.margin Css.auto
             , Css.overflow Css.auto
             ]
         ]
         [ fromUnstyled <|
             Svg.svg
-                ([ Html.Attributes.style "width" "95%"
-                 , Html.Attributes.style "height" "95%"
+                ([ Html.Attributes.style "width" "100%"
+                 , Html.Attributes.style "height" "100%"
                  , Html.Attributes.id "graph"
                  , handleZoom Zoom
                  , Draggable.mouseTrigger "my-element" DragMsg
