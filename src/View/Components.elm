@@ -49,7 +49,6 @@ panel =
     styled
         div
         [ Css.backgroundColor theme.mediumblue
-        , Css.whiteSpace Css.pre
         , Css.display Css.block
         , Css.margin (Css.px 10)
         , Css.borderRadius (Css.px 10)

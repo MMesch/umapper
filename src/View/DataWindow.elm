@@ -21,7 +21,14 @@ import Util.Array
 import Util.Cmap
 import Util.Matrix exposing (Matrix)
 import Util.Util
-import View.Components exposing (Component, onChange, panel)
+import View.Components
+    exposing
+        ( Builder
+        , Component
+        , forSmallWidth
+        , onChange
+        , theme
+        )
 import View.Graph
 
 
@@ -52,15 +59,33 @@ viewPanel model =
         colorColumn =
             Maybe.andThen (\idx -> Util.Matrix.getColumn idx "" model.records) colorsidx
     in
-    panel [ css [ Css.width (Css.pct 100) ] ]
+    div
+        [ css
+            [ Css.width (Css.pct 100)
+            , Css.backgroundColor theme.mediumblue
+            , Css.display Css.block
+            , Css.margin (Css.px 10)
+            , Css.borderRadius (Css.px 10)
+            , forSmallWidth
+                [ Css.height (Css.px 800)
+                , Css.width (Css.pct 95)
+                , Css.padding (Css.px 0)
+                ]
+            ]
+        ]
         [ div
-            [ css [ Css.height (Css.pct 90) ] ]
+            [ css
+                [ Css.height (Css.pct 90)
+                , Css.display Css.block
+                ]
+            ]
             [ lazy graphMap
                 { positions = model.positions
                 , labels = labels
                 , colors = Maybe.map Util.Cmap.translate colorColumn
                 , center = model.center
                 , zoom = model.zoom
+                , baseSize = model.plotParams.baseSize
                 }
             ]
         ]
@@ -68,13 +93,14 @@ viewPanel model =
 
 graphMap :
     { positions : Maybe Matrix
+    , baseSize : Float
     , labels : Array String
     , colors : Maybe (Array String)
     , center : ( Float, Float )
     , zoom : Float
     }
     -> Component
-graphMap { positions, labels, colors, center, zoom } =
+graphMap { positions, baseSize, labels, colors, center, zoom } =
     let
         data =
             withDefault Util.Util.testMatrix positions
@@ -86,7 +112,7 @@ graphMap { positions, labels, colors, center, zoom } =
             withDefault (A.repeat (A.length data) "#000000") colors
 
         sizes_ =
-            withDefault (A.repeat (A.length data) "1") colors
+            A.repeat (A.length data) baseSize
     in
     div
         [ css

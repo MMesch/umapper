@@ -49,7 +49,7 @@ plotTab params headers =
         , reusableInput "base size"
             [ Att.type_ "number"
             , Att.placeholder "spread"
-            , Att.step "0.01"
+            , Att.step "0.1"
             , Att.value <| String.fromFloat params.baseSize
             , onInput (\x -> SetPlotParams { params | baseSize = withDefault 1.0 (String.toFloat x) })
             ]

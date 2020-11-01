@@ -16,7 +16,7 @@ graph :
     { positions : Matrix
     , labels : A.Array String
     , colors : A.Array String
-    , sizes : A.Array String
+    , sizes : A.Array Float
     , center : ( Float, Float )
     , zoom : Float
     }
@@ -37,13 +37,13 @@ graph { positions, labels, colors, sizes, center, zoom } =
         [ viewBox "-1 -1 101 101" ]
         [ g [ transform (zooming ++ " " ++ panning) ]
             (A.toList <|
-                A.map3 toNode (normalize positions) labels colors
+                A.map4 toNode (normalize positions) labels sizes colors
             )
         ]
 
 
-toNode : A.Array Float -> String -> String -> Svg msg
-toNode position label color =
+toNode : A.Array Float -> String -> Float -> String -> Svg msg
+toNode position label size color =
     let
         px =
             safeRetrieve 0 position
@@ -51,16 +51,26 @@ toNode position label color =
         py =
             safeRetrieve 1 position
     in
-    nodeGroup px py label color
+    nodeGroup px py label size color
 
 
 safeRetrieve idx =
     String.fromFloat << (*) 100 << Maybe.withDefault 0 << A.get idx
 
 
-nodeGroup : String -> String -> String -> String -> Svg msg
-nodeGroup px py label color =
+nodeGroup : String -> String -> String -> Float -> String -> Svg msg
+nodeGroup px py label size color =
+    let
+        radius_ =
+            String.fromFloat <| size * 0.5
+
+        fontSize_ =
+            String.fromFloat size
+
+        textPos =
+            "translate(0," ++ String.fromFloat size ++ ")"
+    in
     g []
-        [ circle [ cx px, cy py, r "0.5", fill color ] []
-        , text_ [ x px, y py, transform "translate(0 -1)", fontSize "1", fill color ] [ text label ]
+        [ circle [ cx px, cy py, r radius_, fill color ] []
+        , text_ [ x px, y py, transform textPos, fontSize fontSize_, fill color ] [ text label ]
         ]

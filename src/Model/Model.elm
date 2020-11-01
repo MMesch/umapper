@@ -257,7 +257,7 @@ update msg model =
                 newZoom =
                     model.zoom
                         |> (+) (factor * 0.005)
-                        |> clamp 0.5 5
+                        |> clamp 0.5 10
             in
             ( { model | zoom = newZoom }, Cmd.none )
 

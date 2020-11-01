@@ -7918,7 +7918,7 @@ var $author$project$Model$Model$update = F2(
 				return A3($zaboco$elm_draggable$Draggable$update, $author$project$Model$Model$dragConfig, dragMsg, model);
 			case 15:
 				var factor = msg.a;
-				var newZoom = A3($elm$core$Basics$clamp, 0.5, 5, (factor * 0.005) + model.bc);
+				var newZoom = A3($elm$core$Basics$clamp, 0.5, 10, (factor * 0.005) + model.bc);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -11453,7 +11453,7 @@ var $author$project$View$SideBar$PlotTab$plotTab = F2(
 						[
 							$rtfeldman$elm_css$Html$Styled$Attributes$type_('number'),
 							$rtfeldman$elm_css$Html$Styled$Attributes$placeholder('spread'),
-							$rtfeldman$elm_css$Html$Styled$Attributes$step('0.01'),
+							$rtfeldman$elm_css$Html$Styled$Attributes$step('0.1'),
 							$rtfeldman$elm_css$Html$Styled$Attributes$value(
 							$elm$core$String$fromFloat(params.bW)),
 							$rtfeldman$elm_css$Html$Styled$Events$onInput(
@@ -12260,6 +12260,11 @@ var $elm_community$array_extra$Array$Extra$map3 = F3(
 		return $elm_community$array_extra$Array$Extra$apply(
 			A3($elm_community$array_extra$Array$Extra$map2, f, ws, xs));
 	});
+var $elm_community$array_extra$Array$Extra$map4 = F4(
+	function (f, ws, xs, ys) {
+		return $elm_community$array_extra$Array$Extra$apply(
+			A4($elm_community$array_extra$Array$Extra$map3, f, ws, xs, ys));
+	});
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
 var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
 var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
@@ -12272,8 +12277,11 @@ var $elm$svg$Svg$text_ = $elm$svg$Svg$trustedNode('text');
 var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
 var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
 var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
-var $author$project$View$Graph$nodeGroup = F4(
-	function (px, py, label, color) {
+var $author$project$View$Graph$nodeGroup = F5(
+	function (px, py, label, size, color) {
+		var textPos = 'translate(0,' + ($elm$core$String$fromFloat(size) + ')');
+		var radius_ = $elm$core$String$fromFloat(size * 0.5);
+		var fontSize_ = $elm$core$String$fromFloat(size);
 		return A2(
 			$elm$svg$Svg$g,
 			_List_Nil,
@@ -12285,7 +12293,7 @@ var $author$project$View$Graph$nodeGroup = F4(
 						[
 							$elm$svg$Svg$Attributes$cx(px),
 							$elm$svg$Svg$Attributes$cy(py),
-							$elm$svg$Svg$Attributes$r('0.5'),
+							$elm$svg$Svg$Attributes$r(radius_),
 							$elm$svg$Svg$Attributes$fill(color)
 						]),
 					_List_Nil),
@@ -12295,8 +12303,8 @@ var $author$project$View$Graph$nodeGroup = F4(
 						[
 							$elm$svg$Svg$Attributes$x(px),
 							$elm$svg$Svg$Attributes$y(py),
-							$elm$svg$Svg$Attributes$transform('translate(0 -1)'),
-							$elm$svg$Svg$Attributes$fontSize('1'),
+							$elm$svg$Svg$Attributes$transform(textPos),
+							$elm$svg$Svg$Attributes$fontSize(fontSize_),
 							$elm$svg$Svg$Attributes$fill(color)
 						]),
 					_List_fromArray(
@@ -12317,11 +12325,11 @@ var $author$project$View$Graph$safeRetrieve = function (idx) {
 			$elm$core$Maybe$withDefault(0)),
 		$elm$core$Array$get(idx));
 };
-var $author$project$View$Graph$toNode = F3(
-	function (position, label, color) {
+var $author$project$View$Graph$toNode = F4(
+	function (position, label, size, color) {
 		var py = A2($author$project$View$Graph$safeRetrieve, 1, position);
 		var px = A2($author$project$View$Graph$safeRetrieve, 0, position);
-		return A4($author$project$View$Graph$nodeGroup, px, py, label, color);
+		return A5($author$project$View$Graph$nodeGroup, px, py, label, size, color);
 	});
 var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
 var $author$project$View$Graph$graph = function (_v0) {
@@ -12348,11 +12356,12 @@ var $author$project$View$Graph$graph = function (_v0) {
 						$elm$svg$Svg$Attributes$transform(zooming + (' ' + panning))
 					]),
 				$elm$core$Array$toList(
-					A4(
-						$elm_community$array_extra$Array$Extra$map3,
+					A5(
+						$elm_community$array_extra$Array$Extra$map4,
 						$author$project$View$Graph$toNode,
 						$author$project$Util$Util$normalize(positions),
 						labels,
+						sizes,
 						colors)))
 			]));
 };
@@ -12619,6 +12628,7 @@ var $zaboco$elm_draggable$Draggable$touchTriggers = F2(
 	});
 var $author$project$View$DataWindow$graphMap = function (_v0) {
 	var positions = _v0.bz;
+	var baseSize = _v0.bW;
 	var labels = _v0.bp;
 	var colors = _v0.bf;
 	var center = _v0.aT;
@@ -12626,12 +12636,9 @@ var $author$project$View$DataWindow$graphMap = function (_v0) {
 	var labels_ = labels;
 	var data = A2($elm$core$Maybe$withDefault, $author$project$Util$Util$testMatrix, positions);
 	var sizes_ = A2(
-		$elm$core$Maybe$withDefault,
-		A2(
-			$elm$core$Array$repeat,
-			$elm$core$Array$length(data),
-			'1'),
-		colors);
+		$elm$core$Array$repeat,
+		$elm$core$Array$length(data),
+		baseSize);
 	var colors_ = A2(
 		$elm$core$Maybe$withDefault,
 		A2(
@@ -12677,21 +12684,6 @@ var $author$project$View$DataWindow$graphMap = function (_v0) {
 						])))
 			]));
 };
-var $rtfeldman$elm_css$Css$pre = {bO: 'pre', O: 0};
-var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
-var $author$project$View$Components$panel = A2(
-	$rtfeldman$elm_css$Html$Styled$styled,
-	$rtfeldman$elm_css$Html$Styled$div,
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cr),
-			$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre),
-			$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
-			$rtfeldman$elm_css$Css$margin(
-			$rtfeldman$elm_css$Css$px(10)),
-			$rtfeldman$elm_css$Css$borderRadius(
-			$rtfeldman$elm_css$Css$px(10))
-		]));
 var $author$project$Util$Cmap$qualitative = _List_fromArray(
 	['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a', '#ffff99', '#b15928']);
 var $author$project$Util$Cmap$translate = function (values) {
@@ -12761,14 +12753,30 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 		},
 		colorsidx);
 	return A2(
-		$author$project$View$Components$panel,
+		$rtfeldman$elm_css$Html$Styled$div,
 		_List_fromArray(
 			[
 				$rtfeldman$elm_css$Html$Styled$Attributes$css(
 				_List_fromArray(
 					[
 						$rtfeldman$elm_css$Css$width(
-						$rtfeldman$elm_css$Css$pct(100))
+						$rtfeldman$elm_css$Css$pct(100)),
+						$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.cr),
+						$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+						$rtfeldman$elm_css$Css$margin(
+						$rtfeldman$elm_css$Css$px(10)),
+						$rtfeldman$elm_css$Css$borderRadius(
+						$rtfeldman$elm_css$Css$px(10)),
+						$author$project$View$Components$forSmallWidth(
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Css$height(
+								$rtfeldman$elm_css$Css$px(800)),
+								$rtfeldman$elm_css$Css$width(
+								$rtfeldman$elm_css$Css$pct(95)),
+								$rtfeldman$elm_css$Css$padding(
+								$rtfeldman$elm_css$Css$px(0))
+							]))
 					]))
 			]),
 		_List_fromArray(
@@ -12781,7 +12789,8 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Css$height(
-								$rtfeldman$elm_css$Css$pct(90))
+								$rtfeldman$elm_css$Css$pct(90)),
+								$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block)
 							]))
 					]),
 				_List_fromArray(
@@ -12790,6 +12799,7 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 						$rtfeldman$elm_css$Html$Styled$Lazy$lazy,
 						$author$project$View$DataWindow$graphMap,
 						{
+							bW: model.by.bW,
 							aT: model.aT,
 							bf: A2($elm$core$Maybe$map, $author$project$Util$Cmap$translate, colorColumn),
 							bp: labels,
