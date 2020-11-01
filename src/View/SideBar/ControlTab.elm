@@ -13,7 +13,7 @@ import View.SideBar.Style exposing (Layout(..), reusableButton, reusableTab)
 
 controlTab : Component
 controlTab =
-    reusableTab { title = "Control", layout = ColumnLayout }
+    reusableTab { title = "Control", layout = RowLayout }
         [ heyButton
         , loadButton
         , downloadSvgButton
@@ -22,14 +22,14 @@ controlTab =
 
 loadButton : Component
 loadButton =
-    reusableButton [ onClick CsvRequested ] [ text "Load CSV" ]
+    reusableButton [ onClick CsvRequested, css [ Css.width (Css.pct 30) ] ] [ text "Load CSV" ]
 
 
 heyButton : Component
 heyButton =
-    reusableButton [ onClick <| UmapSender ] [ text <| "Map" ]
+    reusableButton [ onClick <| UmapSender, css [ Css.width (Css.pct 30) ] ] [ text <| "UMap" ]
 
 
 downloadSvgButton : Component
 downloadSvgButton =
-    reusableButton [ onClick GetSvg ] [ text "Download Svg" ]
+    reusableButton [ onClick GetSvg, css [ Css.width (Css.pct 30) ] ] [ text "Get Svg" ]

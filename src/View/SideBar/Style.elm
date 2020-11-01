@@ -18,8 +18,7 @@ buttonStyle =
     , Css.color theme.black
     , Css.border (Css.px 0)
     , Css.fontSize (Css.rem 1.5)
-    , Css.width (Css.pct 95)
-    , Css.display Css.block
+    , Css.display Css.inlineBlock
     , Css.marginTop (Css.px 2)
     , Css.marginBottom (Css.px 2)
     ]
@@ -55,6 +54,7 @@ layout x =
             , Css.justifyContent Css.spaceBetween
             , Css.alignItems Css.center
             , Css.flexWrap Css.wrap
+            , Css.flexGrow (Css.num 1)
             ]
 
         ColumnLayout ->
