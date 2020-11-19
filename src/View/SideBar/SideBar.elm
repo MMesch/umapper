@@ -55,8 +55,7 @@ sidebar model =
                 headers =
                     A.map .name model.columnParams
              in
-             [ controlTab
-             , lazy3 tableTab model.tableState headers model.records
+             [ lazy3 tableTab model.tableState headers model.records
              , lazy umapTab model.umapParams
              , lazy similarityTab model.columnParams
              , lazy2 plotTab model.plotParams headers

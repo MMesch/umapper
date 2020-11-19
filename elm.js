@@ -11064,241 +11064,7 @@ var $author$project$View$View$mainWindow = function (components) {
 };
 var $rtfeldman$elm_css$Css$auto = {alignItemsOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, cursor: $rtfeldman$elm_css$Css$Structure$Compatible, flexBasis: $rtfeldman$elm_css$Css$Structure$Compatible, intOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, justifyContentOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrAutoOrCoverOrContain: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrNumberOrAutoOrNoneOrContent: $rtfeldman$elm_css$Css$Structure$Compatible, overflow: $rtfeldman$elm_css$Css$Structure$Compatible, pointerEvents: $rtfeldman$elm_css$Css$Structure$Compatible, tableLayout: $rtfeldman$elm_css$Css$Structure$Compatible, textRendering: $rtfeldman$elm_css$Css$Structure$Compatible, touchAction: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'auto'};
 var $rtfeldman$elm_css$Css$block = {display: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'block'};
-var $author$project$View$SideBar$Style$RowLayout = {$: 'RowLayout'};
-var $author$project$Model$Model$GetSvg = {$: 'GetSvg'};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $rtfeldman$elm_css$VirtualDom$Styled$on = F2(
-	function (eventName, handler) {
-		return A3(
-			$rtfeldman$elm_css$VirtualDom$Styled$Attribute,
-			A2($elm$virtual_dom$VirtualDom$on, eventName, handler),
-			_List_Nil,
-			'');
-	});
-var $rtfeldman$elm_css$Html$Styled$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$rtfeldman$elm_css$VirtualDom$Styled$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $rtfeldman$elm_css$Html$Styled$Events$onClick = function (msg) {
-	return A2(
-		$rtfeldman$elm_css$Html$Styled$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
-var $rtfeldman$elm_css$Html$Styled$button = $rtfeldman$elm_css$Html$Styled$node('button');
-var $rtfeldman$elm_css$Css$border = $rtfeldman$elm_css$Css$prop1('border');
-var $rtfeldman$elm_css$Css$borderRadius = $rtfeldman$elm_css$Css$prop1('border-radius');
-var $rtfeldman$elm_css$Css$color = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'color', c.value);
-};
 var $rtfeldman$elm_css$Css$display = $rtfeldman$elm_css$Css$prop1('display');
-var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
-var $rtfeldman$elm_css$Css$inlineBlock = {display: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'inline-block'};
-var $rtfeldman$elm_css$Css$marginBottom = $rtfeldman$elm_css$Css$prop1('margin-bottom');
-var $rtfeldman$elm_css$Css$marginTop = $rtfeldman$elm_css$Css$prop1('margin-top');
-var $rtfeldman$elm_css$Css$RemUnits = {$: 'RemUnits'};
-var $rtfeldman$elm_css$Css$rem = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, $rtfeldman$elm_css$Css$RemUnits, 'rem');
-var $author$project$View$SideBar$Style$buttonStyle = _List_fromArray(
-	[
-		$rtfeldman$elm_css$Css$borderRadius(
-		$rtfeldman$elm_css$Css$px(2)),
-		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.dark),
-		$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.white),
-		$rtfeldman$elm_css$Css$border(
-		$rtfeldman$elm_css$Css$px(0)),
-		$rtfeldman$elm_css$Css$fontSize(
-		$rtfeldman$elm_css$Css$rem(1.5)),
-		$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock),
-		$rtfeldman$elm_css$Css$marginTop(
-		$rtfeldman$elm_css$Css$px(2)),
-		$rtfeldman$elm_css$Css$marginBottom(
-		$rtfeldman$elm_css$Css$px(2))
-	]);
-var $rtfeldman$elm_css$Html$Styled$styled = F4(
-	function (fn, styles, attrs, children) {
-		return A2(
-			fn,
-			A2(
-				$elm$core$List$cons,
-				$rtfeldman$elm_css$Html$Styled$Internal$css(styles),
-				attrs),
-			children);
-	});
-var $author$project$View$SideBar$Style$reusableButton = A2($rtfeldman$elm_css$Html$Styled$styled, $rtfeldman$elm_css$Html$Styled$button, $author$project$View$SideBar$Style$buttonStyle);
-var $rtfeldman$elm_css$VirtualDom$Styled$Unstyled = function (a) {
-	return {$: 'Unstyled', a: a};
-};
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $rtfeldman$elm_css$VirtualDom$Styled$text = function (str) {
-	return $rtfeldman$elm_css$VirtualDom$Styled$Unstyled(
-		$elm$virtual_dom$VirtualDom$text(str));
-};
-var $rtfeldman$elm_css$Html$Styled$text = $rtfeldman$elm_css$VirtualDom$Styled$text;
-var $author$project$View$SideBar$ControlTab$downloadSvgButton = A2(
-	$author$project$View$SideBar$Style$reusableButton,
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$GetSvg),
-			$rtfeldman$elm_css$Html$Styled$Attributes$css(
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Css$width(
-					$rtfeldman$elm_css$Css$pct(30))
-				]))
-		]),
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$text('Get Svg')
-		]));
-var $author$project$Model$Model$UmapSender = {$: 'UmapSender'};
-var $author$project$View$SideBar$ControlTab$heyButton = A2(
-	$author$project$View$SideBar$Style$reusableButton,
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$UmapSender),
-			$rtfeldman$elm_css$Html$Styled$Attributes$css(
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Css$width(
-					$rtfeldman$elm_css$Css$pct(30))
-				]))
-		]),
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$text('UMap')
-		]));
-var $author$project$Model$Model$CsvRequested = {$: 'CsvRequested'};
-var $author$project$View$SideBar$ControlTab$loadButton = A2(
-	$author$project$View$SideBar$Style$reusableButton,
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$CsvRequested),
-			$rtfeldman$elm_css$Html$Styled$Attributes$css(
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Css$width(
-					$rtfeldman$elm_css$Css$pct(30))
-				]))
-		]),
-	_List_fromArray(
-		[
-			$rtfeldman$elm_css$Html$Styled$text('Load CSV')
-		]));
-var $rtfeldman$elm_css$Css$flexGrow = $rtfeldman$elm_css$Css$prop1('flex-grow');
-var $rtfeldman$elm_css$Css$flexWrap = $rtfeldman$elm_css$Css$prop1('flex-wrap');
-var $rtfeldman$elm_css$Css$justifyContent = function (fn) {
-	return A3(
-		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
-		'justifyContent',
-		'justify-content',
-		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
-};
-var $rtfeldman$elm_css$Css$UnitlessFloat = {$: 'UnitlessFloat'};
-var $rtfeldman$elm_css$Css$num = function (val) {
-	return {
-		lengthOrNumber: $rtfeldman$elm_css$Css$Structure$Compatible,
-		lengthOrNumberOrAutoOrNoneOrContent: $rtfeldman$elm_css$Css$Structure$Compatible,
-		number: $rtfeldman$elm_css$Css$Structure$Compatible,
-		numberOrInfinite: $rtfeldman$elm_css$Css$Structure$Compatible,
-		numericValue: val,
-		unitLabel: '',
-		units: $rtfeldman$elm_css$Css$UnitlessFloat,
-		value: $elm$core$String$fromFloat(val)
-	};
-};
-var $rtfeldman$elm_css$Css$spaceBetween = $rtfeldman$elm_css$Css$prop1('space-between');
-var $rtfeldman$elm_css$Css$wrap = {flexDirectionOrWrap: $rtfeldman$elm_css$Css$Structure$Compatible, flexWrap: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'wrap'};
-var $author$project$View$SideBar$Style$layout = function (x) {
-	switch (x.$) {
-		case 'RowLayout':
-			return _List_fromArray(
-				[
-					$rtfeldman$elm_css$Css$displayFlex,
-					$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$row),
-					$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$spaceBetween),
-					$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center),
-					$rtfeldman$elm_css$Css$flexWrap($rtfeldman$elm_css$Css$wrap),
-					$rtfeldman$elm_css$Css$flexGrow(
-					$rtfeldman$elm_css$Css$num(1))
-				]);
-		case 'ColumnLayout':
-			return _List_fromArray(
-				[
-					$rtfeldman$elm_css$Css$displayFlex,
-					$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$column),
-					$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$spaceBetween),
-					$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center)
-				]);
-		default:
-			var i1 = x.a;
-			var i2 = x.b;
-			return _List_fromArray(
-				[
-					A2($rtfeldman$elm_css$Css$property, 'display', 'grid')
-				]);
-	}
-};
-var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
-var $author$project$View$SideBar$Style$tabStyle = _List_fromArray(
-	[
-		$rtfeldman$elm_css$Css$borderRadius(
-		$rtfeldman$elm_css$Css$px(5)),
-		$rtfeldman$elm_css$Css$width(
-		$rtfeldman$elm_css$Css$pct(100)),
-		$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
-		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.medium),
-		$rtfeldman$elm_css$Css$marginTop(
-		$rtfeldman$elm_css$Css$px(2)),
-		$rtfeldman$elm_css$Css$padding(
-		$rtfeldman$elm_css$Css$px(10))
-	]);
-var $author$project$View$SideBar$Style$reusableTab = F2(
-	function (params, components) {
-		return A2(
-			$rtfeldman$elm_css$Html$Styled$div,
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Html$Styled$Attributes$css($author$project$View$SideBar$Style$tabStyle)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$rtfeldman$elm_css$Html$Styled$div,
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.black),
-									$rtfeldman$elm_css$Css$margin(
-									$rtfeldman$elm_css$Css$px(5))
-								]))
-						]),
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$text(params.title)
-						])),
-					A2(
-					$rtfeldman$elm_css$Html$Styled$div,
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							$author$project$View$SideBar$Style$layout(params.layout))
-						]),
-					components)
-				]));
-	});
-var $author$project$View$SideBar$ControlTab$controlTab = A2(
-	$author$project$View$SideBar$Style$reusableTab,
-	{layout: $author$project$View$SideBar$Style$RowLayout, title: 'Control'},
-	_List_fromArray(
-		[$author$project$View$SideBar$ControlTab$heyButton, $author$project$View$SideBar$ControlTab$loadButton, $author$project$View$SideBar$ControlTab$downloadSvgButton]));
 var $rtfeldman$elm_css$Css$Media$minWidth = function (value) {
 	return A2($rtfeldman$elm_css$Css$Media$feature, 'min-width', value);
 };
@@ -11314,6 +11080,16 @@ var $author$project$View$Components$forLargeWidth = $rtfeldman$elm_css$Css$Media
 					$rtfeldman$elm_css$Css$px(1000))
 				]))
 		]));
+var $rtfeldman$elm_css$Css$justifyContent = function (fn) {
+	return A3(
+		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
+		'justifyContent',
+		'justify-content',
+		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
+};
+var $rtfeldman$elm_css$VirtualDom$Styled$Unstyled = function (a) {
+	return {$: 'Unstyled', a: a};
+};
 var $elm$virtual_dom$VirtualDom$lazy2 = _VirtualDom_lazy2;
 var $rtfeldman$elm_css$VirtualDom$Styled$accumulateStyles = F2(
 	function (_v0, styles) {
@@ -11596,6 +11372,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$stylesFromProperties = function (proper
 		return A2($elm$core$Dict$singleton, classname, styles);
 	}
 };
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $rtfeldman$elm_css$Css$Structure$ClassSelector = function (a) {
 	return {$: 'ClassSelector', a: a};
 };
@@ -11830,10 +11607,12 @@ var $rtfeldman$elm_css$VirtualDom$Styled$lazy3 = F4(
 			A5($elm$virtual_dom$VirtualDom$lazy4, $rtfeldman$elm_css$VirtualDom$Styled$lazyHelp3, fn, arg1, arg2, arg3));
 	});
 var $rtfeldman$elm_css$Html$Styled$Lazy$lazy3 = $rtfeldman$elm_css$VirtualDom$Styled$lazy3;
+var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
 var $rtfeldman$elm_css$Css$marginLeft = $rtfeldman$elm_css$Css$prop1('margin-left');
 var $rtfeldman$elm_css$Css$maxHeight = $rtfeldman$elm_css$Css$prop1('max-height');
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
 var $rtfeldman$elm_css$Css$overflowY = $rtfeldman$elm_css$Css$prop1('overflow-y');
+var $author$project$View$SideBar$Style$RowLayout = {$: 'RowLayout'};
 var $author$project$Model$Model$SetPlotParams = function (a) {
 	return {$: 'SetPlotParams', a: a};
 };
@@ -11843,6 +11622,15 @@ var $rtfeldman$elm_css$Html$Styled$Events$alwaysStop = function (x) {
 var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
 	return {$: 'MayStopPropagation', a: a};
 };
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $rtfeldman$elm_css$VirtualDom$Styled$on = F2(
+	function (eventName, handler) {
+		return A3(
+			$rtfeldman$elm_css$VirtualDom$Styled$Attribute,
+			A2($elm$virtual_dom$VirtualDom$on, eventName, handler),
+			_List_Nil,
+			'');
+	});
 var $rtfeldman$elm_css$Html$Styled$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
@@ -11884,8 +11672,18 @@ var $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $rtfeldman$elm_css$Html$Styled$Attributes$placeholder = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('placeholder');
+var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
+var $rtfeldman$elm_css$Css$inlineBlock = {display: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'inline-block'};
 var $rtfeldman$elm_css$Html$Styled$input = $rtfeldman$elm_css$Html$Styled$node('input');
+var $rtfeldman$elm_css$Css$color = function (c) {
+	return A2($rtfeldman$elm_css$Css$property, 'color', c.value);
+};
 var $rtfeldman$elm_css$Html$Styled$label = $rtfeldman$elm_css$Html$Styled$node('label');
+var $rtfeldman$elm_css$VirtualDom$Styled$text = function (str) {
+	return $rtfeldman$elm_css$VirtualDom$Styled$Unstyled(
+		$elm$virtual_dom$VirtualDom$text(str));
+};
+var $rtfeldman$elm_css$Html$Styled$text = $rtfeldman$elm_css$VirtualDom$Styled$text;
 var $rtfeldman$elm_css$Css$textAlign = function (fn) {
 	return A3(
 		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
@@ -11933,6 +11731,8 @@ var $author$project$View$SideBar$Style$inputWrapper = F2(
 					c
 				]));
 	});
+var $rtfeldman$elm_css$Css$RemUnits = {$: 'RemUnits'};
+var $rtfeldman$elm_css$Css$rem = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, $rtfeldman$elm_css$Css$RemUnits, 'rem');
 var $author$project$View$SideBar$Style$reusableInput = F2(
 	function (name, atts) {
 		var inputElem = A2(
@@ -11971,6 +11771,9 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 	});
 var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
 var $elm$html$Html$Attributes$multiple = $elm$html$Html$Attributes$boolProperty('multiple');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
 var $elm$html$Html$Events$on = F2(
 	function (event, decoder) {
 		return A2(
@@ -12245,6 +12048,104 @@ var $author$project$View$SideBar$Style$reusableSelect = F2(
 			return dropdown;
 		}
 	});
+var $rtfeldman$elm_css$Css$flexGrow = $rtfeldman$elm_css$Css$prop1('flex-grow');
+var $rtfeldman$elm_css$Css$flexWrap = $rtfeldman$elm_css$Css$prop1('flex-wrap');
+var $rtfeldman$elm_css$Css$UnitlessFloat = {$: 'UnitlessFloat'};
+var $rtfeldman$elm_css$Css$num = function (val) {
+	return {
+		lengthOrNumber: $rtfeldman$elm_css$Css$Structure$Compatible,
+		lengthOrNumberOrAutoOrNoneOrContent: $rtfeldman$elm_css$Css$Structure$Compatible,
+		number: $rtfeldman$elm_css$Css$Structure$Compatible,
+		numberOrInfinite: $rtfeldman$elm_css$Css$Structure$Compatible,
+		numericValue: val,
+		unitLabel: '',
+		units: $rtfeldman$elm_css$Css$UnitlessFloat,
+		value: $elm$core$String$fromFloat(val)
+	};
+};
+var $rtfeldman$elm_css$Css$spaceBetween = $rtfeldman$elm_css$Css$prop1('space-between');
+var $rtfeldman$elm_css$Css$wrap = {flexDirectionOrWrap: $rtfeldman$elm_css$Css$Structure$Compatible, flexWrap: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'wrap'};
+var $author$project$View$SideBar$Style$layout = function (x) {
+	switch (x.$) {
+		case 'RowLayout':
+			return _List_fromArray(
+				[
+					$rtfeldman$elm_css$Css$displayFlex,
+					$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$row),
+					$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$spaceBetween),
+					$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center),
+					$rtfeldman$elm_css$Css$flexWrap($rtfeldman$elm_css$Css$wrap),
+					$rtfeldman$elm_css$Css$flexGrow(
+					$rtfeldman$elm_css$Css$num(1))
+				]);
+		case 'ColumnLayout':
+			return _List_fromArray(
+				[
+					$rtfeldman$elm_css$Css$displayFlex,
+					$rtfeldman$elm_css$Css$flexDirection($rtfeldman$elm_css$Css$column),
+					$rtfeldman$elm_css$Css$justifyContent($rtfeldman$elm_css$Css$spaceBetween),
+					$rtfeldman$elm_css$Css$alignItems($rtfeldman$elm_css$Css$center)
+				]);
+		default:
+			var i1 = x.a;
+			var i2 = x.b;
+			return _List_fromArray(
+				[
+					A2($rtfeldman$elm_css$Css$property, 'display', 'grid')
+				]);
+	}
+};
+var $rtfeldman$elm_css$Css$borderRadius = $rtfeldman$elm_css$Css$prop1('border-radius');
+var $rtfeldman$elm_css$Css$marginTop = $rtfeldman$elm_css$Css$prop1('margin-top');
+var $author$project$View$SideBar$Style$tabStyle = _List_fromArray(
+	[
+		$rtfeldman$elm_css$Css$borderRadius(
+		$rtfeldman$elm_css$Css$px(5)),
+		$rtfeldman$elm_css$Css$width(
+		$rtfeldman$elm_css$Css$pct(100)),
+		$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+		$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.medium),
+		$rtfeldman$elm_css$Css$marginTop(
+		$rtfeldman$elm_css$Css$px(2)),
+		$rtfeldman$elm_css$Css$padding(
+		$rtfeldman$elm_css$Css$px(10))
+	]);
+var $author$project$View$SideBar$Style$reusableTab = F2(
+	function (params, components) {
+		return A2(
+			$rtfeldman$elm_css$Html$Styled$div,
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$Attributes$css($author$project$View$SideBar$Style$tabStyle)
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$css(
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$color($author$project$View$Components$theme.black),
+									$rtfeldman$elm_css$Css$margin(
+									$rtfeldman$elm_css$Css$px(5))
+								]))
+						]),
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$text(params.title)
+						])),
+					A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$css(
+							$author$project$View$SideBar$Style$layout(params.layout))
+						]),
+					components)
+				]));
+	});
 var $rtfeldman$elm_css$Html$Styled$Attributes$step = function (n) {
 	return A2($rtfeldman$elm_css$Html$Styled$Attributes$stringProperty, 'step', n);
 };
@@ -12353,6 +12254,13 @@ var $author$project$Model$Model$distanceMap = _List_fromArray(
 	]);
 var $rtfeldman$elm_css$Html$Styled$Attributes$max = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('max');
 var $rtfeldman$elm_css$Html$Styled$Attributes$min = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('min');
+var $rtfeldman$elm_css$Html$Styled$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$rtfeldman$elm_css$VirtualDom$Styled$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
 var $author$project$View$Components$onChange = function (handler) {
 	return A2(
 		$rtfeldman$elm_css$Html$Styled$Events$on,
@@ -13125,7 +13033,6 @@ var $author$project$View$SideBar$SideBar$sidebar = function (model) {
 						model.columnParams);
 					return _List_fromArray(
 						[
-							$author$project$View$SideBar$ControlTab$controlTab,
 							A4($rtfeldman$elm_css$Html$Styled$Lazy$lazy3, $author$project$View$SideBar$TableTab$tableTab, model.tableState, headers, model.records),
 							A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$UmapTab$umapTab, model.umapParams),
 							A2($rtfeldman$elm_css$Html$Styled$Lazy$lazy, $author$project$View$SideBar$SimilarityTab$similarityTab, model.columnParams),
@@ -13135,6 +13042,73 @@ var $author$project$View$SideBar$SideBar$sidebar = function (model) {
 			]));
 };
 var $rtfeldman$elm_css$Html$Styled$toUnstyled = $rtfeldman$elm_css$VirtualDom$Styled$toUnstyled;
+var $rtfeldman$elm_css$Css$absolute = {position: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'absolute'};
+var $author$project$Model$Model$GetSvg = {$: 'GetSvg'};
+var $rtfeldman$elm_css$Html$Styled$img = $rtfeldman$elm_css$Html$Styled$node('img');
+var $rtfeldman$elm_css$Html$Styled$Events$onClick = function (msg) {
+	return A2(
+		$rtfeldman$elm_css$Html$Styled$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $rtfeldman$elm_css$Html$Styled$Attributes$src = function (url) {
+	return A2($rtfeldman$elm_css$Html$Styled$Attributes$stringProperty, 'src', url);
+};
+var $rtfeldman$elm_css$Html$Styled$Attributes$title = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('title');
+var $author$project$View$DataWindow$downloadSvgButton = A2(
+	$rtfeldman$elm_css$Html$Styled$img,
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$Attributes$src('images/download.svg'),
+			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$GetSvg),
+			$rtfeldman$elm_css$Html$Styled$Attributes$title('Download SVG')
+		]),
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$text('Get Svg')
+		]));
+var $author$project$Model$Model$CsvRequested = {$: 'CsvRequested'};
+var $author$project$View$DataWindow$loadButton = A2(
+	$rtfeldman$elm_css$Html$Styled$img,
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$Attributes$src('images/upload.svg'),
+			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$CsvRequested),
+			$rtfeldman$elm_css$Html$Styled$Attributes$title('Upload CSV')
+		]),
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$text('Load CSV')
+		]));
+var $rtfeldman$elm_css$Css$position = $rtfeldman$elm_css$Css$prop1('position');
+var $author$project$Model$Model$UmapSender = {$: 'UmapSender'};
+var $author$project$View$DataWindow$runButton = A2(
+	$rtfeldman$elm_css$Html$Styled$img,
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$Attributes$src('images/run.svg'),
+			$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Model$Model$UmapSender),
+			$rtfeldman$elm_css$Html$Styled$Attributes$title('run Umap')
+		]),
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$text('UMap')
+		]));
+var $author$project$View$DataWindow$controlBar = A2(
+	$rtfeldman$elm_css$Html$Styled$div,
+	_List_fromArray(
+		[
+			$rtfeldman$elm_css$Html$Styled$Attributes$css(
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
+					$rtfeldman$elm_css$Css$position($rtfeldman$elm_css$Css$absolute),
+					$rtfeldman$elm_css$Css$padding(
+					$rtfeldman$elm_css$Css$px(5))
+				]))
+		]),
+	_List_fromArray(
+		[$author$project$View$DataWindow$runButton, $author$project$View$DataWindow$loadButton, $author$project$View$DataWindow$downloadSvgButton]));
 var $author$project$Util$Matrix$getColumn = F3(
 	function (idx, def, matrix) {
 		return A2(
@@ -13639,7 +13613,7 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 					[
 						$rtfeldman$elm_css$Css$width(
 						$rtfeldman$elm_css$Css$pct(100)),
-						$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.medium),
+						$rtfeldman$elm_css$Css$backgroundColor($author$project$View$Components$theme.white),
 						$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$block),
 						$rtfeldman$elm_css$Css$margin(
 						$rtfeldman$elm_css$Css$px(10)),
@@ -13673,6 +13647,7 @@ var $author$project$View$DataWindow$viewPanel = function (model) {
 					]),
 				_List_fromArray(
 					[
+						$author$project$View$DataWindow$controlBar,
 						A2(
 						$rtfeldman$elm_css$Html$Styled$Lazy$lazy,
 						$author$project$View$DataWindow$graphMap,

@@ -9,6 +9,7 @@ import Html.Attributes
 import Html.Events
 import Html.Styled exposing (..)
 import Html.Styled.Attributes as Att exposing (css)
+import Html.Styled.Events exposing (onClick)
 import Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
 import Json.Decode as Decode exposing (Decoder)
 import List as L
@@ -62,7 +63,7 @@ viewPanel model =
     div
         [ css
             [ Css.width (Css.pct 100)
-            , Css.backgroundColor theme.medium
+            , Css.backgroundColor theme.white
             , Css.display Css.block
             , Css.margin (Css.px 10)
             , Css.borderRadius (Css.px 10)
@@ -79,7 +80,8 @@ viewPanel model =
                 , Css.display Css.block
                 ]
             ]
-            [ lazy graphMap
+            [ controlBar
+            , lazy graphMap
                 { positions = model.positions
                 , labels = labels
                 , colors = Maybe.map Util.Cmap.translate colorColumn
@@ -89,6 +91,30 @@ viewPanel model =
                 }
             ]
         ]
+
+
+controlBar : Component
+controlBar =
+    div [ css [ Css.display Css.block, Css.position Css.absolute, Css.padding (Css.px 5) ] ]
+        [ runButton
+        , loadButton
+        , downloadSvgButton
+        ]
+
+
+loadButton : Component
+loadButton =
+    img [ Att.src "images/upload.svg", onClick CsvRequested, Att.title "Upload CSV" ] [ text "Load CSV" ]
+
+
+runButton : Component
+runButton =
+    img [ Att.src "images/run.svg", onClick <| UmapSender, Att.title "run Umap" ] [ text <| "UMap" ]
+
+
+downloadSvgButton : Component
+downloadSvgButton =
+    img [ Att.src "images/download.svg", onClick GetSvg, Att.title "Download SVG" ] [ text "Get Svg" ]
 
 
 graphMap :
