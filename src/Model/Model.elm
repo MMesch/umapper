@@ -175,7 +175,7 @@ init _ =
       , positions = Nothing
       , query = ""
       , tableState = Table.initialSort "name"
-      , umapParams = { minDist = 0.1, spread = 1.0, nNeighbors = 3 }
+      , umapParams = { minDist = 0.9, spread = 2.0, nNeighbors = 5 }
       , plotParams = { defaultPlotParams | labelColumns = [ "date", "participants" ] }
       , center = ( 0, 0 )
       , drag = Draggable.init

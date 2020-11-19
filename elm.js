@@ -6572,7 +6572,7 @@ var $author$project$Model$Model$init = function (_v0) {
 							['15/12/2020', 'Mat;Hugo']))
 					])),
 			tableState: $billstclair$elm_sortable_table$Table$initialSort('name'),
-			umapParams: {minDist: 0.1, nNeighbors: 3, spread: 1.0},
+			umapParams: {minDist: 0.9, nNeighbors: 5, spread: 2.0},
 			zoom: 1.0
 		},
 		$author$project$Model$Model$csvFromUrl('data/emperors.csv'));
