@@ -14,8 +14,8 @@ import View.Components exposing (Builder, Component, theme)
 
 buttonStyle =
     [ Css.borderRadius (Css.px 2)
-    , Css.backgroundColor theme.lightblue
-    , Css.color theme.black
+    , Css.backgroundColor theme.dark
+    , Css.color theme.white
     , Css.border (Css.px 0)
     , Css.fontSize (Css.rem 1.5)
     , Css.display Css.inlineBlock
@@ -33,7 +33,7 @@ tabStyle =
     [ Css.borderRadius (Css.px 5)
     , Css.width (Css.pct 100)
     , Css.display Css.block
-    , Css.backgroundColor theme.darkblue
+    , Css.backgroundColor theme.medium
     , Css.marginTop (Css.px 2)
     , Css.padding (Css.px 10)
     ]
@@ -80,7 +80,7 @@ reusableTab params components =
     div [ css tabStyle ]
         [ div
             [ css
-                [ Css.color theme.white
+                [ Css.color theme.black
                 , Css.margin (Css.px 5)
                 ]
             ]
@@ -126,7 +126,7 @@ inputWrapper title c =
         ]
         [ label
             [ css
-                [ Css.color theme.white
+                [ Css.color theme.black
                 , Css.width (Css.px 110)
                 , Css.display Css.inlineBlock
                 , Css.textAlign Css.center

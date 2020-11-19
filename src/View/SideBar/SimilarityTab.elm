@@ -44,7 +44,7 @@ firstColumn labels =
                 [ css
                     [ Css.property "grid-column" "1"
                     , Css.property "grid-row" (String.fromInt (i + 1))
-                    , Css.color theme.white
+                    , Css.color theme.black
                     , Css.display Css.block
                     ]
                 ]
@@ -64,7 +64,7 @@ columnBuilder ( index, params ) =
             [ currentColumn
             , Css.display Css.block
             , Css.property "grid-row" "1"
-            , Css.color theme.white
+            , Css.color theme.black
             , Css.padding (Css.px 2)
             ]
         ]

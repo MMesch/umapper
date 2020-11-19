@@ -20,7 +20,7 @@ tableTab tableState headers records =
                 , Css.display Css.block
                 , Css.overflow Css.auto
                 , Css.margin (Css.px 2)
-                , Css.backgroundColor theme.lightblue
+                , Css.backgroundColor theme.light
                 , Css.borderRadius (Css.px 3)
                 ]
             ]

@@ -62,7 +62,7 @@ viewPanel model =
     div
         [ css
             [ Css.width (Css.pct 100)
-            , Css.backgroundColor theme.mediumblue
+            , Css.backgroundColor theme.medium
             , Css.display Css.block
             , Css.margin (Css.px 10)
             , Css.borderRadius (Css.px 10)
@@ -122,7 +122,8 @@ graphMap { positions, baseSize, labels, colors, center, zoom } =
             [ Css.width (Css.pct 100)
             , Css.height (Css.pct 100)
             , Css.display Css.block
-            , Css.overflow Css.auto
+            , Css.backgroundColor theme.white
+            , Css.borderRadius (Css.px 5)
             ]
         ]
         [ fromUnstyled <|

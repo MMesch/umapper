@@ -25,7 +25,7 @@ mainWindow : List Component -> Component
 mainWindow components =
     div
         [ css
-            [ Css.backgroundColor theme.lightblue
+            [ Css.backgroundColor theme.light
             , Css.minHeight (Css.vh 100)
             , Css.width (Css.vw 100)
             , Css.displayFlex

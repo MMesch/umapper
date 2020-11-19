@@ -36,9 +36,10 @@ onChange handler =
 
 
 theme =
-    { lightblue = Css.hex "5c94eb"
-    , darkblue = Css.hex "2b456e"
-    , mediumblue = Css.hex "5284d2"
+    { light = Css.hex "f2f1ee"
+    , light2 = Css.hex "f0dba0"
+    , dark = Css.hex "292b34"
+    , medium = Css.hex "e0dfd8"
     , white = Css.hex "ffffff"
     , black = Css.hex "000000"
     }

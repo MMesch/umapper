@@ -7,6 +7,8 @@ import Draggable exposing (Msg)
 import File exposing (File)
 import File.Download
 import File.Select as Select
+import Http
+import Json.Decode as D
 import Maybe exposing (Maybe(..), withDefault)
 import Result exposing (toMaybe)
 import String exposing (String)
@@ -21,6 +23,7 @@ type Msg
     = CsvRequested
     | CsvSelected File
     | CsvLoaded String
+    | CsvFromUrl (Result Http.Error String)
     | SetQuery String
     | SetTableState Table.State
     | SetUmapParams UmapParams
@@ -136,6 +139,14 @@ type alias Model =
     }
 
 
+csvFromUrl : String -> Cmd Msg
+csvFromUrl url =
+    Http.get
+        { url = url
+        , expect = Http.expectString CsvFromUrl
+        }
+
+
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { records =
@@ -170,7 +181,7 @@ init _ =
       , drag = Draggable.init
       , zoom = 1.0
       }
-    , Cmd.none
+    , csvFromUrl "data/emperors.csv"
     )
 
 
@@ -264,6 +275,14 @@ update msg model =
         SetPlotParams params ->
             ( { model | plotParams = params }, Cmd.none )
 
+        CsvFromUrl result ->
+            case result of
+                Err err ->
+                    ( model, Cmd.none )
+
+                Ok content ->
+                    ( updateCsvModel content model, Cmd.none )
+
 
 downloadSvg : String -> Cmd msg
 downloadSvg svgContent =
@@ -272,8 +291,8 @@ downloadSvg svgContent =
 
 updateCsvModel : String -> Model -> Model
 updateCsvModel content model =
-    case toMaybe (parse content) of
-        Just parsed ->
+    case parse content of
+        Ok parsed ->
             let
                 columnParams =
                     A.fromList <| List.map (\x -> { defaultColumnParams | name = x }) parsed.headers
@@ -287,8 +306,8 @@ updateCsvModel content model =
                 , positions = Nothing
             }
 
-        Nothing ->
-            model
+        Err err ->
+            Debug.log (Debug.toString err) model
 
 
 fileSelection : Cmd Msg
